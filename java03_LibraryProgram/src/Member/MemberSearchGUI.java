@@ -1,4 +1,4 @@
-package MemberGUI;
+package Member;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
