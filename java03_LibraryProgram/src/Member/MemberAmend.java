@@ -1,124 +1,97 @@
 package Member;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
-import Book.BookRegister;
-import Book.BookSearch;
-import BookCheckoutReturn.BookCheckout;
-import BookCheckoutReturn.BookReturn;
-
-public class MemberAmend extends JFrame {
-
-	private JPanel contentPane;
+public class MemberAmend extends JPanel {
+	private JTextField textField_Name;
+	private JTextField textField_Birth;
+	private JTextField textField_Email;
+	private JTextField textField_PhoneN;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MemberAmend frame = new MemberAmend();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	 * Create the panel.
 	 */
 	public MemberAmend() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 440, 290);
+		setLayout(null);
 		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");
+		lbTitle.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		lbTitle.setBounds(12, 10, 75, 27);
+		add(lbTitle);
 		
-		JMenu mnNewMenu = new JMenu("\uB3C4\uC11C\uAD00\uB9AC");
-		menuBar.add(mnNewMenu);
+		JLabel lbImage = new JLabel("        Image");
+		lbImage.setBounds(49, 67, 97, 92);
+		add(lbImage);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("\uB3C4\uC11C\uAC80\uC0C9");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				BookSearch temp = new BookSearch();
-				temp.setVisible(true);
-			}
-		});
-		mnNewMenu.add(mntmNewMenuItem);
+		JButton btn_ImageFind = new JButton("\uCC3E\uC544\uBCF4\uAE30");
+		btn_ImageFind.setBounds(49, 161, 97, 23);
+		add(btn_ImageFind);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("\uB3C4\uC11C\uB4F1\uB85D");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				BookRegister temp = new BookRegister();
-				temp.setVisible(true);
-			}
-		});
-		mnNewMenu.add(mntmNewMenuItem_1);
+		JLabel lbName = new JLabel("\uC774\uB984");
+		lbName.setBounds(204, 67, 42, 15);
+		add(lbName);
 		
-		JMenu mnNewMenu_1 = new JMenu("\uD68C\uC6D0\uAD00\uB9AC");
-		menuBar.add(mnNewMenu_1);
+		textField_Name = new JTextField();
+		textField_Name.setBounds(258, 64, 144, 21);
+		add(textField_Name);
+		textField_Name.setColumns(10);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("\uD68C\uC6D0\uAC80\uC0C9");
-		mntmNewMenuItem_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				MemberSearch temp = new MemberSearch();
-				temp.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmNewMenuItem_2);
+		JLabel lbBirth = new JLabel("\uC0DD\uB144\uC6D4\uC77C");
+		lbBirth.setBounds(189, 106, 57, 15);
+		add(lbBirth);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("\uD68C\uC6D0\uB4F1\uB85D");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				MemberRegister temp = new MemberRegister();
-				temp.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmNewMenuItem_3);
+		textField_Birth = new JTextField();
+		textField_Birth.setBounds(258, 103, 144, 21);
+		add(textField_Birth);
+		textField_Birth.setColumns(10);
 		
-		JMenu mnNewMenu_2 = new JMenu("\uB300\uCD9C\uAD00\uB9AC");
-		menuBar.add(mnNewMenu_2);
+		JLabel lbSex = new JLabel("\uC131\uBCC4");
+		lbSex.setBounds(204, 141, 32, 15);
+		add(lbSex);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("\uB3C4\uC11C\uB300\uCD9C");
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				BookCheckout temp = new BookCheckout();
-				temp.setVisible(true);
-			}
-		});
-		mnNewMenu_2.add(mntmNewMenuItem_4);
+		JRadioButton rdMan = new JRadioButton("\uB0A8\uC131");
+		rdMan.setBounds(258, 137, 57, 23);
+		add(rdMan);
 		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("\uB3C4\uC11C\uBC18\uB0A9");
-		mntmNewMenuItem_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				BookReturn temp = new BookReturn();
-				temp.setVisible(true);
-			}
-		});
-		mnNewMenu_2.add(mntmNewMenuItem_5);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		JRadioButton rdWom = new JRadioButton("\uC5EC\uC131");
+		rdWom.setBounds(345, 136, 57, 23);
+		add(rdWom);
+		
+		JLabel lbEmail = new JLabel("\uC774\uBA54\uC77C");
+		lbEmail.setBounds(194, 176, 42, 15);
+		add(lbEmail);
+		
+		textField_Email = new JTextField();
+		textField_Email.setColumns(10);
+		textField_Email.setBounds(258, 173, 144, 21);
+		add(textField_Email);
+		
+		JLabel lbPhoneN = new JLabel("\uC804\uD654\uBC88\uD638");
+		lbPhoneN.setBounds(189, 210, 57, 15);
+		add(lbPhoneN);
+		
+		textField_PhoneN = new JTextField();
+		textField_PhoneN.setBounds(258, 207, 144, 21);
+		add(textField_PhoneN);
+		textField_PhoneN.setColumns(10);
+		
+		JButton btnAmend = new JButton("\uC218\uC815");
+		btnAmend.setBounds(49, 246, 97, 23);
+		add(btnAmend);
+		
+		JButton btnCancel = new JButton("\uCDE8\uC18C");
+		btnCancel.setBounds(305, 246, 97, 23);
+		add(btnCancel);
+		
+		JButton btnTOut = new JButton("\uD0C8\uD1F4");
+		btnTOut.setBounds(178, 246, 97, 23);
+		add(btnTOut);
 	}
-
 }
