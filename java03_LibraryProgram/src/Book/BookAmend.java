@@ -16,6 +16,7 @@ import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
 import Member.MemberSearch;
+import javax.swing.JLabel;
 
 public class BookAmend extends JFrame {
 
@@ -119,6 +120,9 @@ public class BookAmend extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JLabel lblNewLabel = new JLabel("GithubDesktop Test");
+		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 	}
 
 }
