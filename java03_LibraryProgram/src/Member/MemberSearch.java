@@ -16,7 +16,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
-public class MemberSearchGUI extends JPanel {
+public class MemberSearch extends JPanel {
 	private JTextField textField_Booktitle;
 	private JTextField textField_Author;
 
@@ -44,7 +44,7 @@ public class MemberSearchGUI extends JPanel {
 
 		}
 	
-	public MemberSearchGUI() {
+	public MemberSearch() {
 		setBounds(100, 100, 561, 389);
 		setLayout(null);
 		

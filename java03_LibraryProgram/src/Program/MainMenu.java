@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import Book.*;
 import BookCheckoutReturn.*;
 import Member.*;
-import java03_20211015_20160262.MemberSearchGUI;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -79,10 +78,9 @@ public class MainMenu extends JFrame {
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("회원검색");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MemberSearchGUI temp = new MemberSearchGUI();
-				setContentPane(temp);
-				temp.setLayout(new BorderLayout(0, 0));
-				System.out.print("클릭");
+				setVisible(false);
+				MemberSearch temp = new MemberSearch();
+				temp.setVisible(true);
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
@@ -90,10 +88,9 @@ public class MainMenu extends JFrame {
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("회원등록"); 
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				MemberRegisterGUI temp = new MemberRegisterGUI();
-//				setContentPane(temp);
-//				temp.setLayout(new BorderLayout(0, 0));
-//				System.out.print("클릭");
+				setVisible(false);
+				MemberAmend temp = new MemberAmend();
+				temp.setVisible(true);
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
