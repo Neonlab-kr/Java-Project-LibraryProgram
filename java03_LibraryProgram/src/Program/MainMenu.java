@@ -79,7 +79,7 @@ public class MainMenu extends JFrame {
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("회원검색");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MemberSearchGUI temp = new MemberSearchGUI();
+				MemberSearch temp = new MemberSearch();
 				setContentPane(temp);
 				temp.setLayout(new BorderLayout(0, 0));
 				System.out.print("클릭");

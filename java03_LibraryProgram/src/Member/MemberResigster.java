@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 
-public class MemberResigsterGUI extends JPanel {
+public class MemberResigster extends JPanel {
 	private JTextField textField_Name;
 	private JTextField textField_Birth;
 	private JTextField textField_Email;
@@ -17,7 +17,7 @@ public class MemberResigsterGUI extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MemberResigsterGUI() {
+	public MemberResigster() {
 		setBounds(100, 100, 440, 290);
 		setLayout(null);
 		
