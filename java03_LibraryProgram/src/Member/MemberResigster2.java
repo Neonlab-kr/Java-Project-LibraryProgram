@@ -13,11 +13,11 @@ import BookCheckoutReturn.BookCheckout;
 
 import javax.swing.JRadioButton;
 
-<<<<<<< HEAD:java03_LibraryProgram/src/Member/MemberResigster.java
-public class MemberResigster extends JPanel {
-=======
-public class MemberRegister extends JFrame {
->>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
+//<<<<<<< HEAD:java03_LibraryProgram/src/Member/MemberResigster.java
+//public class MemberResigster extends JPanel {
+//=======
+public class MemberResigster2 extends JFrame {
+//>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
 	private JTextField textField_Name;
 	private JTextField textField_Birth;
 	private JTextField textField_Email;
@@ -27,7 +27,7 @@ public class MemberRegister extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberRegister frame = new MemberRegister();
+					MemberResigster2 frame = new MemberResigster2();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,11 +40,11 @@ public class MemberRegister extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-<<<<<<< HEAD:java03_LibraryProgram/src/Member/MemberResigster.java
-	public MemberResigster() {
-=======
-	public MemberRegister() {
->>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
+//<<<<<<< HEAD:java03_LibraryProgram/src/Member/MemberResigster.java
+//	public MemberRegister() {
+//=======
+	public MemberResigster2() {
+//>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
 		setBounds(100, 100, 440, 290);
 		setLayout(null);
 		

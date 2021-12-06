@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
-import Member.MemberResigster;
+import Member.MemberRegister;
 import Member.MemberSearch;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
@@ -34,6 +34,7 @@ import java.awt.Font;
 import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class BookAmend extends JFrame {
 
 	private JPanel contentPane;
@@ -113,7 +114,7 @@ public class BookAmend extends JFrame {
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				MemberResigster temp = new MemberResigster();
+				MemberRegister temp = new MemberRegister();
 				temp.setVisible(true);
 			}
 		});
