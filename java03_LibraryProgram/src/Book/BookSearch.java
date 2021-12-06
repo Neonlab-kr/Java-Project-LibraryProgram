@@ -14,8 +14,11 @@ import javax.swing.border.EmptyBorder;
 
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
-import Member.MemberRegister;
+import Member.MemberResigster;
 import Member.MemberSearch;
+import javax.swing.JLabel;
+import java.awt.GridLayout;
+import javax.swing.JSplitPane;
 
 public class BookSearch extends JFrame {
 
@@ -41,10 +44,12 @@ public class BookSearch extends JFrame {
 	 * Create the frame.
 	 */
 	public BookSearch() {
+		setTitle("LibaryManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setToolTipText("\u3163");
 		setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("\uB3C4\uC11C\uAD00\uB9AC");
@@ -87,7 +92,7 @@ public class BookSearch extends JFrame {
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				MemberRegister temp = new MemberRegister();
+				MemberResigster temp = new MemberResigster();
 				temp.setVisible(true);
 			}
 		});
@@ -117,8 +122,19 @@ public class BookSearch extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		contentPane.add(splitPane);
+		
+		JSplitPane splitPane_1 = new JSplitPane();
+		splitPane_1.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		splitPane.setLeftComponent(splitPane_1);
+		
+		JLabel lblNewLabel = new JLabel("\uB3C4\uC11C\uAC80\uC0C9");
+		splitPane_1.setLeftComponent(lblNewLabel);
 	}
 
 }
