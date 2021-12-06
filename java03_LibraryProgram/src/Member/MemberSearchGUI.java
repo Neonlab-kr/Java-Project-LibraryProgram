@@ -98,9 +98,9 @@ public class MemberSearchGUI extends JPanel {
 			JLabel imgLabel = new JLabel();
 			ImageIcon c = new ImageIcon("image/icon1.png");
 			imgLabel.setIcon(c);
-			JLabel a = new JLabel("제목 : 자바어려워 ");
+			JLabel a = new JLabel("이름 :윤성철");
 			a.setFont(new Font("굴림", Font.PLAIN, 15));
-			JLabel b = new JLabel("저자 : 성철 ");
+			JLabel b = new JLabel("전화번호 :0192222222");
 			b.setFont(new Font("굴림", Font.PLAIN, 15));
 			JPanel label2 = new JPanel();
 			JButton btnNewButton = new JButton("클릭");
