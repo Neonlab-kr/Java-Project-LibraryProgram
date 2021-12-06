@@ -213,6 +213,12 @@ public class BookReturn extends JFrame {
 		contentPane.add(textField_7);
 		
 		JButton btnNewButton = new JButton("\uB3C4\uC11C\uAC80\uC0C9");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BCR_BookSearch temp = new BCR_BookSearch();
+				temp.setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(303, 285, 97, 37);
 		contentPane.add(btnNewButton);
 		

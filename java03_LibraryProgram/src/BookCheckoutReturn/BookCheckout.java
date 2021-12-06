@@ -199,6 +199,12 @@ public class BookCheckout extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("\uB3C4\uC11C\uAC80\uC0C9");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BCR_BookSearch temp = new BCR_BookSearch();
+				temp.setVisible(true);
+			}
+		});
 		btnNewButton_1.setBounds(555, 281, 97, 37);
 		contentPane.add(btnNewButton_1);
 		
@@ -253,6 +259,12 @@ public class BookCheckout extends JFrame {
 		contentPane.add(textField_9);
 		
 		JButton btnNewButton_2 = new JButton("\uD68C\uC6D0\uAC80\uC0C9");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BCR_MemberSearch temp = new BCR_MemberSearch();
+				temp.setVisible(true);
+			}
+		});
 		btnNewButton_2.setBounds(199, 281, 97, 37);
 		contentPane.add(btnNewButton_2);
 		
