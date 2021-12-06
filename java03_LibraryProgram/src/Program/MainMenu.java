@@ -10,8 +10,7 @@ import javax.swing.border.EmptyBorder;
 import Book.*;
 import BookCheckoutReturn.*;
 import Member.*;
-
-import MemberGUI.MemberSearchGUI;
+import java03_20211015_20160262.MemberSearchGUI;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
