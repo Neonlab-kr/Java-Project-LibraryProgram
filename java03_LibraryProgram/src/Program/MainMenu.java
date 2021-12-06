@@ -11,6 +11,8 @@ import Book.*;
 import BookCheckoutReturn.*;
 import Member.*;
 
+import MemberGUI.MemberSearchGUI;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
@@ -72,25 +74,27 @@ public class MainMenu extends JFrame {
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
-		JMenu mnNewMenu_1 = new JMenu("\uD68C\uC6D0\uAD00\uB9AC");
+		JMenu mnNewMenu_1 = new JMenu("회원관리"); 
 		menuBar.add(mnNewMenu_1);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("\uD68C\uC6D0\uAC80\uC0C9");
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("회원검색");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				MemberSearch temp = new MemberSearch();
-				temp.setVisible(true);
+				MemberSearchGUI temp = new MemberSearchGUI();
+				setContentPane(temp);
+				temp.setLayout(new BorderLayout(0, 0));
+				System.out.print("클릭");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("\uD68C\uC6D0\uB4F1\uB85D");
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("회원등록"); 
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				MemberRegister temp = new MemberRegister();
-				temp.setVisible(true);
+//				MemberRegisterGUI temp = new MemberRegisterGUI();
+//				setContentPane(temp);
+//				temp.setLayout(new BorderLayout(0, 0));
+//				System.out.print("클릭");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
