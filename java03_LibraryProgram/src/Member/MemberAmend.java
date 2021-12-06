@@ -1,24 +1,39 @@
 package Member;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class MemberAmend extends JPanel {
+public class MemberAmend extends JFrame {
 	private JTextField textField_Name;
 	private JTextField textField_Birth;
 	private JTextField textField_Email;
 	private JTextField textField_PhoneN;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MemberAmend frame = new MemberAmend();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Create the panel.
 	 */
 	public MemberAmend() {
-		setBounds(100, 100, 440, 290);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 680, 428);
 		setLayout(null);
 		
 		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");

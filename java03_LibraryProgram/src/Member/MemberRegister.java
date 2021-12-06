@@ -1,19 +1,38 @@
 package Member;
 
 
-import javax.swing.JPanel;
 import javax.swing.JLabel;
+
+import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import BookCheckoutReturn.BookCheckout;
+
 import javax.swing.JRadioButton;
 
-public class MemberRegister extends JPanel {
+public class MemberRegister extends JFrame {
 	private JTextField textField_Name;
 	private JTextField textField_Birth;
 	private JTextField textField_Email;
 	private JTextField textField_PhoneN;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MemberRegister frame = new MemberRegister();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+		
+	
 	/**
 	 * Create the panel.
 	 */

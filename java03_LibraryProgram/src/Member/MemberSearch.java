@@ -14,12 +14,26 @@ import javax.swing.JScrollPane;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
-public class MemberSearch extends JPanel {
+public class MemberSearch extends JFrame {
 	private JTextField textField_Booktitle;
 	private JTextField textField_Author;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MemberSearch frame = new MemberSearch();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Create the panel.
 	 */
