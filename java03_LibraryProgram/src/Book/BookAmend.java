@@ -69,7 +69,7 @@ public class BookAmend extends JFrame {
 	public BookAmend() {
 		setTitle("LibrayManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 496, 367);
+		setBounds(100, 100, 680, 428);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
