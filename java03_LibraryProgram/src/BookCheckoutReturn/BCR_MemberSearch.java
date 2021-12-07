@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JRadioButton;
+import java.awt.Color;
 
 public class BCR_MemberSearch extends JFrame {
 
@@ -68,6 +69,7 @@ public class BCR_MemberSearch extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(0, 191, 664, 198);
 		contentPane.add(panel);
 		panel.setLayout(null);

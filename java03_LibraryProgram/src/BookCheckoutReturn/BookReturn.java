@@ -17,6 +17,7 @@ import Member.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class BookReturn extends JFrame {
 
@@ -125,6 +126,7 @@ public class BookReturn extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

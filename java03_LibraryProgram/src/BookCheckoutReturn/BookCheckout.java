@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
+import java.awt.Color;
 
 public class BookCheckout extends JFrame {
 
@@ -132,7 +133,9 @@ public class BookCheckout extends JFrame {
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
+		
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

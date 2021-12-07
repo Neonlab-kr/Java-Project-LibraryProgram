@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
+import java.awt.Color;
 
 public class BCR_BookSearch extends JFrame {
 
@@ -70,6 +71,7 @@ public class BCR_BookSearch extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(0, 191, 664, 198);
 		contentPane.add(panel);
 		panel.setLayout(null);
