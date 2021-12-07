@@ -143,15 +143,15 @@ public class BCR_BookSearch extends JFrame {
 
 		for (int count = 0; count < 5; count++) {
 			JLabel imgLabel = new JLabel();
-			JLabel a = new JLabel("Á¦¸ñ :  ");
-			a.setFont(new Font("±¼¸²", Font.PLAIN, 15));
-			JLabel b = new JLabel("ÀúÀÚ :  ");
-			b.setFont(new Font("±¼¸²", Font.PLAIN, 15));
+			JLabel Title = new JLabel("Á¦¸ñ :  ");
+			Title.setFont(new Font("±¼¸²", Font.PLAIN, 15));
+			JLabel Author = new JLabel("ÀúÀÚ :  ");
+			Author.setFont(new Font("±¼¸²", Font.PLAIN, 15));
 			JPanel label2 = new JPanel();
 			JButton tempButton = new JButton("»ó¼¼Á¤º¸");
 			label2.add(imgLabel);
-			label2.add(a);
-			label2.add(b);
+			label2.add(Title);
+			label2.add(Author);
 			label2.add(tempButton);
 
 			create_form(label2, 0, 30 * count, 30, 10);

@@ -134,11 +134,6 @@ public class BCR_MemberSearch extends JFrame {
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("\uC5EC\uC131");
 		panel_2.add(rdbtnNewRadioButton_1);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 664, 192);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-
 		jp_label = new JPanel();
 
 		jp_label.setLayout(Gbag);
@@ -150,15 +145,15 @@ public class BCR_MemberSearch extends JFrame {
 
 		for (int count = 0; count < 5; count++) {
 			JLabel imgLabel = new JLabel();
-			JLabel a = new JLabel("이름 : ");
-			a.setFont(new Font("굴림", Font.PLAIN, 15));
-			JLabel b = new JLabel("전화번호 : ");
-			b.setFont(new Font("굴림", Font.PLAIN, 15));
+			JLabel Name = new JLabel("이름 : ");
+			Name.setFont(new Font("굴림", Font.PLAIN, 15));
+			JLabel Phone = new JLabel("전화번호 : ");
+			Phone.setFont(new Font("굴림", Font.PLAIN, 15));
 			JPanel label2 = new JPanel();
 			JButton tempButton = new JButton("상세정보");
 			label2.add(imgLabel);
-			label2.add(a);
-			label2.add(b);
+			label2.add(Name);
+			label2.add(Phone);
 			label2.add(tempButton);
 
 			create_form(label2, 0, 30 * count, 30, 10);
