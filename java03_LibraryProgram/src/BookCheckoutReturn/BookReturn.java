@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import Book.*;
 import Member.*;
@@ -131,8 +132,9 @@ public class BookReturn extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
+		JLabel lblNewLabel_1 = new JLabel("book image");
 		lblNewLabel_1.setBounds(78, 37, 99, 112);
+		lblNewLabel_1.setBorder(new LineBorder(Color.BLACK));
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("\uC81C\uBAA9");

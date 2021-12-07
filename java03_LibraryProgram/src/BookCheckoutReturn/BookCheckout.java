@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import Book.*;
 import Member.*;
@@ -140,8 +141,9 @@ public class BookCheckout extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
+		JLabel lblNewLabel_1 = new JLabel("book image");
 		lblNewLabel_1.setBounds(306, 35, 67, 89);
+		lblNewLabel_1.setBorder(new LineBorder(Color.BLACK));
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("\uC81C\uBAA9");
@@ -219,8 +221,9 @@ public class BookCheckout extends JFrame {
 		textField_5.setEditable(false);
 		textField_5.setColumns(10);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("New label");
+		JLabel lblNewLabel_1_1 = new JLabel("user image");
 		lblNewLabel_1_1.setBounds(12, 35, 67, 89);
+		lblNewLabel_1_1.setBorder(new LineBorder(Color.BLACK));
 		contentPane.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_4 = new JLabel("\uC774\uB984");

@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -144,10 +145,10 @@ public class BCR_BookSearch extends JFrame {
 		contentPane.add(scroll);
 
 		for (int count = 0; count < 5; count++) {
-			JLabel imgLabel = new JLabel();
-			JLabel Title = new JLabel("제목 :  ");
+			JLabel imgLabel = new JLabel("image");
+			JLabel Title = new JLabel("제목 : 책제목");
 			Title.setFont(new Font("굴림", Font.PLAIN, 15));
-			JLabel Author = new JLabel("저자 :  ");
+			JLabel Author = new JLabel("저자 : 김저자");
 			Author.setFont(new Font("굴림", Font.PLAIN, 15));
 			JPanel label2 = new JPanel();
 			JButton tempButton = new JButton("상세정보");
@@ -155,7 +156,7 @@ public class BCR_BookSearch extends JFrame {
 			label2.add(Title);
 			label2.add(Author);
 			label2.add(tempButton);
-
+			label2.setBorder(new LineBorder(Color.BLACK));
 			create_form(label2, 0, 30 * count, 30, 10);
 		}
 	}

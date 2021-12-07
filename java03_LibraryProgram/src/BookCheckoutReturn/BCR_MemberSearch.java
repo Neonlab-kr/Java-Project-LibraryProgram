@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
 import javax.swing.JRadioButton;
 import java.awt.Color;
 
@@ -146,10 +146,10 @@ public class BCR_MemberSearch extends JFrame {
 		contentPane.add(scroll);
 
 		for (int count = 0; count < 5; count++) {
-			JLabel imgLabel = new JLabel();
-			JLabel Name = new JLabel("이름 : ");
+			JLabel imgLabel = new JLabel("image");
+			JLabel Name = new JLabel("이름 : 김원");
 			Name.setFont(new Font("굴림", Font.PLAIN, 15));
-			JLabel Phone = new JLabel("전화번호 : ");
+			JLabel Phone = new JLabel("전화번호 : 01052914719");
 			Phone.setFont(new Font("굴림", Font.PLAIN, 15));
 			JPanel label2 = new JPanel();
 			JButton tempButton = new JButton("상세정보");
@@ -157,7 +157,7 @@ public class BCR_MemberSearch extends JFrame {
 			label2.add(Name);
 			label2.add(Phone);
 			label2.add(tempButton);
-
+			label2.setBorder(new LineBorder(Color.BLACK));
 			create_form(label2, 0, 30 * count, 30, 10);
 		}
 
