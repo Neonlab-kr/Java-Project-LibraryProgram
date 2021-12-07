@@ -34,79 +34,79 @@ public class MemberAmend extends JFrame {
 	public MemberAmend() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
-		setLayout(null);
+		getContentPane().setLayout(null);
 		
-		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");
+		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uC815\uBCF4");
 		lbTitle.setFont(new Font("±¼¸²", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
-		add(lbTitle);
+		getContentPane().add(lbTitle);
 		
 		JLabel lbImage = new JLabel("        Image");
 		lbImage.setBounds(49, 67, 97, 92);
-		add(lbImage);
+		getContentPane().add(lbImage);
 		
 		JButton btn_ImageFind = new JButton("\uCC3E\uC544\uBCF4\uAE30");
 		btn_ImageFind.setBounds(49, 161, 97, 23);
-		add(btn_ImageFind);
+		getContentPane().add(btn_ImageFind);
 		
 		JLabel lbName = new JLabel("\uC774\uB984");
 		lbName.setBounds(204, 67, 42, 15);
-		add(lbName);
+		getContentPane().add(lbName);
 		
 		textField_Name = new JTextField();
 		textField_Name.setBounds(258, 64, 144, 21);
-		add(textField_Name);
+		getContentPane().add(textField_Name);
 		textField_Name.setColumns(10);
 		
 		JLabel lbBirth = new JLabel("\uC0DD\uB144\uC6D4\uC77C");
 		lbBirth.setBounds(189, 106, 57, 15);
-		add(lbBirth);
+		getContentPane().add(lbBirth);
 		
 		textField_Birth = new JTextField();
 		textField_Birth.setBounds(258, 103, 144, 21);
-		add(textField_Birth);
+		getContentPane().add(textField_Birth);
 		textField_Birth.setColumns(10);
 		
 		JLabel lbSex = new JLabel("\uC131\uBCC4");
 		lbSex.setBounds(204, 141, 32, 15);
-		add(lbSex);
+		getContentPane().add(lbSex);
 		
 		JRadioButton rdMan = new JRadioButton("\uB0A8\uC131");
 		rdMan.setBounds(258, 137, 57, 23);
-		add(rdMan);
+		getContentPane().add(rdMan);
 		
 		JRadioButton rdWom = new JRadioButton("\uC5EC\uC131");
 		rdWom.setBounds(345, 136, 57, 23);
-		add(rdWom);
+		getContentPane().add(rdWom);
 		
 		JLabel lbEmail = new JLabel("\uC774\uBA54\uC77C");
 		lbEmail.setBounds(194, 176, 42, 15);
-		add(lbEmail);
+		getContentPane().add(lbEmail);
 		
 		textField_Email = new JTextField();
 		textField_Email.setColumns(10);
 		textField_Email.setBounds(258, 173, 144, 21);
-		add(textField_Email);
+		getContentPane().add(textField_Email);
 		
 		JLabel lbPhoneN = new JLabel("\uC804\uD654\uBC88\uD638");
 		lbPhoneN.setBounds(189, 210, 57, 15);
-		add(lbPhoneN);
+		getContentPane().add(lbPhoneN);
 		
 		textField_PhoneN = new JTextField();
 		textField_PhoneN.setBounds(258, 207, 144, 21);
-		add(textField_PhoneN);
+		getContentPane().add(textField_PhoneN);
 		textField_PhoneN.setColumns(10);
 		
 		JButton btnAmend = new JButton("\uC218\uC815");
 		btnAmend.setBounds(49, 246, 97, 23);
-		add(btnAmend);
+		getContentPane().add(btnAmend);
 		
 		JButton btnCancel = new JButton("\uCDE8\uC18C");
 		btnCancel.setBounds(305, 246, 97, 23);
-		add(btnCancel);
+		getContentPane().add(btnCancel);
 		
 		JButton btnTOut = new JButton("\uD0C8\uD1F4");
 		btnTOut.setBounds(178, 246, 97, 23);
-		add(btnTOut);
+		getContentPane().add(btnTOut);
 	}
 }

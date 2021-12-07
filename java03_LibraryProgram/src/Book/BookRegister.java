@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
-import Member.MemberRegister;
+import Member.*;
 import Member.MemberSearch;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;

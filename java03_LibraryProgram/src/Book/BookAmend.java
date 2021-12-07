@@ -12,10 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import BookCheckoutReturn.BookCheckout;
-import BookCheckoutReturn.BookReturn;
-import Member.MemberRegister;
-import Member.MemberSearch;
+import BookCheckoutReturn.*;
+import Member.*;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
 import net.miginfocom.swing.MigLayout;

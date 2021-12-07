@@ -12,10 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Book.BookRegister;
-import Book.BookSearch;
-import Member.MemberRegister;
-import Member.MemberSearch;
+import Book.*;
+import Member.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;

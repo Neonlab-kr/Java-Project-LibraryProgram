@@ -89,7 +89,7 @@ public class MainMenu extends JFrame {
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				MemberAmend temp = new MemberAmend();
+				MemberRegister temp = new MemberRegister();
 				temp.setVisible(true);
 			}
 		});
