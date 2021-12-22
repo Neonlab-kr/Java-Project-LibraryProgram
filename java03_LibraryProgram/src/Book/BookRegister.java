@@ -2,37 +2,27 @@ package Book;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
-import Member.*;
+import Member.MemberRegister;
 import Member.MemberSearch;
-import javax.swing.JLabel;
-import javax.swing.JSplitPane;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.CardLayout;
-import javax.swing.BoxLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.Font;
-import javax.swing.SpringLayout;
-import javax.swing.JTextField;
 
 public class BookRegister extends JFrame {
 
