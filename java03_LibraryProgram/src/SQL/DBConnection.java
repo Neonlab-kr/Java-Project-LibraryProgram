@@ -9,6 +9,7 @@ public class DBConnection {
     private static final String URL = "jdbc:mysql://jdb.deu.monster:60001/j20203025";//DBMS立加且 db疙
     
     public DBConnection() {
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try {
             System.out.println("积己磊");
             Class.forName("com.mysql.jdbc.Driver");
