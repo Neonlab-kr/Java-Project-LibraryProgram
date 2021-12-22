@@ -224,6 +224,30 @@ public class BookSearch extends JFrame {
 		});
 		panel_2.add(btnNewButton_1);
 		
+		for(int i=1;i<10;i++) {	//검색 결과에 따라 반복문 사용
+			JPanel pane = new JPanel();
+			panel.add(pane, "cell 0 "+i+",grow");
+			pane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			
+			JLabel lblNewLabel_3_51 = new JLabel("image");
+			pane.add(lblNewLabel_3_51);
+			
+			JLabel lblNewLabel_4_51 = new JLabel("\uC81C\uBAA9:");
+			pane.add(lblNewLabel_4_51);
+			
+			JLabel lblNewLabel_5_51 = new JLabel("\uC81C\uBAA9\uD544\uB4DC");
+			pane.add(lblNewLabel_5_51);
+			
+			JLabel lblNewLabel_6_51 = new JLabel("\uC800\uC790:");
+			pane.add(lblNewLabel_6_51);
+			
+			JLabel lblNewLabel_7_51 = new JLabel("\uC800\uC790\uD544\uB4DC");
+			pane.add(lblNewLabel_7_51);
+			
+			JButton btnNewButton_1_51 = new JButton("\uC0C1\uC138\uC815\uBCF4");
+			pane.add(btnNewButton_1_51);
+		}
+		
 		/*
 		JPanel panel_2_1 = new JPanel();
 		panel.add(panel_2_1, "cell 0 1,grow");
@@ -292,29 +316,5 @@ public class BookSearch extends JFrame {
 		panel_2_3.add(btnNewButton_1_3);
 		
 		*/
-		
-		for(int i=1;i<10;i++) {
-			JPanel pane = new JPanel();
-			panel.add(pane, "cell 0 "+i+",grow");
-			pane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			
-			JLabel lblNewLabel_3_51 = new JLabel("image");
-			pane.add(lblNewLabel_3_51);
-			
-			JLabel lblNewLabel_4_51 = new JLabel("\uC81C\uBAA9:");
-			pane.add(lblNewLabel_4_51);
-			
-			JLabel lblNewLabel_5_51 = new JLabel("\uC81C\uBAA9\uD544\uB4DC");
-			pane.add(lblNewLabel_5_51);
-			
-			JLabel lblNewLabel_6_51 = new JLabel("\uC800\uC790:");
-			pane.add(lblNewLabel_6_51);
-			
-			JLabel lblNewLabel_7_51 = new JLabel("\uC800\uC790\uD544\uB4DC");
-			pane.add(lblNewLabel_7_51);
-			
-			JButton btnNewButton_1_51 = new JButton("\uC0C1\uC138\uC815\uBCF4");
-			pane.add(btnNewButton_1_51);
-		}
 	}
 }
