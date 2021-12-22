@@ -10,6 +10,5 @@
 	<classpathentry kind="lib" path="U:/2021 2학기 대학교 자료/2021 Programming JAVA/Java_Project/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="U:/2021 2학기 대학교 자료/2021 Programming JAVA/Java_Project/miglayout15-swing.jar"/>
 	<classpathentry kind="lib" path="U:/2021 2학기 대학교 자료/2021 Programming JAVA/Java_Project/miglayout-src.zip"/>
-	<classpathentry kind="lib" path="U:/2021 2학기 대학교 자료/2021 Programming JAVA/Java_Project/mysql-connector-java-8.0.27.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
