@@ -29,13 +29,16 @@ import com.jgoodies.forms.layout.RowSpec;
 import net.miginfocom.swing.MigLayout;
 import java.awt.FlowLayout;
 import javax.swing.SpringLayout;
-import javax.swing.ScrollPaneConstants;
 
 public class BookSearch extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	/**
+	 * @wbp.nonvisual location=169,284
+	 */
+	private final JPanel panel_2_5 = new JPanel();
 
 	/**
 	 * Launch the application.
@@ -57,6 +60,25 @@ public class BookSearch extends JFrame {
 	 * Create the frame.
 	 */
 	public BookSearch() {
+		panel_2_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel_3_5 = new JLabel("image");
+		panel_2_5.add(lblNewLabel_3_5);
+		
+		JLabel lblNewLabel_4_5 = new JLabel("\uC81C\uBAA9:");
+		panel_2_5.add(lblNewLabel_4_5);
+		
+		JLabel lblNewLabel_5_5 = new JLabel("\uC81C\uBAA9\uD544\uB4DC");
+		panel_2_5.add(lblNewLabel_5_5);
+		
+		JLabel lblNewLabel_6_5 = new JLabel("\uC800\uC790:");
+		panel_2_5.add(lblNewLabel_6_5);
+		
+		JLabel lblNewLabel_7_5 = new JLabel("\uC800\uC790\uD544\uB4DC");
+		panel_2_5.add(lblNewLabel_7_5);
+		
+		JButton btnNewButton_1_5 = new JButton("\uC0C1\uC138\uC815\uBCF4");
+		panel_2_5.add(btnNewButton_1_5);
 		setTitle("LibaryManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
@@ -170,8 +192,6 @@ public class BookSearch extends JFrame {
 		panel_1.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		splitPane.setRightComponent(scrollPane);
 		
 		JPanel panel = new JPanel();
