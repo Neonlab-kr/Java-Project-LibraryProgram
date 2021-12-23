@@ -1,6 +1,7 @@
 package SQL;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -56,5 +57,32 @@ public class printToJTablefromDB_BOOK extends JFrame {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				JTable sourceTable = (JTable) e.getSource();
+				DefaultTableModel sourceModel = (DefaultTableModel) sourceTable.getModel();
+				
+				int clickedTableRow = sourceTable.getSelectedRow();
+				int clickedTableColumn = sourceTable.getSelectedColumn();
+				
+				if(clickedTableColumn == 6) {
+					JFrame showBookImgWindows = new JFrame();
+					JLabel bookImg = new JLabel((new ImageIcon(tmpImg.get(clickedTableRow))));
+					showBookImgWindows.add(bookImg);
+					
+					showBookImgWindows.addWindowListener(new WindowAdapter() {
+						
+						public void windowClosing(WindowEvent e) {
+							System.out.println("Closed sub windows");
+							e.getWindow().dispose();
+						}
+					});
+					showBookImgWindows.pack();
+					showBookImgWindows.setLocationRelativeTo(null);
+					showBookImgWindows.setVisible(true);
+				}
+			}
+		});
 	}
 }

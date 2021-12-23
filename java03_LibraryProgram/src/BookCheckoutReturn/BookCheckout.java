@@ -4,17 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import Book.*;
 import Member.*;
+import SQL.dbConnector;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -27,18 +31,26 @@ import javax.swing.JRadioButton;
 import java.awt.Color;
 
 public class BookCheckout extends JFrame {
+	
+	dbConnector dbConn = new dbConnector();
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_9;
-	private JTextField textField_8;
+	JTextField textField;
+	JTextField textField_1;
+	JTextField textField_2;
+	JTextField textField_3;
+	JTextField textField_4;
+	JTextField textField_5;
+	JTextField textField_6;
+	JTextField textField_7;
+	JTextField textField_9;
+	JTextField textField_8;
+	JRadioButton rdbtnNewRadioButton;
+	JRadioButton rdbtnNewRadioButton_1;
+	JLabel lblNewLabel_1_1;
+	BookCheckout getSelf() {
+		return this;
+	}
 
 	/**
 	 * Launch the application.
@@ -221,7 +233,7 @@ public class BookCheckout extends JFrame {
 		textField_5.setEditable(false);
 		textField_5.setColumns(10);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("user image");
+		lblNewLabel_1_1 = new JLabel("user image");
 		lblNewLabel_1_1.setBounds(12, 35, 67, 89);
 		lblNewLabel_1_1.setBorder(new LineBorder(Color.BLACK));
 		contentPane.add(lblNewLabel_1_1);
@@ -265,8 +277,56 @@ public class BookCheckout extends JFrame {
 		JButton btnNewButton_2 = new JButton("\uD68C\uC6D0\uAC80\uC0C9");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BCR_MemberSearch temp = new BCR_MemberSearch();
-				temp.setVisible(true);
+				if(!textField_8.getText().equals(""))
+				{
+					ResultSet src = dbConn.executeQurey("select * from USER where USER_PHONE like \"" + textField_8.getText() +"\";");
+					if(src==null)
+					{
+						JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음",JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						BCR_MemberSearch temp = new BCR_MemberSearch(getSelf(),src);
+						temp.setVisible(true);
+					}
+				}
+				else if(!textField_6.getText().equals("") && !textField_7.getText().equals(""))
+				{
+					ResultSet src = dbConn.executeQurey("select * from USER where USER_NAME like \"%" + textField_6.getText() + "\"% and USER_BIRTH like\"%"+textField_7.getText()+"%\";");
+					if(src==null)
+					{
+						JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음",JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						BCR_MemberSearch temp = new BCR_MemberSearch(getSelf(),src);
+						temp.setVisible(true);
+					}
+				}
+				else if(!textField_6.getText().equals("")) {
+					ResultSet src = dbConn.executeQurey("select * from USER where USER_NAME like \"%" + textField_6.getText() + "%\";");
+					if(src==null)
+					{
+						JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음",JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						BCR_MemberSearch temp = new BCR_MemberSearch(getSelf(),src);
+						temp.setVisible(true);
+					}
+				}
+				else if(!textField_7.getText().equals("")) {
+					ResultSet src = dbConn.executeQurey("select * from USER where USER_BIRTH like\"%"+textField_7.getText()+"%\";");
+					if(src==null)
+					{
+						JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음",JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						BCR_MemberSearch temp = new BCR_MemberSearch(getSelf(),src);
+						temp.setVisible(true);
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.", "입력 오류",JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton_2.setBounds(199, 281, 97, 37);
@@ -276,10 +336,12 @@ public class BookCheckout extends JFrame {
 		panel.setBounds(146, 101, 150, 33);
 		contentPane.add(panel);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("\uB0A8\uC131");
+		rdbtnNewRadioButton = new JRadioButton("\uB0A8\uC131");
+		rdbtnNewRadioButton.setEnabled(false);
 		panel.add(rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("\uC5EC\uC131");
+		rdbtnNewRadioButton_1 = new JRadioButton("\uC5EC\uC131");
+		rdbtnNewRadioButton_1.setEnabled(false);
 		panel.add(rdbtnNewRadioButton_1);
 		
 		textField_8 = new JTextField();

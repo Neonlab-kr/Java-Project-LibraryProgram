@@ -1,30 +1,25 @@
 package BookCheckoutReturn;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.sql.*;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.JRadioButton;
-import java.awt.Color;
+
+import Program.MainMenu;
+import SQL.dbConnector;
 
 public class BCR_MemberSearch extends JFrame {
 
+	dbConnector dbConn = new dbConnector();
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JRadioButton rdbtnNewRadioButton;
 	private JPanel jp_label;
 	private JScrollPane scroll;
 	private GridBagLayout Gbag = new GridBagLayout();
@@ -36,7 +31,7 @@ public class BCR_MemberSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BCR_MemberSearch frame = new BCR_MemberSearch();
+					MainMenu frame = new MainMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +56,7 @@ public class BCR_MemberSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BCR_MemberSearch() {
+	public BCR_MemberSearch(BookCheckout BCO, ResultSet src) {
 		setBounds(100, 100, 680, 428);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,10 +70,39 @@ public class BCR_MemberSearch extends JFrame {
 		panel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(55, 38, 91, 106);
+		lblNewLabel.setBounds(38, 38, 91, 106);
 		panel.add(lblNewLabel);
 
-		JButton btnNewButton = new JButton("\uB3C4\uC11C\uC120\uD0DD");
+		JButton btnNewButton = new JButton("\uD68C\uC6D0\uC120\uD0DD");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField_4.equals("")) {
+					JOptionPane.showMessageDialog(null, "회원이 선택되지 않았습니다.", "선택 없음", JOptionPane.ERROR_MESSAGE);
+				} else {
+					BCO.textField_6.setText(textField.getText());
+					BCO.textField_6.setEditable(false);
+					BCO.textField_7.setText(textField_1.getText());
+					BCO.textField_7.setEditable(false);
+					BCO.textField_9.setText(textField_3.getText());
+					BCO.textField_8.setText(textField_4.getText());
+					BCO.textField_8.setEditable(false);
+					if (rdbtnNewRadioButton.isSelected()) {
+						BCO.rdbtnNewRadioButton.setSelected(true);
+					} else {
+						BCO.rdbtnNewRadioButton_1.setSelected(true);
+					}
+					ResultSet tempsrc = dbConn.executeQurey("select * from USER where USER_PHONE like \""+ textField_4.getText().replaceAll("[^0-9]", "") + "\";");
+					try {
+						tempsrc.next();
+						InputStream inputStream = tempsrc.getBinaryStream(6);
+						BCO.lblNewLabel_1_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
+						setVisible(false);
+					} catch (SQLException | IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnNewButton.setBounds(533, 38, 97, 23);
 		panel.add(btnNewButton);
 
@@ -130,11 +154,17 @@ public class BCR_MemberSearch extends JFrame {
 		panel_2.setBounds(269, 87, 208, 33);
 		panel.add(panel_2);
 
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("\uB0A8\uC131");
+		rdbtnNewRadioButton = new JRadioButton("\uB0A8\uC131");
+		rdbtnNewRadioButton.setEnabled(false);
 		panel_2.add(rdbtnNewRadioButton);
 
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("\uC5EC\uC131");
+		rdbtnNewRadioButton_1.setEnabled(false);
 		panel_2.add(rdbtnNewRadioButton_1);
+
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnNewRadioButton);
+		group.add(rdbtnNewRadioButton_1);
 
 		jp_label = new JPanel();
 
@@ -145,20 +175,54 @@ public class BCR_MemberSearch extends JFrame {
 
 		contentPane.add(scroll);
 
-		for (int count = 0; count < 5; count++) {
-			JLabel imgLabel = new JLabel("image");
-			JLabel Name = new JLabel("이름 : 김원");
-			Name.setFont(new Font("굴림", Font.PLAIN, 15));
-			JLabel Phone = new JLabel("전화번호 : 01052914719");
-			Phone.setFont(new Font("굴림", Font.PLAIN, 15));
-			JPanel label2 = new JPanel();
-			JButton tempButton = new JButton("상세정보");
-			label2.add(imgLabel);
-			label2.add(Name);
-			label2.add(Phone);
-			label2.add(tempButton);
-			label2.setBorder(new LineBorder(Color.BLACK));
-			create_form(label2, 0, 30 * count, 30, 10);
+		try {
+			int count = 0;
+			while (src.next()) {
+				InputStream inputStream = src.getBinaryStream(6);
+				JLabel imgLabel = new JLabel(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage()
+						.getScaledInstance(100, 80, Image.SCALE_SMOOTH)));
+				JLabel Name = new JLabel("이름 : " + src.getString(2));
+				Name.setFont(new Font("굴림", Font.PLAIN, 15));
+				JLabel Phone = new JLabel("전화번호 : " + src.getString(1));
+				Phone.setFont(new Font("굴림", Font.PLAIN, 15));
+				JPanel label2 = new JPanel();
+				JButton tempButton = new JButton("상세정보");
+				tempButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							ResultSet tempsrc = dbConn.executeQurey("select * from USER where USER_PHONE like \""
+									+ Phone.getText().replaceAll("[^0-9]", "") + "\";");
+							tempsrc.next();
+							InputStream inputStream = tempsrc.getBinaryStream(6);
+							textField.setText(tempsrc.getString(2));
+							textField_1.setText(tempsrc.getString(3));
+							textField_3.setText(tempsrc.getString(5));
+							textField_4.setText(tempsrc.getString(1));
+							if (tempsrc.getInt(4) == 1) {
+								rdbtnNewRadioButton.setSelected(true);
+							} else {
+								rdbtnNewRadioButton_1.setSelected(true);
+							}
+							lblNewLabel.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage()
+									.getScaledInstance(91, 106, Image.SCALE_SMOOTH)));
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				});
+				label2.add(imgLabel);
+				label2.add(Name);
+				label2.add(Phone);
+				label2.add(tempButton);
+				label2.setBorder(new LineBorder(Color.BLACK));
+				create_form(label2, 0, 30 * count++, 30, 10);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
