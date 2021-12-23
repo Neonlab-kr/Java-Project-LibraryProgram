@@ -2,6 +2,7 @@ package Book;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,9 @@ import Member.MemberSearch;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
-public class BookAmend extends JFrame {
+public class BookAmend extends JFrame implements ActionListener
+
+{
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -164,8 +167,22 @@ public class BookAmend extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("image");
 		panel_1.add(lblNewLabel_1);
 		
-		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");
+		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");	//이미지 찾아보기
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
+		ActionListener find=new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame jFrame=new JFrame();
+				FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
+                fileDialogOpen.setVisible(true);
+                String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
+                System.out.println(filePath);
+                //사진파일 입력
+			}
+		};
+		btnNewButton_2.addActionListener(find);
+
+		
+		
 		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
@@ -226,6 +243,12 @@ public class BookAmend extends JFrame {
 		textField_7 = new JTextField();
 		panel_2.add(textField_7, "cell 1 7,growx,aligny center");
 		textField_7.setColumns(10);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
