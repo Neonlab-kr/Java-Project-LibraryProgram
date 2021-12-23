@@ -411,7 +411,7 @@ public class BookCheckout extends JFrame {
 					if (!textField_8.getText().equals("")) {
 
 						ResultSet src = dbConn.executeQurey(
-								"select * from USER where USER_PHONE like \"" + textField_8.getText() + "\";");
+								"select * from USER where USER_PHONE like \"" + textField_8.getText() + "\" and USER_OUT_DATE is null;");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -421,7 +421,7 @@ public class BookCheckout extends JFrame {
 					} else if (!textField_6.getText().equals("") && !textField_7.getText().equals("")) {
 						ResultSet src = dbConn
 								.executeQurey("select * from USER where USER_NAME like \"%" + textField_6.getText()
-										+ "\"% and USER_BIRTH like\"%" + textField_7.getText() + "%\";");
+										+ "\"% and USER_BIRTH like\"%" + textField_7.getText() + "%\"and USER_OUT_DATE is null;");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -430,7 +430,7 @@ public class BookCheckout extends JFrame {
 						}
 					} else if (!textField_6.getText().equals("")) {
 						ResultSet src = dbConn.executeQurey(
-								"select * from USER where USER_NAME like \"%" + textField_6.getText() + "%\";");
+								"select * from USER where USER_NAME like \"%" + textField_6.getText() + "%\"and USER_OUT_DATE is null;");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -439,7 +439,7 @@ public class BookCheckout extends JFrame {
 						}
 					} else if (!textField_7.getText().equals("")) {
 						ResultSet src = dbConn.executeQurey(
-								"select * from USER where USER_BIRTH like\"%" + textField_7.getText() + "%\";");
+								"select * from USER where USER_BIRTH like\"%" + textField_7.getText() + "%\"and USER_OUT_DATE is null;");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {
