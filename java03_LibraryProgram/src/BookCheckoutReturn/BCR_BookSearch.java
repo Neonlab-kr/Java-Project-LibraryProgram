@@ -9,11 +9,25 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import Program.MainMenu;
+import SQL.dbConnector;
+
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
@@ -21,6 +35,7 @@ import java.awt.Color;
 
 public class BCR_BookSearch extends JFrame {
 
+	dbConnector dbConn = new dbConnector();
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -30,6 +45,8 @@ public class BCR_BookSearch extends JFrame {
 	private JPanel jp_label;
 	private JScrollPane scroll;
 	private GridBagLayout Gbag = new GridBagLayout();
+	BookCheckout BCO;
+	BookReturn BR;
 
 	/**
 	 * Launch the application.
@@ -38,7 +55,7 @@ public class BCR_BookSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BCR_BookSearch frame = new BCR_BookSearch();
+					MainMenu frame = new MainMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +81,7 @@ public class BCR_BookSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BCR_BookSearch() {
+	public BCR_BookSearch(int num, ResultSet src) {
 		setBounds(100, 100, 680, 428);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -82,6 +99,74 @@ public class BCR_BookSearch extends JFrame {
 		panel.add(lblNewLabel);
 
 		JButton btnNewButton = new JButton("\uB3C4\uC11C\uC120\uD0DD");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(num==1) {
+					if(textField_4.equals("")) {
+						JOptionPane.showMessageDialog(null, "도서가 선택되지 않았습니다.", "선택 없음", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						BCO.textField.setText(textField.getText());
+						BCO.textField.setEditable(false);
+						BCO.textField_1.setText(textField_1.getText());
+						BCO.textField_1.setEditable(false);
+						BCO.textField_2.setText(textField_2.getText());
+						BCO.textField_3.setText(textField_3.getText());
+						BCO.textField_4.setText(textField_4.getText());
+						BCO.textField_4.setEditable(false);
+						ResultSet tempsrc = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
+								+ textField_4.getText().replaceAll("[^0-9]", "") + "\";");
+						try {
+							tempsrc.next();
+							BCO.textArea.setText(tempsrc.getString(6));
+							InputStream inputStream = tempsrc.getBinaryStream(7);
+							BCO.lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
+							setVisible(false);
+						} catch (SQLException | IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+				else {
+					if(textField_4.equals("")) {
+						JOptionPane.showMessageDialog(null, "도서가 선택되지 않았습니다.", "선택 없음", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						BR.textField.setText(textField.getText());
+						BR.textField.setEditable(false);
+						BR.textField_1.setText(textField_1.getText());
+						BR.textField_1.setEditable(false);
+						BR.textField_2.setText(textField_2.getText());
+						BR.textField_3.setText(textField_3.getText());
+						BR.textField_4.setText(textField_4.getText());
+						BR.textField_4.setEditable(false);
+						ResultSet tempsrc = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
+								+ textField_4.getText().replaceAll("[^0-9]", "") + "\";");
+						try {
+							tempsrc.next();
+							BR.textArea.setText(tempsrc.getString(6));
+							InputStream inputStream = tempsrc.getBinaryStream(7);
+							BR.lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
+							setVisible(false);
+						} catch (SQLException | IOException e1) {
+							e1.printStackTrace();
+						}
+						ResultSet tempsrc1 = dbConn.executeQurey("select * from RENT where BOOK_ISBN like \""
+								+ textField_4.getText().replaceAll("[^0-9]", "") + "\";");
+						try {
+							tempsrc1.next();
+							BR.textField_7.setText(tempsrc1.getString(3));
+							ResultSet tempsrc2 = dbConn.executeQurey("select * from USER where USER_PHONE like \""
+									+ tempsrc1.getString(5) + "\";");
+							tempsrc2.next();
+							BR.textField_6.setText(tempsrc2.getString(2));
+						} catch(SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
 		btnNewButton.setBounds(533, 38, 97, 23);
 		panel.add(btnNewButton);
 
@@ -143,21 +228,53 @@ public class BCR_BookSearch extends JFrame {
 		scroll.setBounds(0, 0, 664, 192);
 
 		contentPane.add(scroll);
-
-		for (int count = 0; count < 5; count++) {
-			JLabel imgLabel = new JLabel("image");
-			JLabel Title = new JLabel("제목 : 책제목");
-			Title.setFont(new Font("굴림", Font.PLAIN, 15));
-			JLabel Author = new JLabel("저자 : 김저자");
-			Author.setFont(new Font("굴림", Font.PLAIN, 15));
-			JPanel label2 = new JPanel();
-			JButton tempButton = new JButton("상세정보");
-			label2.add(imgLabel);
-			label2.add(Title);
-			label2.add(Author);
-			label2.add(tempButton);
-			label2.setBorder(new LineBorder(Color.BLACK));
-			create_form(label2, 0, 30 * count, 30, 10);
+		
+		try {
+			int count = 0;
+			while (src.next()) {
+				InputStream inputStream = src.getBinaryStream(7);
+				JLabel imgLabel = new JLabel(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage()
+						.getScaledInstance(100, 80, Image.SCALE_SMOOTH)));
+				JLabel Title = new JLabel("제목 : " + src.getString(2));
+				Title.setFont(new Font("굴림", Font.PLAIN, 15));
+				JLabel Author = new JLabel("저자 : " + src.getString(3));
+				Author.setFont(new Font("굴림", Font.PLAIN, 15));
+				JLabel ISBN = new JLabel("ISBN : " + src.getString(1));
+				ISBN.setFont(new Font("굴림", Font.PLAIN, 15));
+				JPanel label2 = new JPanel();
+				JButton tempButton = new JButton("상세정보");
+				tempButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							ResultSet tempsrc = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
+									+ ISBN.getText().replaceAll("[^0-9]", "") + "\";");
+							tempsrc.next();
+							InputStream inputStream = tempsrc.getBinaryStream(7);
+							textField.setText(tempsrc.getString(2));
+							textField_1.setText(tempsrc.getString(3));
+							textField_2.setText(tempsrc.getString(5));
+							textField_3.setText(tempsrc.getString(8));
+							textField_4.setText(tempsrc.getString(1));
+							lblNewLabel.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage()
+									.getScaledInstance(91, 106, Image.SCALE_SMOOTH)));
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				});
+				label2.add(imgLabel);
+				label2.add(Title);
+				label2.add(Author);
+				label2.add(tempButton);
+				label2.setBorder(new LineBorder(Color.BLACK));
+				create_form(label2, 0, 30 * count++, 30, 10);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
