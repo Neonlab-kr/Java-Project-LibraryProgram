@@ -149,6 +149,10 @@ public class BookAmend extends JFrame implements ActionListener
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton_3 = new JButton("\uC218\uC815");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel.add(btnNewButton_3);
 		
 		JButton btnNewButton = new JButton("\uC0AD\uC81C");

@@ -2,6 +2,7 @@ package Book;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -159,6 +160,16 @@ public class BookRegister extends JFrame {
 		panel_1.add(lblNewLabel_1);
 		
 		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					JFrame jFrame=new JFrame();
+					FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
+	                fileDialogOpen.setVisible(true);
+	                String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
+	                System.out.println(filePath);
+	                //사진파일 입력
+			}
+		});
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
 		
 		JPanel panel_2 = new JPanel();
