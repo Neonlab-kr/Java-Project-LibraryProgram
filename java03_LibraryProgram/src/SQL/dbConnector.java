@@ -14,7 +14,7 @@ public class dbConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://jdb.deu.monster:60001/java03_team04", "20183087","!!!!20183087");
+			conn = DriverManager.getConnection("jdbc:mysql://jdb.deu.monster:60001/j20183087", "20183087","!!!!20183087");
 			System.out.println("DB 연결 완료");
 			stmt = conn.createStatement();
 
@@ -36,6 +36,7 @@ public class dbConnector {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
+			System.out.println(src);
 			System.out.println("SQL 실행 에러");
 			return null;
 		}
