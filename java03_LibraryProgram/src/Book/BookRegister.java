@@ -5,27 +5,49 @@ import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
 import Member.MemberSearch;
+import SQL.dbConnector;
+import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
 
 public class BookRegister extends JFrame {
+	
+	LocalDateTime now = LocalDateTime.now();
+	dbConnector dbConn = new dbConnector();
+	FileInputStream iis;	//이미지파일
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -143,7 +165,25 @@ public class BookRegister extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("\uC800\uC7A5");
+		JButton btnNewButton = new JButton("\uC800\uC7A5");	//저장버튼
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					try {
+						String sql=("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION);"+"VALUES("+iis/*이미지*/+textField.getText(/*제목*/)+","+textField_1.getText(/*저자*/)+","+textField_2.getText(/*가격*/)+","+textField_3.getText(/*링크*/)+","+textField_4.getText(/*ISBN*/)+","+textField_5.getText(/*설명*/)+");");
+						Connection tmpConn = dbConn.getConnection();
+						PreparedStatement ps;
+						ps = tmpConn.prepareStatement(sql);
+						ps.executeUpdate();
+						JOptionPane.showMessageDialog(null, "저장이 완료되었습니다", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+					} catch (NullPointerException |SQLException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+					
+					
+			}
+		});
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("\uCDE8\uC18C");
@@ -165,10 +205,38 @@ public class BookRegister extends JFrame {
 					JFrame jFrame=new JFrame();
 					FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
 	                fileDialogOpen.setVisible(true);
-	                String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
-	                System.out.println(filePath);
-	                //사진파일 입력
+	                
+	                //이미지 불러오기
+	            	try {
+	            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
+		                System.out.println(filePath);
+		                //사진파일 입력
+		            	File file = new File(filePath);
+		            	ImageIcon icon=new ImageIcon(filePath);
+		            	Image image = ImageIO.read(file);
+						iis = new FileInputStream(file);
+		
+						if(ImageCheck.isImage(file)==false){
+							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						}
+
+						else {
+							lblNewLabel_1.setIcon(icon);
+
+						}
+  
+						
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
 			}
+
 		});
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
 		
@@ -182,7 +250,7 @@ public class BookRegister extends JFrame {
 		textField = new JTextField();
 		panel_2.add(textField, "cell 1 0,grow");
 		textField.setColumns(10);
-		
+		 
 		JLabel lblNewLabel_4 = new JLabel("\uC800\uC790");
 		panel_2.add(lblNewLabel_4, "cell 0 1,alignx center,aligny center");
 		
