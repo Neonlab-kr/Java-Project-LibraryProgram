@@ -79,24 +79,32 @@ public class BCR_MemberSearch extends JFrame {
 				if (textField_4.equals("")) {
 					JOptionPane.showMessageDialog(null, "회원이 선택되지 않았습니다.", "선택 없음", JOptionPane.ERROR_MESSAGE);
 				} else {
-					BCO.textField_6.setText(textField.getText());
-					BCO.textField_6.setEditable(false);
-					BCO.textField_7.setText(textField_1.getText());
-					BCO.textField_7.setEditable(false);
-					BCO.textField_9.setText(textField_3.getText());
-					BCO.textField_8.setText(textField_4.getText());
-					BCO.textField_8.setEditable(false);
-					if (rdbtnNewRadioButton.isSelected()) {
-						BCO.rdbtnNewRadioButton.setSelected(true);
-					} else {
-						BCO.rdbtnNewRadioButton_1.setSelected(true);
-					}
-					ResultSet tempsrc = dbConn.executeQurey("select * from USER where USER_PHONE like \""+ textField_4.getText().replaceAll("[^0-9]", "") + "\";");
 					try {
+						ResultSet tempsrc = dbConn.executeQurey("select * from USER where USER_PHONE like \""
+								+ textField_4.getText().replaceAll("[^0-9]", "") + "\";");
 						tempsrc.next();
-						InputStream inputStream = tempsrc.getBinaryStream(6);
-						BCO.lblNewLabel_1_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
-						setVisible(false);
+						if (tempsrc.getInt(9) >= 3) {
+							JOptionPane.showMessageDialog(null, "이미 3권 이상 대여중인 회원입니다.", "대여불가",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							BCO.textField_6.setText(textField.getText());
+							BCO.textField_6.setEditable(false);
+							BCO.textField_7.setText(textField_1.getText());
+							BCO.textField_7.setEditable(false);
+							BCO.textField_9.setText(textField_3.getText());
+							BCO.textField_8.setText(textField_4.getText());
+							BCO.textField_8.setEditable(false);
+							if (rdbtnNewRadioButton.isSelected()) {
+								BCO.rdbtnNewRadioButton.setSelected(true);
+							} else {
+								BCO.rdbtnNewRadioButton_1.setSelected(true);
+							}
+							InputStream inputStream = tempsrc.getBinaryStream(6);
+							BCO.lblNewLabel_1_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream))
+									.getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
+							setVisible(false);
+
+						}
 					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}

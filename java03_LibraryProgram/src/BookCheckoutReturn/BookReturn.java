@@ -362,9 +362,14 @@ public class BookReturn extends JFrame {
 							.executeQurey("select * from RENT where BOOK_ISBN like \"" + textField_4.getText() + "\";");
 					try {
 						if (src.isBeforeFirst()) {
+							src.next();
 							String sql = "DELETE FROM RENT where BOOK_ISBN=" + textField_4.getText() + ";";
 							Connection tmpConn = dbConn.getConnection();
 							PreparedStatement ps = tmpConn.prepareStatement(sql);
+							ps.executeUpdate();
+							sql = "UPDATE USER set USER_RENT_CNT = USER_RENT_CNT - 1 where USER_PHONE = \""+ src.getString(5) +"\";";
+							tmpConn = dbConn.getConnection();
+							ps = tmpConn.prepareStatement(sql);
 							ps.executeUpdate();
 							JOptionPane.showMessageDialog(null, "반납이 완료되었습니다", "반납 완료",
 									JOptionPane.INFORMATION_MESSAGE);

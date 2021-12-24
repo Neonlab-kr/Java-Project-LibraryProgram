@@ -282,6 +282,10 @@ public class BookCheckout extends JFrame {
 							ps.executeUpdate();
 							JOptionPane.showMessageDialog(null, "대출이 완료되었습니다", "대출 완료",
 									JOptionPane.INFORMATION_MESSAGE);
+							sql = "UPDATE USER set USER_RENT_CNT = USER_RENT_CNT + 1 where USER_PHONE = \""+ textField_8.getText() +"\";";
+							tmpConn = dbConn.getConnection();
+							ps = tmpConn.prepareStatement(sql);
+							ps.executeUpdate();
 							BookCheckout temp = new BookCheckout();
 							temp.setVisible(true);
 							setVisible(false);
