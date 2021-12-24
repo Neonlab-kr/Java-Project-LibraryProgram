@@ -2,8 +2,15 @@ package BookCheckoutReturn;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -40,6 +48,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.JTextArea;
 import java.awt.SystemColor;
 
@@ -215,9 +225,30 @@ public class BookCheckout extends JFrame {
 		contentPane.add(textField_2);
 
 		textField_3 = new JTextField();
+		textField_3.setToolTipText("\uD558\uC774\uD37C\uB9C1\uD06C\uB85C \uC5F0\uACB0");
+		textField_3.setForeground(Color.BLUE);
 		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		textField_3.setBounds(426, 126, 226, 21);
+		textField_3.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {                                           
+			    if (Desktop.isDesktopSupported()) {
+			            Desktop desktop = Desktop.getDesktop();
+			            try {
+			                URI uri = new URI(textField_3.getText());
+			                desktop.browse(uri);
+			            } catch (IOException ex) {
+			                ex.printStackTrace();
+			            } catch (URISyntaxException ex) {
+			                ex.printStackTrace();
+			            }
+			    }
+			}
+		});
+		Font font = textField_3.getFont();
+		Map attributes = font.getAttributes();
+		attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		textField_3.setFont(font.deriveFont(attributes));
 		contentPane.add(textField_3);
 
 		textField_4 = new JTextField();

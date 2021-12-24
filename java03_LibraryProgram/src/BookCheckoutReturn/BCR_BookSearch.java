@@ -2,6 +2,7 @@ package BookCheckoutReturn;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -24,10 +25,16 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
@@ -189,9 +196,30 @@ public class BCR_BookSearch extends JFrame {
 		panel.add(textField_2);
 
 		textField_3 = new JTextField();
+		textField_3.setToolTipText("\uD558\uC774\uD37C\uB9C1\uD06C\uB85C \uC5F0\uACB0");
+		textField_3.setForeground(Color.BLUE);
 		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		textField_3.setBounds(269, 118, 208, 21);
+		textField_3.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {                                           
+			    if (Desktop.isDesktopSupported()) {
+			            Desktop desktop = Desktop.getDesktop();
+			            try {
+			                URI uri = new URI(textField_3.getText());
+			                desktop.browse(uri);
+			            } catch (IOException ex) {
+			                ex.printStackTrace();
+			            } catch (URISyntaxException ex) {
+			                ex.printStackTrace();
+			            }
+			    }
+			}
+		});
+		Font font = textField_3.getFont();
+		Map attributes = font.getAttributes();
+		attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		textField_3.setFont(font.deriveFont(attributes));
 		panel.add(textField_3);
 
 		textField_4 = new JTextField();
