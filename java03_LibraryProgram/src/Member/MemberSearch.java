@@ -5,12 +5,22 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JTextField;
 
@@ -18,6 +28,7 @@ import Book.BookRegister;
 import Book.BookSearch;
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
+import SQL.dbConnector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,7 +43,9 @@ import java.awt.FlowLayout;
 public class MemberSearch extends JFrame {
 	private JTextField textField_Booktitle;
 	private JTextField textField_Author;
-
+	
+	dbConnector dbConn = new dbConnector();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,6 +69,7 @@ public class MemberSearch extends JFrame {
 	 int count =1;
 	 GridBagLayout Gbag = new GridBagLayout();
 	 GridBagConstraints gbc1;
+	 JScrollPane scrollPane;
 	public void create_form(Component cmpt, int x, int y, int w, int h){
 
 		  GridBagConstraints gbc = new GridBagConstraints();
@@ -146,13 +160,13 @@ public class MemberSearch extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
-		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uAC80\uC0C9");
-		lbTitle.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		JLabel lbTitle = new JLabel("íšŒì›ê²€ìƒ‰");
+		lbTitle.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
 		add(lbTitle);
 		
-		JLabel lbBookTitle = new JLabel("\uC81C\uBAA9 :");
-		lbBookTitle.setFont(new Font("±¼¸²", Font.PLAIN, 15));
+		JLabel lbBookTitle = new JLabel("ì´ë¦„ :");
+		lbBookTitle.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 15));
 		lbBookTitle.setBounds(43, 47, 48, 18);
 		add(lbBookTitle);
 		
@@ -161,8 +175,8 @@ public class MemberSearch extends JFrame {
 		add(textField_Booktitle);
 		textField_Booktitle.setColumns(10);
 		
-		JLabel lbAuthor = new JLabel("\uC800\uC790 :");
-		lbAuthor.setFont(new Font("±¼¸²", Font.PLAIN, 15));
+		JLabel lbAuthor = new JLabel("ì „í™”ë²ˆí˜¸ :");
+		lbAuthor.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 15));
 		lbAuthor.setBounds(174, 47, 48, 18);
 		add(lbAuthor);
 		
@@ -171,42 +185,95 @@ public class MemberSearch extends JFrame {
 		textField_Author.setBounds(222, 46, 75, 21);
 		add(textField_Author);
 		
-		JButton btnSearch = new JButton("\uAC80\uC0C9");
-		btnSearch.setFont(new Font("±¼¸²", Font.PLAIN, 14));
+		JButton btnSearch = new JButton("ê²€ìƒ‰");
+		btnSearch.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 14));
 		btnSearch.setBounds(338, 47, 69, 21);
 		add(btnSearch);
 		
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField_Booktitle.getText().equals("") || textField_Author.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "ì´ë¦„ë‚˜ ì „í™”ë²ˆí˜¸ê°€ ì…ë ¥ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.", "ê²€ìƒ‰ ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
+				} else {
+					ResultSet src = dbConn.executeQurey("select * from USER where USER_NAME=\""+textField_Booktitle.getText()+"\" and USER_PHONE=\""+textField_Author.getText()+"\";");
+//					ResultSet src = dbConn.executeQurey("select * from j20183087.USER where USER_NAME=\"í•œêµ­ì¸\";");
+					
+					remove(jp_label);
+					remove(scrollPane);
+					
+					jp_label = new JPanel();
+
+					jp_label.setLayout(Gbag); 
+					scrollPane = new JScrollPane(jp_label);
+					scrollPane.setBounds(12, 77, 395, 203);
+					add(scrollPane); 
+					
+					try {
+						while(src.next()) {
+							System.out.print(src.getString(2));
+							JLabel imgLabel = new JLabel();
+							ImageIcon c = new ImageIcon("image/icon1.png");
+							imgLabel.setIcon(c);
+							JLabel a = new JLabel("ì´ë¦„ : "+src.getString(2));
+							a.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 15));
+							JLabel b = new JLabel("ì „í™”ë²ˆí˜¸ : "+  Integer.toString(src.getInt(1)));
+							b.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 15));
+							JPanel label2 = new JPanel();
+							JButton btnNewButton = new JButton("í´ë¦­");
+							label2.add(imgLabel);
+							label2.add(a);
+							label2.add(b);
+							label2.add(btnNewButton);
+						    create_form(label2,0,count++*30,30,10);
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 
 		jp_label = new JPanel();
 
-	   // ¶óº§ÀÌ µé¾î°¥ panel Àº ·¹ÀÌ¾Æ¿ôÀ» GridBagÀ» »ç¿ëÇÑ´Ù.
+	   // ë¼ë²¨ì´ ë“¤ì–´ê°ˆ panel ì€ ë ˆì´ì•„ì›ƒì„ GridBagì„ ì‚¬ìš©í•œë‹¤.
 	   jp_label.setLayout(Gbag);  
 
 //	   jp_label.setBackground(Color.white);
 
 	   label = new JLabel();
-	   create_form(label, 0,0,30,10);  // GridBagLayout À» À§ÇÑ ÇÔ¼öÈ£Ãâ
+	   create_form(label, 0,0,30,10);  // GridBagLayout ì„ ìœ„í•œ í•¨ìˆ˜í˜¸ì¶œ
 		
-		JScrollPane scrollPane = new JScrollPane(jp_label);
+		scrollPane = new JScrollPane(jp_label);
 		scrollPane.setBounds(12, 77, 395, 203);
 		add(scrollPane); 
 		
-
-		for(int i=0;i<10;i++) {
-			JLabel imgLabel = new JLabel();
-			ImageIcon c = new ImageIcon("image/icon1.png");
-			imgLabel.setIcon(c);
-			JLabel a = new JLabel("ÀÌ¸§ :À±¼ºÃ¶");
-			a.setFont(new Font("±¼¸²", Font.PLAIN, 15));
-			JLabel b = new JLabel("ÀüÈ­¹øÈ£ :0192222222");
-			b.setFont(new Font("±¼¸²", Font.PLAIN, 15));
-			JPanel label2 = new JPanel();
-			JButton btnNewButton = new JButton("Å¬¸¯");
-			label2.add(imgLabel);
-			label2.add(a);
-			label2.add(b);
-			label2.add(btnNewButton);
-	        create_form(label2,0,count++*30,30,10);
+		
+		
+//		for(int i=0;i<10;i++) {
+			
+		ResultSet src = dbConn.executeQurey("select * from USER;");
+		try {
+			while(src.next()) {
+				JLabel imgLabel = new JLabel();
+				ImageIcon c = new ImageIcon("image/icon1.png");
+				imgLabel.setIcon(c);
+				JLabel a = new JLabel("ì´ë¦„ : "+src.getString(2));
+				a.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 15));
+				JLabel b = new JLabel("ì „í™”ë²ˆí˜¸ : "+  Integer.toString(src.getInt(1)));
+				b.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 15));
+				JPanel label2 = new JPanel();
+				JButton btnNewButton = new JButton("í´ë¦­");
+				label2.add(imgLabel);
+				label2.add(a);
+				label2.add(b);
+				label2.add(btnNewButton);
+			    create_form(label2,0,count++*30,30,10);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+			
 	}
 }
