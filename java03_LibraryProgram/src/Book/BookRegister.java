@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -33,8 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
@@ -42,6 +37,7 @@ import Member.MemberSearch;
 import SQL.dbConnector;
 import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Rectangle;
 
 public class BookRegister extends JFrame {
 	
@@ -190,13 +186,15 @@ public class BookRegister extends JFrame {
 		panel.add(btnNewButton_1);
 		
 		JSplitPane splitPane = new JSplitPane();
+		splitPane.setDividerSize(2);
+		splitPane.setFocusCycleRoot(true);
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
 		splitPane.setLeftComponent(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("image");
+		JLabel lblNewLabel_1 = new JLabel("");
 		panel_1.add(lblNewLabel_1);
 		
 		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");
@@ -212,8 +210,12 @@ public class BookRegister extends JFrame {
 		                System.out.println(filePath);
 		                //사진파일 입력
 		            	File file = new File(filePath);
-		            	ImageIcon icon=new ImageIcon(filePath);
 		            	Image image = ImageIO.read(file);
+		            	
+		            	
+		            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
+		            	ImageIcon icon=new ImageIcon(resize);
+		            	
 						iis = new FileInputStream(file);
 		
 						if(ImageCheck.isImage(file)==false){
@@ -242,7 +244,7 @@ public class BookRegister extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new MigLayout("", "[47.00px][265.00px,grow]", "[23.00px][23.00][][][][65.00]"));
+		panel_2.setLayout(new MigLayout("", "[74.00px][357.00px,grow]", "[23.00px][23.00][][][][172.00]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
@@ -285,6 +287,7 @@ public class BookRegister extends JFrame {
 		textField_5 = new JTextField();
 		panel_2.add(textField_5, "cell 1 5,grow");
 		textField_5.setColumns(10);
+		splitPane.setDividerLocation(170);
 	}
 
 }
