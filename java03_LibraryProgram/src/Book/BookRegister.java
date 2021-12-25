@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
@@ -44,6 +45,7 @@ public class BookRegister extends JFrame {
 	LocalDateTime now = LocalDateTime.now();
 	dbConnector dbConn = new dbConnector();
 	FileInputStream iis;	//이미지파일
+	File file;
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -169,11 +171,30 @@ public class BookRegister extends JFrame {
 				}
 				else {
 					try {
-						String sql=("insert into DB_BOOK(BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION);VALUES("+textField.getText(/*제목*/)+","+textField_1.getText(/*저자*/)+","+textField_2.getText(/*가격*/)+","+textField_3.getText(/*링크*/)+","+textField_4.getText(/*ISBN*/)+","+textField_5.getText(/*설명*/)+");");
 						Connection tmpConn = dbConn.getConnection();
-						PreparedStatement ps;
-						ps = tmpConn.prepareStatement(sql);
-						ps.executeUpdate();
+						
+						Statement st = tmpConn.createStatement();
+			            //File imgfile = new File("d:\\images.jpg");
+			            //FileInputStream fin = new FileInputStream(imgfile);
+			            PreparedStatement pre = tmpConn.prepareStatement("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION)VALUES(?,?,?,?,?,?,?);");
+			            pre.setBinaryStream(1,iis,(int)file.length());	//이미지
+			            pre.setString(2,textField.getText());	//제목
+			            pre.setString(3,textField_1.getText());	//저자
+			            pre.setInt(4,Integer.parseInt(textField_2.getText()));	//가격
+			            pre.setString(5,textField_3.getText());	//링크
+			            pre.setInt(6,Integer.parseInt(textField_4.getText()));	//ISBN
+			            pre.setString(7,textField_5.getText());	//설명
+			            pre.executeUpdate();
+
+						
+						
+						//String sql=("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION)VALUES(?"+",\'"+textField.getText(/*제목*/)+"\',\'"+textField_1.getText(/*저자*/)+"\',"+textField_2.getText(/*가격*/)+",\'"+textField_3.getText(/*링크*/)+"\',"+textField_4.getText(/*ISBN*/)+",\'"+textField_5.getText(/*설명*/)+"\');");
+						//PreparedStatement ps;
+						//ps.setString(1, textField_4.getText());
+						//ps = tmpConn.prepareStatement(sql);
+						//ps.executeUpdate();
+						
+						
 						JOptionPane.showMessageDialog(null, "저장이 완료되었습니다", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
 					} catch (NullPointerException |SQLException e1) {
 						// TODO Auto-generated catch block
@@ -220,26 +241,18 @@ public class BookRegister extends JFrame {
 	            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
 		                System.out.println(filePath);
 		                //사진파일 입력
-		            	File file = new File(filePath);
+		            	file = new File(filePath);
 		            	
-						iis = new FileInputStream(file);
-		
 						if(ImageCheck.isImage(file)==false){
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
-
 						else {
-							
-							Image image = ImageIO.read(file);
-			            	
-			            	
+							iis = new FileInputStream(file);
+							Image image = ImageIO.read(file);           	
 			            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
 			            	lblNewLabel_1.setIcon(icon);
-
-						}
-  
-						
+						}  						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
@@ -250,7 +263,6 @@ public class BookRegister extends JFrame {
 						e1.printStackTrace();
 					}
 			}
-
 		});
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
 		
