@@ -169,8 +169,7 @@ public class BookRegister extends JFrame {
 				}
 				else {
 					try {
-						String sql=("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION);"
-					+"VALUES("+iis/*이미지*/+textField.getText(/*제목*/)+","+textField_1.getText(/*저자*/)+","+textField_2.getText(/*가격*/)+","+textField_3.getText(/*링크*/)+","+textField_4.getText(/*ISBN*/)+","+textField_5.getText(/*설명*/)+");");
+						String sql=("insert into DB_BOOK(BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION);VALUES("+textField.getText(/*제목*/)+","+textField_1.getText(/*저자*/)+","+textField_2.getText(/*가격*/)+","+textField_3.getText(/*링크*/)+","+textField_4.getText(/*ISBN*/)+","+textField_5.getText(/*설명*/)+");");
 						Connection tmpConn = dbConn.getConnection();
 						PreparedStatement ps;
 						ps = tmpConn.prepareStatement(sql);
@@ -187,7 +186,14 @@ public class BookRegister extends JFrame {
 		});
 		panel.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("\uCDE8\uC18C");
+		JButton btnNewButton_1 = new JButton("\uCDE8\uC18C");	//취소버튼
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				BookSearch temp = new BookSearch();
+				temp.setVisible(true);
+			}
+		});
 		panel.add(btnNewButton_1);
 		
 		JSplitPane splitPane = new JSplitPane();
@@ -215,11 +221,6 @@ public class BookRegister extends JFrame {
 		                System.out.println(filePath);
 		                //사진파일 입력
 		            	File file = new File(filePath);
-		            	Image image = ImageIO.read(file);
-		            	
-		            	
-		            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
-		            	ImageIcon icon=new ImageIcon(resize);
 		            	
 						iis = new FileInputStream(file);
 		
@@ -228,7 +229,13 @@ public class BookRegister extends JFrame {
 						}
 
 						else {
-							lblNewLabel_1.setIcon(icon);
+							
+							Image image = ImageIO.read(file);
+			            	
+			            	
+			            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
+			            	ImageIcon icon=new ImageIcon(resize);
+			            	lblNewLabel_1.setIcon(icon);
 
 						}
   
@@ -249,7 +256,7 @@ public class BookRegister extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new MigLayout("", "[74.00px][357.00px,grow]", "[23.00px][23.00][][][][172.00]"));
+		panel_2.setLayout(new MigLayout("", "[50.00px][357.00px,grow]", "[23.00px][23.00][][][][172.00]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
