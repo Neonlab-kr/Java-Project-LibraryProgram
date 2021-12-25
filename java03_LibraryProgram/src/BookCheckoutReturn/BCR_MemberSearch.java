@@ -57,6 +57,7 @@ public class BCR_MemberSearch extends JFrame {
 	 * Create the frame.
 	 */
 	public BCR_MemberSearch(BookCheckout BCO, ResultSet src) {
+		setTitle("LibraryManager");
 		setBounds(100, 100, 680, 428);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

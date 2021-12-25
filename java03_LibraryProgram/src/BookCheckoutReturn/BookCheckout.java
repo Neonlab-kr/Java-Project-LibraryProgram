@@ -98,6 +98,7 @@ public class BookCheckout extends JFrame {
 	 * Create the frame.
 	 */
 	public BookCheckout() {
+		setTitle("LibraryManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
 

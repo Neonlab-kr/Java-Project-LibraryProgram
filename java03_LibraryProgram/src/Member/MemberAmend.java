@@ -32,6 +32,7 @@ public class MemberAmend extends JFrame {
 	 * Create the panel.
 	 */
 	public MemberAmend() {
+		setTitle("LibraryManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
 		getContentPane().setLayout(null);

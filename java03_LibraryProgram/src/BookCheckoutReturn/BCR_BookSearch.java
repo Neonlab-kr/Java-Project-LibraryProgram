@@ -89,6 +89,7 @@ public class BCR_BookSearch extends JFrame {
 	 * Create the frame.
 	 */
 	public BCR_BookSearch(int num, ResultSet src) {
+		setTitle("LibraryManager");
 		setBounds(100, 100, 680, 428);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

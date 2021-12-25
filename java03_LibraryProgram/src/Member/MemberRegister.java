@@ -53,6 +53,7 @@ public class MemberRegister extends JFrame {
 //	public MemberRegister() {
 //=======
 	public MemberRegister() {
+		setTitle("LibraryManager");
 //>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
 		setBounds(100, 100, 680, 428);
 		setLayout(null);

@@ -54,6 +54,7 @@ public class BookSearch extends JFrame {
 	 * Create the frame.
 	 */
 	public BookSearch() {
+		setTitle("LibraryManager");
 		panel_2_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblNewLabel_3_5 = new JLabel("image");
