@@ -164,8 +164,13 @@ public class BookRegister extends JFrame {
 		JButton btnNewButton = new JButton("\uC800\uC7A5");	//저장버튼
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(iis==null||textField.getText()==""||textField_1.getText()==""||textField_2.getText()==""||textField_3.getText()==""||textField_4.getText()==""||textField_5.getText()=="") {
+					JOptionPane.showMessageDialog(null, "모든 필드가 채워지지 않았습니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
 					try {
-						String sql=("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION);"+"VALUES("+iis/*이미지*/+textField.getText(/*제목*/)+","+textField_1.getText(/*저자*/)+","+textField_2.getText(/*가격*/)+","+textField_3.getText(/*링크*/)+","+textField_4.getText(/*ISBN*/)+","+textField_5.getText(/*설명*/)+");");
+						String sql=("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION);"
+					+"VALUES("+iis/*이미지*/+textField.getText(/*제목*/)+","+textField_1.getText(/*저자*/)+","+textField_2.getText(/*가격*/)+","+textField_3.getText(/*링크*/)+","+textField_4.getText(/*ISBN*/)+","+textField_5.getText(/*설명*/)+");");
 						Connection tmpConn = dbConn.getConnection();
 						PreparedStatement ps;
 						ps = tmpConn.prepareStatement(sql);
@@ -176,8 +181,8 @@ public class BookRegister extends JFrame {
 						JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
-					
-					
+				}
+	
 			}
 		});
 		panel.add(btnNewButton);
