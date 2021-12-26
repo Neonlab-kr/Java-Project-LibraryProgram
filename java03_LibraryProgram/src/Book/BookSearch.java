@@ -212,7 +212,7 @@ public class BookSearch extends JFrame {
 				
 				try {
 					if (txtn.getText().equals("") && txtm.getText().equals("")) {	//제목필드와 저자필드 둘 다 비웠을때
-						JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.\n모든 도서를 표시합니다.\n로딩에 시간이 소요될 수 있습니다.", "입력 오류",	JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.\n모든 도서를 표시합니다.\n로딩에 시간이 소요될 수 있습니다.", "모두 표시",	JOptionPane.WARNING_MESSAGE);
 					}
 					
 					ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\" and BOOK_AUTHOR like \"%" + txtm.getText() + "%\";");
@@ -380,6 +380,7 @@ public class BookSearch extends JFrame {
 		int isbn = 0;
 		try {
 			isbn=src.getInt(0);
+			System.out.println(isbn);
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -415,6 +416,8 @@ public class BookSearch extends JFrame {
 			btnNewButton_1_51.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					info.setVisible(true);
+					//info.isbn=isbn;
+					System.out.println(info.isbn);
 				}
 			});
 			pane.add(btnNewButton_1_51);

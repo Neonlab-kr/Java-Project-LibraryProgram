@@ -79,7 +79,9 @@ public class BookAmend extends JFrame implements ActionListener
 	/**
 	 * Create the frame.
 	 */
+	public int isbn;
 	public BookAmend(int i) {
+		isbn=i;
 		setTitle("LibrayManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
