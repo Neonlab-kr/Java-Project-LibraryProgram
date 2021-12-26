@@ -3,11 +3,16 @@ package Book;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,12 +33,16 @@ import Member.MemberRegister;
 import Member.MemberSearch;
 import SQL.dbConnector;
 import net.miginfocom.swing.MigLayout;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
 
 
 public class BookSearch extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtn;
 	private JTextField textField_1;
 	private JPanel panel;
 	private int index=0;
@@ -183,11 +192,12 @@ public class BookSearch extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("\uC81C\uBAA9:");
 		panel_1.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		panel_1.add(textField);
-		textField.setColumns(10);
+		txtn = new JTextField();
+		txtn.setScrollOffset(2);
+		panel_1.add(txtn);
+		txtn.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("\uC800\uC790:l");
+		JLabel lblNewLabel_2 = new JLabel("\uC800\uC790:");
 		panel_1.add(lblNewLabel_2);
 		
 		textField_1 = new JTextField();
@@ -198,31 +208,26 @@ public class BookSearch extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				index=0;	//인덱스 초기화
+				panel.removeAll();	//패널 비우기
 				
 				try {
-					if (!textField.getText().equals("") && !textField_1.getText().equals("")) {	//제목필드와 저자필드 둘 다 채웠을때
+					if (!txtn.getText().equals("") && !textField_1.getText().equals("")) {	//제목필드와 저자필드 둘 다 채웠을때
 						
 
 
-					} else if (!textField.getText().equals("")) {	//제목필드만 채웠을때 
+					} else if (!txtn.getText().equals("")) {	//제목필드만 채웠을때 
 						ResultSet src = dbConn.executeQurey(
-								"select * from BOOK where BOOK_TITLE like \"" + textField.getText() + "\";");
+								"select * from BOOK where BOOK_TITLE like \"" + txtn.getText() + "\";");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
 						} else {
-							src.next();
-							ResultSet tempsrc = dbConn.executeQurey(
-									"select * from RENT where BOOK_ISBN like \"" + src.getString(1) + "\";");
-							if (tempsrc.isBeforeFirst()) {
-								JOptionPane.showMessageDialog(null, "대출가능한 도서 검색 결과가 없습니다.", "결과 없음",
-										JOptionPane.ERROR_MESSAGE);
-							} else {
-								src = dbConn.executeQurey(
-										"select * from BOOK where BOOK_TITLE like \"%" + textField.getText() + "%\";");
-								BCR_BookSearch temp = new BCR_BookSearch(1, src);
-								//temp.BCO = getSelf();
-								temp.setVisible(true);
-							}
+							
+							src = dbConn.executeQurey(
+									"select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\";");
+							
+							while(src.next()) {
+								AddResult(src);		
+							}	
 						}
 
 					} else if (!textField_1.getText().equals("")) {	//저자필드만 채웠을때
@@ -239,9 +244,13 @@ public class BookSearch extends JFrame {
 			
 				
 				
+				panel.revalidate();	//패널 다시 그리기
+				panel.repaint();
 			}
 		});
 		panel_1.add(btnNewButton);
+		
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		splitPane.setRightComponent(scrollPane);
@@ -250,6 +259,7 @@ public class BookSearch extends JFrame {
 		scrollPane.setViewportView(panel);
 		panel.setLayout(new MigLayout("", "[410.00,grow]", "[44.00,grow][grow][grow][grow][grow]"));
 		
+
 		/*
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2, "cell 0 0,growx,aligny center");
@@ -280,14 +290,16 @@ public class BookSearch extends JFrame {
 		
 		
 		
-		/*
+
 		//검색결과
-		for(int i=1;i<10;i++) {	//검색 결과에 따라 반복문 사용
+		/*
 			JPanel pane = new JPanel();
-			panel.add(pane, "cell 0 "+i+",grow");
+			pane.setSize(new Dimension(201, 0));
+			panel.add(pane, "growx,aligny center");
 			pane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			
 			JLabel lblNewLabel_3_51 = new JLabel("image");
+			lblNewLabel_3_51.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			pane.add(lblNewLabel_3_51);
 			
 			JLabel lblNewLabel_4_51 = new JLabel("\uC81C\uBAA9:");
@@ -304,12 +316,8 @@ public class BookSearch extends JFrame {
 			
 			JButton btnNewButton_1_51 = new JButton("\uC0C1\uC138\uC815\uBCF4");
 			pane.add(btnNewButton_1_51);
-		}
+
 		*/
-		
-		while(index<3) {
-			this.AddResult();
-		}
 		
 		
 		/*
@@ -380,31 +388,59 @@ public class BookSearch extends JFrame {
 		panel_2_3.add(btnNewButton_1_3);
 		
 		*/
+		
+
+		
+		
 	}
 
-	private void AddResult() {
-		index++;
+	void AddResult(ResultSet src) {
+
 		
+		index++;
+		BookAmend info = new BookAmend(src);
 		JPanel pane = new JPanel();
 		panel.add(pane, "cell 0 "+index+",grow");
-		pane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pane.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JLabel lblNewLabel_3_51 = new JLabel("image");
-		pane.add(lblNewLabel_3_51);
+		JLabel lblNewLabel_3_51 = new JLabel();	//이미지
+		InputStream inputStream = null;
+
+		try {
+			inputStream = src.getBinaryStream(7);
+			lblNewLabel_3_51.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+			pane.add(lblNewLabel_3_51);
+			
+			JTextPane titlePane = new JTextPane();
+			titlePane.setText("-제목-\n\n"+src.getString(2));
+			pane.add(titlePane);
+
+			
+			JTextPane authPane = new JTextPane();
+			authPane.setText("-저자-\n\n"+src.getString(3));
+			pane.add(authPane);
+			
+			JTextPane pubPane = new JTextPane();
+			pubPane.setText("-출판사-\n\n"+src.getString(4));
+			pane.add(pubPane);
+			
+			JButton btnNewButton_1_51 = new JButton("세부정보");
+			btnNewButton_1_51.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					info.setVisible(true);
+				}
+			});
+			pane.add(btnNewButton_1_51);
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		JLabel lblNewLabel_4_51 = new JLabel("\uC81C\uBAA9:");
-		pane.add(lblNewLabel_4_51);
-		
-		JLabel lblNewLabel_5_51 = new JLabel("\uC81C\uBAA9\uD544\uB4DC");
-		pane.add(lblNewLabel_5_51);
-		
-		JLabel lblNewLabel_6_51 = new JLabel("\uC800\uC790:");
-		pane.add(lblNewLabel_6_51);
-		
-		JLabel lblNewLabel_7_51 = new JLabel("\uC800\uC790\uD544\uB4DC");
-		pane.add(lblNewLabel_7_51);
-		
-		JButton btnNewButton_1_51 = new JButton("\uC0C1\uC138\uC815\uBCF4");
-		pane.add(btnNewButton_1_51);
+
 	}
 }

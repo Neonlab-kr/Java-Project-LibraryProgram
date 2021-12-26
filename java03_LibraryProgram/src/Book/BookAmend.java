@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
@@ -74,7 +75,7 @@ public class BookAmend extends JFrame implements ActionListener
 	/**
 	 * Create the frame.
 	 */
-	public BookAmend() {
+	public BookAmend(ResultSet src) {
 		setTitle("LibrayManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
