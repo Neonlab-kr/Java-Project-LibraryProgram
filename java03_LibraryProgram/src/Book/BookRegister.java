@@ -54,6 +54,7 @@ public class BookRegister extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JTextField textField_6;
 
 	/**
 	 * Launch the application.
@@ -176,14 +177,15 @@ public class BookRegister extends JFrame {
 						Statement st = tmpConn.createStatement();
 			            //File imgfile = new File("d:\\images.jpg");
 			            //FileInputStream fin = new FileInputStream(imgfile);
-			            PreparedStatement pre = tmpConn.prepareStatement("insert into DB_BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION)VALUES(?,?,?,?,?,?,?);");
+			            PreparedStatement pre = tmpConn.prepareStatement("insert into BOOK(BOOK_IMAGE,BOOK_TITLE,BOOK_AUTHOR,BOOK_PUB,BOOK_PRICE,BOOK_LINK,BOOK_ISBN,BOOK_DESCRIPTION)VALUES(?,?,?,?,?,?,?,?);");
 			            pre.setBinaryStream(1,iis,(int)file.length());	//이미지
 			            pre.setString(2,textField.getText());	//제목
 			            pre.setString(3,textField_1.getText());	//저자
-			            pre.setInt(4,Integer.parseInt(textField_2.getText()));	//가격
-			            pre.setString(5,textField_3.getText());	//링크
-			            pre.setInt(6,Integer.parseInt(textField_4.getText()));	//ISBN
-			            pre.setString(7,textField_5.getText());	//설명
+			            pre.setString(4,textField_6.getText());	//출판사
+			            pre.setInt(5,Integer.parseInt(textField_2.getText()));	//가격
+			            pre.setString(6,textField_3.getText());	//링크
+			            pre.setInt(7,Integer.parseInt(textField_4.getText()));	//ISBN
+			            pre.setString(8,textField_5.getText());	//설명
 			            pre.executeUpdate();
 
 						
@@ -229,20 +231,20 @@ public class BookRegister extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("");
 		panel_1.add(lblNewLabel_1);
 		
-		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");
+		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");	//찾아보기 버튼
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					JFrame jFrame=new JFrame();
 					FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
 	                fileDialogOpen.setVisible(true);
 	                
+	                String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
+	                System.out.println(filePath);
+	                //사진파일 입력
+	            	file = new File(filePath);
+	                
 	                //이미지 불러오기
-	            	try {
-	            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
-		                System.out.println(filePath);
-		                //사진파일 입력
-		            	file = new File(filePath);
-		            	
+	            	try {           		           	
 						if(ImageCheck.isImage(file)==false){
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
@@ -268,7 +270,7 @@ public class BookRegister extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new MigLayout("", "[50.00px][357.00px,grow]", "[23.00px][23.00][][][][172.00]"));
+		panel_2.setLayout(new MigLayout("", "[50.00px][357.00px,grow]", "[23.00px][23.00][][][][][172.00]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
@@ -284,32 +286,39 @@ public class BookRegister extends JFrame {
 		panel_2.add(textField_1, "cell 1 1,growx");
 		textField_1.setColumns(10);
 		
+		JLabel lblNewLabel_8 = new JLabel("\uCD9C\uD310\uC0AC");
+		panel_2.add(lblNewLabel_8, "cell 0 2,alignx center");
+		
+		textField_6 = new JTextField();
+		panel_2.add(textField_6, "cell 1 2,growx");
+		textField_6.setColumns(10);
+		
 		JLabel lblNewLabel_6 = new JLabel("\uAC00\uACA9");
-		panel_2.add(lblNewLabel_6, "cell 0 2,alignx center,aligny center");
+		panel_2.add(lblNewLabel_6, "cell 0 3,alignx center,aligny center");
 		
 		textField_2 = new JTextField();
-		panel_2.add(textField_2, "cell 1 2,grow");
+		panel_2.add(textField_2, "cell 1 3,grow");
 		textField_2.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("\uB9C1\uD06C");
-		panel_2.add(lblNewLabel_3, "cell 0 3,alignx center,aligny center");
+		panel_2.add(lblNewLabel_3, "cell 0 4,alignx center,aligny center");
 		
 		textField_3 = new JTextField();
-		panel_2.add(textField_3, "cell 1 3,grow");
+		panel_2.add(textField_3, "cell 1 4,grow");
 		textField_3.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("ISBN");
-		panel_2.add(lblNewLabel_5, "cell 0 4,alignx center,aligny center");
+		panel_2.add(lblNewLabel_5, "cell 0 5,alignx center,aligny center");
 		
 		textField_4 = new JTextField();
-		panel_2.add(textField_4, "cell 1 4,grow");
+		panel_2.add(textField_4, "cell 1 5,grow");
 		textField_4.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("\uC124\uBA85");
-		panel_2.add(lblNewLabel_7, "cell 0 5,alignx center,aligny center");
+		panel_2.add(lblNewLabel_7, "cell 0 6,alignx center,aligny center");
 		
 		textField_5 = new JTextField();
-		panel_2.add(textField_5, "cell 1 5,grow");
+		panel_2.add(textField_5, "cell 1 6,grow");
 		textField_5.setColumns(10);
 		splitPane.setDividerLocation(170);
 	}
