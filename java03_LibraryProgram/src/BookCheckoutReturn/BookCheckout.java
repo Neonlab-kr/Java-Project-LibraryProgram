@@ -302,7 +302,7 @@ public class BookCheckout extends JFrame {
 		btnNewButton.setBounds(446, 281, 97, 37);
 		contentPane.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("\uB3C4\uC11C\uAC80\uC0C9");
+		JButton btnNewButton_1 = new JButton("\uB3C4\uC11C\uAC80\uC0C9");	//도서검색버튼
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

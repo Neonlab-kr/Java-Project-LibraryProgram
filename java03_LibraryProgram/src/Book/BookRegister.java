@@ -200,7 +200,7 @@ public class BookRegister extends JFrame {
 						JOptionPane.showMessageDialog(null, "저장이 완료되었습니다", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
 					} catch (NullPointerException |SQLException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.\n중복틍록인지  확인하세요.", "저장 실패", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 				}

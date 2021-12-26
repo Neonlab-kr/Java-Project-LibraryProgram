@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,23 +14,32 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import BookCheckoutReturn.BCR_BookSearch;
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
 import Member.MemberSearch;
+import SQL.dbConnector;
 import net.miginfocom.swing.MigLayout;
+
 
 public class BookSearch extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JPanel panel;
+	private int index=0;
+	
+	dbConnector dbConn = new dbConnector();
+	
 	/**
 	 * @wbp.nonvisual location=169,284
 	 */
@@ -183,16 +194,63 @@ public class BookSearch extends JFrame {
 		panel_1.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton btnNewButton = new JButton("\uAC80\uC0C9");
+		JButton btnNewButton = new JButton("\uAC80\uC0C9");	//검색버튼
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				index=0;	//인덱스 초기화
+				
+				try {
+					if (!textField.getText().equals("") && !textField_1.getText().equals("")) {	//제목필드와 저자필드 둘 다 채웠을때
+						
+
+
+					} else if (!textField.getText().equals("")) {	//제목필드만 채웠을때 
+						ResultSet src = dbConn.executeQurey(
+								"select * from BOOK where BOOK_TITLE like \"" + textField.getText() + "\";");
+						if (!src.isBeforeFirst()) {
+							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
+						} else {
+							src.next();
+							ResultSet tempsrc = dbConn.executeQurey(
+									"select * from RENT where BOOK_ISBN like \"" + src.getString(1) + "\";");
+							if (tempsrc.isBeforeFirst()) {
+								JOptionPane.showMessageDialog(null, "대출가능한 도서 검색 결과가 없습니다.", "결과 없음",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
+								src = dbConn.executeQurey(
+										"select * from BOOK where BOOK_TITLE like \"%" + textField.getText() + "%\";");
+								BCR_BookSearch temp = new BCR_BookSearch(1, src);
+								//temp.BCO = getSelf();
+								temp.setVisible(true);
+							}
+						}
+
+					} else if (!textField_1.getText().equals("")) {	//저자필드만 채웠을때
+						
+						
+					} else {	//둘 다 비었을때
+						ResultSet src = dbConn.executeQurey(
+								"select * from BOOK;");
+						JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.\n모든 도서를 표시합니다.", "입력 오류",	JOptionPane.WARNING_MESSAGE);
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			
+				
+				
+			}
+		});
 		panel_1.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		splitPane.setRightComponent(scrollPane);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		scrollPane.setViewportView(panel);
 		panel.setLayout(new MigLayout("", "[410.00,grow]", "[44.00,grow][grow][grow][grow][grow]"));
 		
+		/*
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2, "cell 0 0,growx,aligny center");
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -218,7 +276,12 @@ public class BookSearch extends JFrame {
 			}
 		});
 		panel_2.add(btnNewButton_1);
+		*/
 		
+		
+		
+		/*
+		//검색결과
 		for(int i=1;i<10;i++) {	//검색 결과에 따라 반복문 사용
 			JPanel pane = new JPanel();
 			panel.add(pane, "cell 0 "+i+",grow");
@@ -242,6 +305,12 @@ public class BookSearch extends JFrame {
 			JButton btnNewButton_1_51 = new JButton("\uC0C1\uC138\uC815\uBCF4");
 			pane.add(btnNewButton_1_51);
 		}
+		*/
+		
+		while(index<3) {
+			this.AddResult();
+		}
+		
 		
 		/*
 		JPanel panel_2_1 = new JPanel();
@@ -311,5 +380,31 @@ public class BookSearch extends JFrame {
 		panel_2_3.add(btnNewButton_1_3);
 		
 		*/
+	}
+
+	private void AddResult() {
+		index++;
+		
+		JPanel pane = new JPanel();
+		panel.add(pane, "cell 0 "+index+",grow");
+		pane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel_3_51 = new JLabel("image");
+		pane.add(lblNewLabel_3_51);
+		
+		JLabel lblNewLabel_4_51 = new JLabel("\uC81C\uBAA9:");
+		pane.add(lblNewLabel_4_51);
+		
+		JLabel lblNewLabel_5_51 = new JLabel("\uC81C\uBAA9\uD544\uB4DC");
+		pane.add(lblNewLabel_5_51);
+		
+		JLabel lblNewLabel_6_51 = new JLabel("\uC800\uC790:");
+		pane.add(lblNewLabel_6_51);
+		
+		JLabel lblNewLabel_7_51 = new JLabel("\uC800\uC790\uD544\uB4DC");
+		pane.add(lblNewLabel_7_51);
+		
+		JButton btnNewButton_1_51 = new JButton("\uC0C1\uC138\uC815\uBCF4");
+		pane.add(btnNewButton_1_51);
 	}
 }
