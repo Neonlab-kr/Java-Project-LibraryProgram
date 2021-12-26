@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-
+import java.sql.*;
 public class MemberSearch extends JFrame {
 	private JTextField textField_Booktitle;
 	private JTextField textField_Author;
@@ -290,6 +291,23 @@ public class MemberSearch extends JFrame {
 				a.setFont(new Font("굴림", Font.PLAIN, 15));
 				JLabel b = new JLabel("전화번호 : "+  src.getString(1)); 
 				b.setFont(new Font("굴림", Font.PLAIN, 15));
+				
+				dbConnector dbConn2 = new dbConnector();
+				Connection tmpConn = dbConn2.getConnection();
+				Statement stmt = tmpConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+			            ResultSet.CONCUR_UPDATABLE);
+
+//				ResultSet src2 = dbConn2.executeQurey("select * from RENT where USER_PHONE=\"0171234567\";");
+				ResultSet src2 = stmt.executeQuery("select * from RENT where USER_PHONE=\""+src.getString(1)+"\";");
+				src2.last();
+				int columnCount = src2.getRow();
+				
+				System.out.println(src.getString(1));
+				System.out.println(columnCount);
+				
+				
+				JLabel c2 = new JLabel("대출중 : "+   Integer.toString(columnCount)); 
+				b.setFont(new Font("굴림", Font.PLAIN, 15));
 				JPanel label2 = new JPanel();
 				JButton btnNewButton = new JButton("상세정보");
 				
@@ -318,6 +336,7 @@ public class MemberSearch extends JFrame {
 				label2.add(imgLabel);
 				label2.add(a);
 				label2.add(b);
+				label2.add(c2);
 				label2.add(btnNewButton);
 			    create_form(label2,0,count++*30,50,10);
 			}
