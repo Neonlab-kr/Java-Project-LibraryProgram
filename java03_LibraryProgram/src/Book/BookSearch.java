@@ -43,7 +43,7 @@ public class BookSearch extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtn;
-	private JTextField textField_1;
+	private JTextField txtm;
 	private JPanel panel;
 	private int index=0;
 	
@@ -200,9 +200,9 @@ public class BookSearch extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("\uC800\uC790:");
 		panel_1.add(lblNewLabel_2);
 		
-		textField_1 = new JTextField();
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		txtm = new JTextField();
+		panel_1.add(txtm);
+		txtm.setColumns(10);
 		
 		JButton btnNewButton = new JButton("\uAC80\uC0C9");	//검색버튼
 		btnNewButton.addActionListener(new ActionListener() {
@@ -211,29 +211,18 @@ public class BookSearch extends JFrame {
 				panel.removeAll();	//패널 비우기
 				
 				try {
-					if (!txtn.getText().equals("") && !textField_1.getText().equals("")) {	//제목필드와 저자필드 둘 다 채웠을때
-						
-
-
-					} else if (!txtn.getText().equals("")) {	//제목필드만 채웠을때 
-						ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\";");
-						if (!src.isBeforeFirst()) {
-							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
-						} else {
-							
-							//src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\";");
-							
-							while(src.next()) {
-								AddResult(src);		
-							}	
-						}
-
-					} else if (!textField_1.getText().equals("")) {	//저자필드만 채웠을때
-						
-						
-					} else {	//둘 다 비었을때
-						ResultSet src = dbConn.executeQurey(
-								"select * from BOOK;");
+					
+					ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\" and BOOK_AUTHOR like \"%" + txtm.getText() + "%\";");
+					if (!src.isBeforeFirst()) {
+						JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
+					} else {
+						while(src.next()) {
+							AddResult(src);		
+						}	
+					}
+										
+					
+					if (txtn.getText().equals("") && txtm.getText().equals("")) {	//제목필드와 저자필드 둘 다 비웠을때
 						JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.\n모든 도서를 표시합니다.", "입력 오류",	JOptionPane.WARNING_MESSAGE);
 					}
 				} catch (SQLException e1) {
@@ -388,10 +377,7 @@ public class BookSearch extends JFrame {
 		
 	}
 
-	void AddResult(ResultSet src) {
-
-		
-		index++;
+	void AddResult(ResultSet src) {	
 		BookAmend info = new BookAmend(src);
 		JPanel pane = new JPanel();
 		panel.add(pane, "cell 0 "+index+",grow");
@@ -434,6 +420,8 @@ public class BookSearch extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		index++;
 		panel.revalidate();	//패널 다시 그리기
 		panel.repaint();
 	}
