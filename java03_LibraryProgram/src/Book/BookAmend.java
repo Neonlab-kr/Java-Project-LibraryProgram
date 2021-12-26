@@ -5,15 +5,24 @@ import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -23,12 +32,18 @@ import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
 import Member.MemberSearch;
+import SQL.dbConnector;
+import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class BookAmend extends JFrame implements ActionListener
 
 {
+	LocalDateTime now = LocalDateTime.now();
+	dbConnector dbConn = new dbConnector();
+	FileInputStream iis;	//이미지파일
+
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -159,9 +174,17 @@ public class BookAmend extends JFrame implements ActionListener
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("\uCDE8\uC18C");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				BookSearch temp = new BookSearch();
+				temp.setVisible(true);
+			}
+		});
 		panel.add(btnNewButton_1);
 		
 		JSplitPane splitPane = new JSplitPane();
+		splitPane.setDividerSize(2);
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
@@ -178,9 +201,33 @@ public class BookAmend extends JFrame implements ActionListener
 				JFrame jFrame=new JFrame();
 				FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
                 fileDialogOpen.setVisible(true);
-                String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
-                System.out.println(filePath);
-                //사진파일 입력
+                
+                //이미지 불러오기
+            	try {
+            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
+	                System.out.println(filePath);
+	                //사진파일 입력
+	            	File file = new File(filePath);
+	            	
+					iis = new FileInputStream(file);
+					if(ImageCheck.isImage(file)==false){
+						JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+					}
+					else {							
+						Image image = ImageIO.read(file);           	
+		            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
+		            	ImageIcon icon=new ImageIcon(resize);
+		            	lblNewLabel_1.setIcon(icon);
+					}  						
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				}
 			}
 		};
 		btnNewButton_2.addActionListener(find);
@@ -190,7 +237,7 @@ public class BookAmend extends JFrame implements ActionListener
 		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new MigLayout("", "[72.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00][][]"));
+		panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00][][]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
@@ -242,11 +289,12 @@ public class BookAmend extends JFrame implements ActionListener
 		textField_6.setColumns(10);
 		
 		JLabel lblNewLabel_9 = new JLabel("\uBC18\uB0A9\uC608\uC815\uC77C");
-		panel_2.add(lblNewLabel_9, "cell 0 7,alignx trailing");
+		panel_2.add(lblNewLabel_9, "cell 0 7,alignx center");
 		
 		textField_7 = new JTextField();
 		panel_2.add(textField_7, "cell 1 7,growx,aligny center");
 		textField_7.setColumns(10);
+		splitPane.setDividerLocation(160);
 	}
 
 	@Override
