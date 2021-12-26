@@ -40,7 +40,8 @@ import javax.swing.JTextPane;
 
 
 public class BookSearch extends JFrame {
-
+	
+	private int isbn;
 	private JPanel contentPane;
 	private JTextField txtn;
 	private JTextField txtm;
@@ -377,7 +378,6 @@ public class BookSearch extends JFrame {
 	}
 
 	void AddResult(ResultSet src) {
-		int isbn = 0;
 		try {
 			isbn=src.getInt(0);
 			System.out.println(isbn);
@@ -385,7 +385,6 @@ public class BookSearch extends JFrame {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		BookAmend info = new BookAmend(isbn);
 
 		JPanel pane = new JPanel();
 		panel.add(pane, "cell 0 "+index+",grow");
@@ -415,8 +414,8 @@ public class BookSearch extends JFrame {
 			JButton btnNewButton_1_51 = new JButton("세부정보");
 			btnNewButton_1_51.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					BookAmend info = new BookAmend(isbn);
 					info.setVisible(true);
-					//info.isbn=isbn;
 					System.out.println(info.isbn);
 				}
 			});
