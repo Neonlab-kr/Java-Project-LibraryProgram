@@ -216,14 +216,12 @@ public class BookSearch extends JFrame {
 
 
 					} else if (!txtn.getText().equals("")) {	//제목필드만 채웠을때 
-						ResultSet src = dbConn.executeQurey(
-								"select * from BOOK where BOOK_TITLE like \"" + txtn.getText() + "\";");
+						ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\";");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
 						} else {
 							
-							src = dbConn.executeQurey(
-									"select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\";");
+							//src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\";");
 							
 							while(src.next()) {
 								AddResult(src);		
@@ -242,10 +240,6 @@ public class BookSearch extends JFrame {
 					e1.printStackTrace();
 				}
 			
-				
-				
-				panel.revalidate();	//패널 다시 그리기
-				panel.repaint();
 			}
 		});
 		panel_1.add(btnNewButton);
@@ -440,7 +434,7 @@ public class BookSearch extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-
+		panel.revalidate();	//패널 다시 그리기
+		panel.repaint();
 	}
 }
