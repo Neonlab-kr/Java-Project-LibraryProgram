@@ -173,7 +173,7 @@ public class MemberAmend extends JFrame {
 		rdWom.setBounds(520, 164, 57, 23);
 		getContentPane().add(rdWom);
 		
-		if(sex==1) {
+		if(sex==0) {
 			rdWom.setSelected(true);
 		}else {
 			rdMan.setSelected(true);
@@ -239,9 +239,9 @@ public class MemberAmend extends JFrame {
 				            
 				            pre.setDate(3,new java.sql.Date(timeInMilliSeconds));	//생일
 				            if(rdWom.isSelected())
-				            	pre.setInt(4,1);	//성별
-				            else
 				            	pre.setInt(4,0);	//성별
+				            else
+				            	pre.setInt(4,1);	//성별
 				            
 				            
 				            pre.setString(5,textField_Email.getText());	//이메일
