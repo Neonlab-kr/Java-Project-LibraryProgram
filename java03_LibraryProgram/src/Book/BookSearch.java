@@ -211,6 +211,9 @@ public class BookSearch extends JFrame {
 				panel.removeAll();	//패널 비우기
 				
 				try {
+					if (txtn.getText().equals("") && txtm.getText().equals("")) {	//제목필드와 저자필드 둘 다 비웠을때
+						JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.\n모든 도서를 표시합니다.\n로딩에 시간이 소요될 수 있습니다.", "입력 오류",	JOptionPane.WARNING_MESSAGE);
+					}
 					
 					ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%" + txtn.getText() + "%\" and BOOK_AUTHOR like \"%" + txtm.getText() + "%\";");
 					if (!src.isBeforeFirst()) {
@@ -220,11 +223,7 @@ public class BookSearch extends JFrame {
 							AddResult(src);		
 						}	
 					}
-										
 					
-					if (txtn.getText().equals("") && txtm.getText().equals("")) {	//제목필드와 저자필드 둘 다 비웠을때
-						JOptionPane.showMessageDialog(null, "검색을 위한 정보가 기입되지 않았습니다.\n모든 도서를 표시합니다.", "입력 오류",	JOptionPane.WARNING_MESSAGE);
-					}
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -240,7 +239,7 @@ public class BookSearch extends JFrame {
 		
 		panel = new JPanel();
 		scrollPane.setViewportView(panel);
-		panel.setLayout(new MigLayout("", "[410.00,grow]", "[44.00,grow][grow][grow][grow][grow]"));
+		panel.setLayout(new MigLayout("", "[410.00,grow]", "[grow][grow][grow][grow][grow]"));
 		
 
 		/*
@@ -377,8 +376,16 @@ public class BookSearch extends JFrame {
 		
 	}
 
-	void AddResult(ResultSet src) {	
-		BookAmend info = new BookAmend(src);
+	void AddResult(ResultSet src) {
+		int isbn = 0;
+		try {
+			isbn=src.getInt(0);
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		BookAmend info = new BookAmend(isbn);
+
 		JPanel pane = new JPanel();
 		panel.add(pane, "cell 0 "+index+",grow");
 		pane.setLayout(new GridLayout(1, 0, 0, 0));

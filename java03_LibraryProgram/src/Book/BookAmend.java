@@ -12,7 +12,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
@@ -36,6 +38,7 @@ import Member.MemberSearch;
 import SQL.dbConnector;
 import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
+import java.awt.ComponentOrientation;
 
 @SuppressWarnings("serial")
 public class BookAmend extends JFrame implements ActionListener
@@ -55,6 +58,7 @@ public class BookAmend extends JFrame implements ActionListener
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	private JLabel lblNewLabel_1; //이미지 라벨
 
 	/**
 	 * Launch the application.
@@ -63,7 +67,7 @@ public class BookAmend extends JFrame implements ActionListener
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookAmend frame = new BookAmend();
+					BookAmend frame = new BookAmend(123456789);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,7 +79,7 @@ public class BookAmend extends JFrame implements ActionListener
 	/**
 	 * Create the frame.
 	 */
-	public BookAmend(ResultSet src) {
+	public BookAmend(int i) {
 		setTitle("LibrayManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
@@ -178,8 +182,6 @@ public class BookAmend extends JFrame implements ActionListener
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				BookSearch temp = new BookSearch();
-				temp.setVisible(true);
 			}
 		});
 		panel.add(btnNewButton_1);
@@ -189,11 +191,11 @@ public class BookAmend extends JFrame implements ActionListener
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		splitPane.setLeftComponent(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("image");
-		panel_1.add(lblNewLabel_1);
+		
 		
 		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");	//이미지 찾아보기
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
@@ -202,6 +204,7 @@ public class BookAmend extends JFrame implements ActionListener
 				JFrame jFrame=new JFrame();
 				FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
                 fileDialogOpen.setVisible(true);
+                
                 
                 //이미지 불러오기
             	try {
@@ -234,68 +237,104 @@ public class BookAmend extends JFrame implements ActionListener
 		btnNewButton_2.addActionListener(find);
 
 		
+
+		
+
+			try {
+				panel_1.add(lblNewLabel_1);
+			}catch(NullPointerException e){
+				e.printStackTrace();
+			}
+			
+			
+			JPanel panel_2 = new JPanel();
+			splitPane.setRightComponent(panel_2);
+			panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00][][]"));
+			
+			JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
+			panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
+			
+			textField = new JTextField();
+			panel_2.add(textField, "cell 1 0,grow");
+			textField.setColumns(10);
+			
+			JLabel lblNewLabel_4 = new JLabel("\uC800\uC790");
+			panel_2.add(lblNewLabel_4, "cell 0 1,alignx center,aligny center");
+			
+			textField_1 = new JTextField();
+			panel_2.add(textField_1, "cell 1 1,growx");
+			textField_1.setColumns(10);
+			
+			JLabel lblNewLabel_6 = new JLabel("\uAC00\uACA9");
+			panel_2.add(lblNewLabel_6, "cell 0 2,alignx center,aligny center");
+			
+			textField_2 = new JTextField();
+			panel_2.add(textField_2, "cell 1 2,grow");
+			textField_2.setColumns(10);
+			
+			JLabel lblNewLabel_3 = new JLabel("\uB9C1\uD06C");
+			panel_2.add(lblNewLabel_3, "cell 0 3,alignx center,aligny center");
+			
+			textField_3 = new JTextField();
+			panel_2.add(textField_3, "cell 1 3,grow");
+			textField_3.setColumns(10);
+			
+			JLabel lblNewLabel_5 = new JLabel("ISBN");
+			panel_2.add(lblNewLabel_5, "cell 0 4,alignx center,aligny center");
+			
+			textField_4 = new JTextField();
+			panel_2.add(textField_4, "cell 1 4,grow");
+			textField_4.setColumns(10);
+			
+			JLabel lblNewLabel_7 = new JLabel("\uC124\uBA85");
+			panel_2.add(lblNewLabel_7, "cell 0 5,alignx center,aligny center");
+			
+			textField_5 = new JTextField();
+			panel_2.add(textField_5, "cell 1 5,grow");
+			textField_5.setColumns(10);
+			
+			JLabel lblNewLabel_8 = new JLabel("\uB300\uCD9C\uC790");
+			panel_2.add(lblNewLabel_8, "cell 0 6,alignx center,aligny center");
+			
+			textField_6 = new JTextField();
+			panel_2.add(textField_6, "cell 1 6,growx,aligny center");
+			textField_6.setColumns(10);
+			
+			JLabel lblNewLabel_9 = new JLabel("\uBC18\uB0A9\uC608\uC815\uC77C");
+			panel_2.add(lblNewLabel_9, "cell 0 7,alignx center");
+			
+			textField_7 = new JTextField();
+			panel_2.add(textField_7, "cell 1 7,growx,aligny center");
+			textField_7.setColumns(10);
+			splitPane.setDividerLocation(160);
+			
+		try {
+			ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
+					+ i + "\";");
+			src.next();
+			
+			System.out.println(src.getString(2));
+			//InputStream inputStream = src.getBinaryStream(7);
+			//lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
+			lblNewLabel_2.setText(src.getString(2));
+			textField_1.setText(src.getString(4));
+			textField_2.setText(src.getString(2));
+			textField_3.setText(src.getString(8));
+			textField_4.setText(src.getString(7));
+			textField_5.setText("되는거 맞나");
+			contentPane.revalidate();	//패널 다시 그리기
+			contentPane.repaint();
+			
+		}catch(NullPointerException e) {
+			e.printStackTrace();		
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		/*catch(IOException e) {
+			e.printStackTrace();
+		}*/
 		
 		
-		JPanel panel_2 = new JPanel();
-		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00][][]"));
-		
-		JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
-		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
-		
-		textField = new JTextField();
-		panel_2.add(textField, "cell 1 0,grow");
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_4 = new JLabel("\uC800\uC790");
-		panel_2.add(lblNewLabel_4, "cell 0 1,alignx center,aligny center");
-		
-		textField_1 = new JTextField();
-		panel_2.add(textField_1, "cell 1 1,growx");
-		textField_1.setColumns(10);
-		
-		JLabel lblNewLabel_6 = new JLabel("\uAC00\uACA9");
-		panel_2.add(lblNewLabel_6, "cell 0 2,alignx center,aligny center");
-		
-		textField_2 = new JTextField();
-		panel_2.add(textField_2, "cell 1 2,grow");
-		textField_2.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("\uB9C1\uD06C");
-		panel_2.add(lblNewLabel_3, "cell 0 3,alignx center,aligny center");
-		
-		textField_3 = new JTextField();
-		panel_2.add(textField_3, "cell 1 3,grow");
-		textField_3.setColumns(10);
-		
-		JLabel lblNewLabel_5 = new JLabel("ISBN");
-		panel_2.add(lblNewLabel_5, "cell 0 4,alignx center,aligny center");
-		
-		textField_4 = new JTextField();
-		panel_2.add(textField_4, "cell 1 4,grow");
-		textField_4.setColumns(10);
-		
-		JLabel lblNewLabel_7 = new JLabel("\uC124\uBA85");
-		panel_2.add(lblNewLabel_7, "cell 0 5,alignx center,aligny center");
-		
-		textField_5 = new JTextField();
-		panel_2.add(textField_5, "cell 1 5,grow");
-		textField_5.setColumns(10);
-		
-		JLabel lblNewLabel_8 = new JLabel("\uB300\uCD9C\uC790");
-		panel_2.add(lblNewLabel_8, "cell 0 6,alignx center,aligny center");
-		
-		textField_6 = new JTextField();
-		panel_2.add(textField_6, "cell 1 6,growx,aligny center");
-		textField_6.setColumns(10);
-		
-		JLabel lblNewLabel_9 = new JLabel("\uBC18\uB0A9\uC608\uC815\uC77C");
-		panel_2.add(lblNewLabel_9, "cell 0 7,alignx center");
-		
-		textField_7 = new JTextField();
-		panel_2.add(textField_7, "cell 1 7,growx,aligny center");
-		textField_7.setColumns(10);
-		splitPane.setDividerLocation(160);
 	}
 
 	@Override
