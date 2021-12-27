@@ -2,6 +2,8 @@ package SQL;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
 public class dbConnector {
 
 	Connection conn; // java.sql.Connection
@@ -22,6 +24,7 @@ public class dbConnector {
 			System.out.println("JDBC 드라이버 로드 에러");
 		} catch (SQLException e) {
 			System.out.println("DB 연결 오류");
+			JOptionPane.showMessageDialog(null, "DB 연결 오류", "DB 연결 오류", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -38,6 +41,7 @@ public class dbConnector {
 			//e.printStackTrace();
 			System.out.println(src);
 			System.out.println("SQL 실행 에러");
+			JOptionPane.showMessageDialog(null, "SQL 실행 에러", "SQL 실행 에러", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		

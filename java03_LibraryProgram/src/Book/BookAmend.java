@@ -454,6 +454,8 @@ public class BookAmend extends JFrame implements ActionListener
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}catch(NullPointerException e) {
+			e.printStackTrace();		
 		}
 		
 		
