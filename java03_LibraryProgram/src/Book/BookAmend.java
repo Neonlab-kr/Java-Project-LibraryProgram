@@ -283,6 +283,7 @@ public class BookAmend extends JFrame implements ActionListener
 			public void actionPerformed(ActionEvent e) {
 				JFrame jFrame=new JFrame();
 				FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
+				//누가 필터좀 넣어줘요
                 fileDialogOpen.setVisible(true);
                 
                 
