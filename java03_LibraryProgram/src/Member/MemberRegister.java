@@ -157,7 +157,7 @@ public class MemberRegister extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");
-		lbTitle.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
+		lbTitle.setFont(new Font("±¼¸²", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
 		getContentPane().add(lbTitle);
 		
@@ -172,23 +172,23 @@ public class MemberRegister extends JFrame {
 		btn_ImageFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame jFrame = new JFrame();
-					FileDialog fileDialogOpen = new FileDialog(jFrame, "ì´ë¯¸ì§€ ì—´ê¸°", FileDialog.LOAD);
+					FileDialog fileDialogOpen = new FileDialog(jFrame, "ÀÌ¹ÌÁö ¿­±â", FileDialog.LOAD);
 	                fileDialogOpen.setVisible(true);
 	                
-	                //ì´ë¯¸ì§€ ë¶ˆëŸ¬ì˜¤ê¸°
+	                //ÀÌ¹ÌÁö ºÒ·¯¿À±â
 	            	try {
 	            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
 		                System.out.println(filePath);
-		                //ì‚¬ì§„íŒŒì¼ ì…ë ¥
+		                //»çÁøÆÄÀÏ ÀÔ·Â
 		            	file = new File(filePath);
 		            	
 		            	iis = new FileInputStream(file);
 		
-						if(ImageCheck.isImage(file)==false){
-							JOptionPane.showMessageDialog(null, "ì´ë¯¸ì§€ê°€ ì•„ë‹™ë‹ˆë‹¤.", "ì´ë¯¸ì§€ ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
+						if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
+							JOptionPane.showMessageDialog(null, "ÀÌ¹ÌÁö°¡ ¾Æ´Õ´Ï´Ù.", "ÀÌ¹ÌÁö ¿À·ù", JOptionPane.ERROR_MESSAGE);
 						}
 
-						else {
+						else if(!filePath.equals("nullnull")){
 							
 							Image image = ImageIO.read(file);
 			            	
@@ -202,11 +202,11 @@ public class MemberRegister extends JFrame {
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "ì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.", "ì´ë¯¸ì§€ ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "ÀÌ¹ÌÁö¸¦ ºÒ·¯¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù.", "ÀÌ¹ÌÁö ¿À·ù", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "ì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.", "ì´ë¯¸ì§€ ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "ÀÌ¹ÌÁö¸¦ ºÒ·¯¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù.", "ÀÌ¹ÌÁö ¿À·ù", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 			}
@@ -270,7 +270,7 @@ public class MemberRegister extends JFrame {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textField_Name.getText()==""||textField_Birth.getText()==""||textField_Email.getText()==""||textField_PhoneN.getText()=="") {
-					JOptionPane.showMessageDialog(null, "ëª¨ë“  í•„ë“œê°€ ì±„ì›Œì§€ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.", "ì…ë ¥ ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "¸ğµç ÇÊµå°¡ Ã¤¿öÁöÁö ¾Ê¾Ò½À´Ï´Ù.", "ÀÔ·Â ¿À·ù", JOptionPane.WARNING_MESSAGE);
 				}
 				else {
 					
@@ -289,22 +289,22 @@ public class MemberRegister extends JFrame {
 							ps.setString(2, textField_Name.getText());
 							ps.setString(3, textField_Birth.getText());
 							 if(rdWom.isSelected())
-					            	ps.setInt(4,0);	//ì„±ë³„
+					            	ps.setInt(4,0);	//¼ºº°
 					            else
-					            	ps.setInt(4,1);	//ì„±ë³„
+					            	ps.setInt(4,1);	//¼ºº°
 							ps.setString(5, textField_Email.getText());
 							ps.setBinaryStream(6,iis,(int)file.length());
 							ps.setString(7, nowDT);
 							
 							ps.executeUpdate();
-							JOptionPane.showMessageDialog(null, "ì €ì¥ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤", "ì €ì¥ ì™„ë£Œ", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ÀúÀåÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù", "ÀúÀå ¿Ï·á", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
 							MainMenu temp = new MainMenu();
 							temp.setVisible(true);
 							
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(null, "ì €ì¥ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.", "ì €ì¥ ì‹¤íŒ¨\n", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ÀúÀå¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.", "ÀúÀå ½ÇÆĞ\n", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 							
 						}

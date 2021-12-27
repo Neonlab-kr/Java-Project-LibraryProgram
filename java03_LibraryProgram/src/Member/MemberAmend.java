@@ -113,11 +113,11 @@ public class MemberAmend extends JFrame {
 		            	iis = new FileInputStream(file);
 		            	
 		            	
-						if(ImageCheck.isImage(file)==false){
+						if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
 
-						else {
+						else if(!filePath.equals("nullnull")) {
 							
 							Image image = ImageIO.read(file);
 			            	Image resize=image.getScaledInstance(190,190,Image.SCALE_SMOOTH);
