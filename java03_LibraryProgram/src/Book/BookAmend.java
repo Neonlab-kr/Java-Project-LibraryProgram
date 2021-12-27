@@ -13,10 +13,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
@@ -61,10 +63,13 @@ public class BookAmend extends JFrame implements ActionListener
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JLabel lblNewLabel_1; //이미지 라벨
+	private File file;	//이미지 파일
 	JTextArea textArea;
+
 
 	/**
 	 * Launch the application.
@@ -174,11 +179,54 @@ public class BookAmend extends JFrame implements ActionListener
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton_3 = new JButton("\uC218\uC815");
+		JButton btnNewButton_3 = new JButton("\uC218\uC815");	//수정버튼
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(textField.getText()==""||textField_1.getText()==""||textField_2.getText()==""||textField_3.getText()==""||textField_4.getText()==""||textArea.getText()=="") {
+					JOptionPane.showMessageDialog(null, "모든 필드가 채워지지 않았습니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+				}else {
+					try {
+						Connection tmpConn = dbConn.getConnection();
+						Statement st = tmpConn.createStatement();
+			            //File imgfile = new File("d:\\images.jpg");
+			            //FileInputStream fin = new FileInputStream(imgfile);
+			            PreparedStatement pre = tmpConn.prepareStatement("update BOOK set BOOK_TITLE=?,BOOK_AUTHOR=?,BOOK_PUB=?,BOOK_PRICE=?,BOOK_LINK=?,BOOK_ISBN=?,BOOK_DESCRIPTION=? where BOOK_ISBN like \""+isbn+"\";");    
+			            pre.setString(1,textField.getText());	//제목
+			            pre.setString(2,textField_1.getText());	//저자
+			            pre.setString(3,textField_5.getText());	//출판사
+			            pre.setInt(4,Integer.parseInt(textField_2.getText()));	//가격
+			            pre.setString(5,textField_3.getText());	//링크
+			            pre.setInt(6,Integer.parseInt(textField_4.getText()));	//ISBN
+			            pre.setString(7,textArea.getText());	//설명
+			            pre.executeUpdate();
+					}catch (NullPointerException |SQLException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.\n중복틍록인지  확인하세요.", "수정 실패", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+					
+					//이미지 변경
+					try {
+						if(!(iis==null)) {
+							System.out.println("이미지 변경");
+							Connection tmpConn = dbConn.getConnection();
+							Statement st = tmpConn.createStatement();
+				            //File imgfile = new File("d:\\images.jpg");
+				            //FileInputStream fin = new FileInputStream(imgfile);
+				            PreparedStatement pre = tmpConn.prepareStatement("update BOOK set BOOK_IMAGE=? where BOOK_ISBN like \""+isbn+"\";");
+				            pre.setBinaryStream(1,iis,(int)file.length());	//이미지
+						}
+					}catch(NullPointerException |SQLException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.\n중복틍록인지  확인하세요.", "수정 실패", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
+			
+
+
 		panel.add(btnNewButton_3);
 		
 		JButton btnNewButton = new JButton("\uC0AD\uC81C");	//삭제버튼
@@ -241,13 +289,13 @@ public class BookAmend extends JFrame implements ActionListener
             		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
 	                System.out.println(filePath);
 	                //사진파일 입력
-	            	File file = new File(filePath);
-	            	
-					iis = new FileInputStream(file);
+	            	file = new File(filePath);
+					
 					if(ImageCheck.isImage(file)==false){
 						JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 					}
-					else {							
+					else {						
+						iis = new FileInputStream(file);
 						Image image = ImageIO.read(file);           	
 		            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
 		            	ImageIcon icon=new ImageIcon(resize);
@@ -273,7 +321,7 @@ public class BookAmend extends JFrame implements ActionListener
 			
 			JPanel panel_2 = new JPanel();
 			splitPane.setRightComponent(panel_2);
-			panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00,grow][][]"));
+			panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][][47.00,grow][][]"));
 			
 			JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 			panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
@@ -289,52 +337,59 @@ public class BookAmend extends JFrame implements ActionListener
 			panel_2.add(textField_1, "cell 1 1,growx");
 			textField_1.setColumns(10);
 			
+			JLabel lblNewLabel_10 = new JLabel("\uCD9C\uD310\uC0AC");
+			panel_2.add(lblNewLabel_10, "cell 0 2,alignx center,aligny center");
+			
+			textField_5 = new JTextField();
+			panel_2.add(textField_5, "cell 1 2,grow");
+			textField_5.setColumns(10);
+			
 			JLabel lblNewLabel_6 = new JLabel("\uAC00\uACA9");
-			panel_2.add(lblNewLabel_6, "cell 0 2,alignx center,aligny center");
+			panel_2.add(lblNewLabel_6, "cell 0 3,alignx center,aligny center");
 			
 			textField_2 = new JTextField();
-			panel_2.add(textField_2, "cell 1 2,grow");
+			panel_2.add(textField_2, "cell 1 3,grow");
 			textField_2.setColumns(10);
 			
 			JLabel lblNewLabel_3 = new JLabel("\uB9C1\uD06C");
-			panel_2.add(lblNewLabel_3, "cell 0 3,alignx center,aligny center");
+			panel_2.add(lblNewLabel_3, "cell 0 4,alignx center,aligny center");
 			
 			textField_3 = new JTextField();
-			panel_2.add(textField_3, "cell 1 3,grow");
+			panel_2.add(textField_3, "cell 1 4,grow");
 			textField_3.setColumns(10);
 			
 			JLabel lblNewLabel_5 = new JLabel("ISBN");
-			panel_2.add(lblNewLabel_5, "cell 0 4,alignx center,aligny center");
+			panel_2.add(lblNewLabel_5, "cell 0 5,alignx center,aligny center");
 			
 			textField_4 = new JTextField();
-			panel_2.add(textField_4, "cell 1 4,grow");
+			panel_2.add(textField_4, "cell 1 5,grow");
 			textField_4.setColumns(10);
 			
 			JLabel lblNewLabel_7 = new JLabel("\uC124\uBA85");
-			panel_2.add(lblNewLabel_7, "cell 0 5,alignx center,aligny center");
+			panel_2.add(lblNewLabel_7, "cell 0 6,alignx center,aligny center");
 			
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			panel_2.add(scrollPane, "cell 1 5,grow");
+			panel_2.add(scrollPane, "cell 1 6,grow");
 			
 			textArea = new JTextArea();
 			textArea.setLineWrap(true);
 			scrollPane.setViewportView(textArea);
 			
 			JLabel lblNewLabel_8 = new JLabel("\uB300\uCD9C\uC790");
-			panel_2.add(lblNewLabel_8, "cell 0 6,alignx center,aligny center");
+			panel_2.add(lblNewLabel_8, "cell 0 7,alignx center,aligny center");
 			
 			textField_6 = new JTextField();
 			textField_6.setEditable(false);
-			panel_2.add(textField_6, "cell 1 6,growx,aligny center");
+			panel_2.add(textField_6, "cell 1 7,growx,aligny center");
 			textField_6.setColumns(10);
 			
 			JLabel lblNewLabel_9 = new JLabel("\uBC18\uB0A9\uC608\uC815\uC77C");
-			panel_2.add(lblNewLabel_9, "cell 0 7,alignx center");
+			panel_2.add(lblNewLabel_9, "cell 0 8,alignx center");
 			
 			textField_7 = new JTextField();
-			panel_2.add(textField_7, "cell 1 7,growx,aligny center");
+			panel_2.add(textField_7, "cell 1 8,growx,aligny center");
 			textField_7.setColumns(10);
 			splitPane.setDividerLocation(160);
 			
@@ -352,6 +407,7 @@ public class BookAmend extends JFrame implements ActionListener
 			textField_2.setText(src.getString(5));
 			textField_3.setText(src.getString(8));
 			textField_4.setText(src.getString(1));
+			textField_5.setText(src.getString(4));
 			textArea.setText(src.getString(6));
 			inputStream = src.getBinaryStream(7);
 			lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(160, 180, Image.SCALE_SMOOTH)));
@@ -403,4 +459,7 @@ public class BookAmend extends JFrame implements ActionListener
 		
 	}
 
+
 }
+
+		
