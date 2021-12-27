@@ -258,6 +258,9 @@ public class MemberSearch extends JFrame {
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}catch (NullPointerException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 				JOptionPane.showMessageDialog(null, "검색이 완료되었습니다.", "검색완료", JOptionPane.PLAIN_MESSAGE);
 			}
