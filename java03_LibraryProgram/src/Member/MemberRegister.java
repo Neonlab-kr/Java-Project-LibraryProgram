@@ -9,6 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.Font;
@@ -34,6 +35,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import Book.BookRegister;
 import Book.BookSearch;
@@ -80,7 +82,7 @@ public class MemberRegister extends JFrame {
 	public MemberRegister() {
 //>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
 		setBounds(100, 100, 680, 428);
-		setLayout(null);
+		getContentPane().setLayout(null);
 		ButtonGroup group = new ButtonGroup();
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -157,15 +159,16 @@ public class MemberRegister extends JFrame {
 		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");
 		lbTitle.setFont(new Font("굴림", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
-		add(lbTitle);
+		getContentPane().add(lbTitle);
 		
-		JLabel lbImage = new JLabel("        Image");
-		lbImage.setBounds(49, 67, 97, 92);
-		add(lbImage);
+		JLabel lbImage = new JLabel("     User Image");
+		lbImage.setBorder(new LineBorder(Color.BLACK));
+		lbImage.setBounds(120, 84, 97, 92);
+		getContentPane().add(lbImage);
 		
 		JButton btn_ImageFind = new JButton("\uCC3E\uC544\uBCF4\uAE30");
-		btn_ImageFind.setBounds(49, 161, 97, 23);
-		add(btn_ImageFind);
+		btn_ImageFind.setBounds(120, 186, 97, 23);
+		getContentPane().add(btn_ImageFind);
 		btn_ImageFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame jFrame = new JFrame();
@@ -190,7 +193,7 @@ public class MemberRegister extends JFrame {
 							Image image = ImageIO.read(file);
 			            	
 			            	
-			            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
+			            	Image resize=image.getScaledInstance(90,90,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
 			            	lbImage.setIcon(icon);
 
@@ -211,59 +214,59 @@ public class MemberRegister extends JFrame {
 		});
 		
 		JLabel lbName = new JLabel("\uC774\uB984");
-		lbName.setBounds(204, 67, 42, 15);
-		add(lbName);
+		lbName.setBounds(323, 87, 42, 15);
+		getContentPane().add(lbName);
 		
 		textField_Name = new JTextField();
-		textField_Name.setBounds(258, 64, 144, 21);
-		add(textField_Name);
+		textField_Name.setBounds(377, 84, 144, 21);
+		getContentPane().add(textField_Name);
 		textField_Name.setColumns(10);
 		
 		JLabel lbBirth = new JLabel("\uC0DD\uB144\uC6D4\uC77C");
-		lbBirth.setBounds(189, 106, 57, 15);
-		add(lbBirth);
+		lbBirth.setBounds(308, 126, 57, 15);
+		getContentPane().add(lbBirth);
 		
 		textField_Birth = new JTextField();
-		textField_Birth.setBounds(258, 103, 144, 21);
-		add(textField_Birth);
+		textField_Birth.setBounds(377, 123, 144, 21);
+		getContentPane().add(textField_Birth);
 		textField_Birth.setColumns(10);
 		
 		JLabel lbSex = new JLabel("\uC131\uBCC4");
-		lbSex.setBounds(204, 141, 32, 15);
-		add(lbSex);
+		lbSex.setBounds(323, 161, 32, 15);
+		getContentPane().add(lbSex);
 		
 		JRadioButton rdMan = new JRadioButton("\uB0A8\uC131");
-		rdMan.setBounds(258, 137, 57, 23);
-		add(rdMan);
+		rdMan.setBounds(377, 157, 57, 23);
+		getContentPane().add(rdMan);
 		
 		JRadioButton rdWom = new JRadioButton("\uC5EC\uC131");
-		rdWom.setBounds(345, 136, 57, 23);
-		add(rdWom);
+		rdWom.setBounds(464, 156, 57, 23);
+		getContentPane().add(rdWom);
 		
 		group.add(rdWom);
 		group.add(rdMan);
 		
 		JLabel lbEmail = new JLabel("\uC774\uBA54\uC77C");
-		lbEmail.setBounds(194, 176, 42, 15);
-		add(lbEmail);
+		lbEmail.setBounds(313, 196, 42, 15);
+		getContentPane().add(lbEmail);
 		
 		textField_Email = new JTextField();
 		textField_Email.setColumns(10);
-		textField_Email.setBounds(258, 173, 144, 21);
-		add(textField_Email);
+		textField_Email.setBounds(377, 193, 144, 21);
+		getContentPane().add(textField_Email);
 		
 		JLabel lbPhoneN = new JLabel("\uC804\uD654\uBC88\uD638");
-		lbPhoneN.setBounds(189, 210, 57, 15);
-		add(lbPhoneN);
+		lbPhoneN.setBounds(308, 230, 57, 15);
+		getContentPane().add(lbPhoneN);
 		
 		textField_PhoneN = new JTextField();
-		textField_PhoneN.setBounds(258, 207, 144, 21);
-		add(textField_PhoneN);
+		textField_PhoneN.setBounds(377, 227, 144, 21);
+		getContentPane().add(textField_PhoneN);
 		textField_PhoneN.setColumns(10);
 		
 		JButton btnUp = new JButton("\uB4F1\uB85D");
-		btnUp.setBounds(82, 246, 97, 23);
-		add(btnUp);
+		btnUp.setBounds(187, 306, 97, 23);
+		getContentPane().add(btnUp);
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textField_Name.getText()==""||textField_Birth.getText()==""||textField_Email.getText()==""||textField_PhoneN.getText()=="") {
@@ -295,6 +298,9 @@ public class MemberRegister extends JFrame {
 							
 							ps.executeUpdate();
 							JOptionPane.showMessageDialog(null, "저장이 완료되었습니다", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+							setVisible(false);
+							MainMenu temp = new MainMenu();
+							temp.setVisible(true);
 							
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -314,16 +320,20 @@ public class MemberRegister extends JFrame {
 		
 		
 		JButton btnCancel = new JButton("\uCDE8\uC18C");
-		btnCancel.setBounds(268, 246, 97, 23);
-		add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				setVisible(false);
-				MainMenu temp = new MainMenu();
+				MemberRegister temp = new MemberRegister();
 				temp.setVisible(true);
+				
 			}
 		});
+		
+		btnCancel.setBounds(371, 306, 97, 23);
+		getContentPane().add(btnCancel);
+		btnCancel.addActionListener(null);
 	}
 }
