@@ -208,58 +208,72 @@ public class MemberSearch extends JFrame {
 								+ textField_Booktitle.getText() + "%\" and USER_PHONE like \"%"
 								+ textField_Author.getText() + "%\";");
 //					ResultSet src = dbConn.executeQurey("select * from j20183087.USER where USER_NAME=\"한국인\";");
-
-				remove(jp_label);
-				remove(scrollPane);
-
-				jp_label = new JPanel();
-
-				jp_label.setLayout(Gbag);
-				scrollPane = new JScrollPane(jp_label);
-				scrollPane.setBounds(12, 77, 642, 281);
-				add(scrollPane);
-
 				try {
-					while (src.next()) {
-						System.out.print(src.getString(2));
-						JLabel imgLabel = new JLabel();
-						ImageIcon c = new ImageIcon("image/icon1.png");
-						imgLabel.setIcon(c);
-						JLabel a = new JLabel("이름 : " + src.getString(2));
-						a.setFont(new Font("굴림", Font.PLAIN, 15));
-						JLabel b = new JLabel("전화번호 : " + src.getString(1));
-						b.setFont(new Font("굴림", Font.PLAIN, 15));
-						JPanel label2 = new JPanel();
-						JButton btnNewButton = new JButton("상세정보");
+					if (src.isBeforeFirst()) {
+						remove(jp_label);
+						remove(scrollPane);
 
-						String name = src.getString(2);
-						Date from = new Date();
-						SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-						String birth = transFormat.format(src.getDate(3));
-						int sex = src.getInt(4);
-						String mail = src.getString(5);
-						String phone = src.getString(1);
+						jp_label = new JPanel();
+
+						jp_label.setLayout(Gbag);
+						scrollPane = new JScrollPane(jp_label);
+						scrollPane.setBounds(12, 77, 642, 281);
+						add(scrollPane);
+
+						try {
+							while (src.next()) {
+								System.out.print(src.getString(2));
+								JLabel imgLabel = new JLabel();
+								ImageIcon c = new ImageIcon("image/icon1.png");
+								imgLabel.setIcon(c);
+								JLabel a = new JLabel("이름 : " + src.getString(2));
+								a.setFont(new Font("굴림", Font.PLAIN, 15));
+								JLabel b = new JLabel("전화번호 : " + src.getString(1));
+								b.setFont(new Font("굴림", Font.PLAIN, 15));
+								JPanel label2 = new JPanel();
+								JButton btnNewButton = new JButton("상세정보");
+
+								String name = src.getString(2);
+								SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+								String birth = transFormat.format(src.getDate(3));
+								int sex = src.getInt(4);
+								String mail = src.getString(5);
+								String phone = src.getString(1);
 //							byte[] image = src.getBytes(6);
-						InputStream image = src.getBinaryStream(6);
 
-						btnNewButton.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								MemberAmend temp = new MemberAmend(image, name, birth, sex, mail, phone);
-								temp.setVisible(true);
-
+								btnNewButton.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										ResultSet src = dbConn.executeQurey(
+												"select * from USER where USER_OUT_DATE is null and USER_PHONE like \""
+														+ phone + "\";");
+										try {
+											src.next();
+										MemberAmend temp = new MemberAmend(src.getBinaryStream(6), name, birth, sex, mail, phone);
+										temp.setVisible(true);
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
+								});
+								label2.add(imgLabel);
+								label2.add(a);
+								label2.add(b);
+								label2.add(btnNewButton);
+								create_form(label2, 0, count++ * 30, 30, 10);
 							}
-						});
-						label2.add(imgLabel);
-						label2.add(a);
-						label2.add(b);
-						label2.add(btnNewButton);
-						create_form(label2, 0, count++ * 30, 30, 10);
+							JOptionPane.showMessageDialog(null, "검색이 완료되었습니다.", "검색완료", JOptionPane.PLAIN_MESSAGE);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "검색 결과가 없습니다..", "검색 오류", JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (SQLException e1) {
+				} catch (HeadlessException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(null, "검색이 완료되었습니다.", "검색완료", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 
