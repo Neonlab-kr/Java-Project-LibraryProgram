@@ -328,7 +328,7 @@ public class BookCheckout extends JFrame {
 						}
 					} else if (!textField.getText().equals("") && !textField_1.getText().equals("")) {
 						ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%"
-								+ textField.getText() + "\"% and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
+								+ textField.getText() + "%\" and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -341,7 +341,7 @@ public class BookCheckout extends JFrame {
 							} else {
 								src = dbConn.executeQurey(
 										"select * from BOOK where BOOK_TITLE like \"%" + textField.getText()
-												+ "\"% and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
+												+ "%\" and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
 								BCR_BookSearch temp = new BCR_BookSearch(1, src);
 								temp.BCO = getSelf();
 								temp.setVisible(true);
@@ -457,7 +457,7 @@ public class BookCheckout extends JFrame {
 					} else if (!textField_6.getText().equals("") && !textField_7.getText().equals("")) {
 						ResultSet src = dbConn
 								.executeQurey("select * from USER where USER_NAME like \"%" + textField_6.getText()
-										+ "\"% and USER_BIRTH like\"%" + textField_7.getText() + "%\"and USER_OUT_DATE is null;");
+										+ "%\" and USER_BIRTH like\"%" + textField_7.getText() + "%\"and USER_OUT_DATE is null;");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {

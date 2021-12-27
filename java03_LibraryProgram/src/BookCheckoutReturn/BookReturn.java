@@ -283,7 +283,7 @@ public class BookReturn extends JFrame {
 						}
 					} else if (!textField.getText().equals("") && !textField_1.getText().equals("")) {
 						ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%"
-								+ textField.getText() + "\"% and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
+								+ textField.getText() + "%\" and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
 						if (!src.isBeforeFirst()) {
 							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -295,7 +295,7 @@ public class BookReturn extends JFrame {
 										JOptionPane.ERROR_MESSAGE);
 							} else {
 								src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%"
-										+ textField.getText() + "\"% and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
+										+ textField.getText() + "%\" and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
 								BCR_BookSearch temp = new BCR_BookSearch(2, src);
 								temp.BR = getSelf();
 								temp.setVisible(true);
