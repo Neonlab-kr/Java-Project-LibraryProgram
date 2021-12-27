@@ -272,16 +272,16 @@ public class BookCheckout extends JFrame {
 							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							String nowDT = df.format(cal.getTime());
 							cal.add(Calendar.DATE, 14);
-							String RetrunDT = df.format(cal.getTime());
+							String ReturnDT = df.format(cal.getTime());
 							String sql = "insert into RENT (BOOK_ISBN,USER_PHONE,RENT_DATE,RENT_RETURN_DATE) values (?,?,?,?);";
 							Connection tmpConn = dbConn.getConnection();
 							PreparedStatement ps = tmpConn.prepareStatement(sql);
 							ps.setString(1, textField_4.getText());
 							ps.setString(2, textField_8.getText());
 							ps.setString(3, nowDT);
-							ps.setString(4, RetrunDT);
+							ps.setString(4, ReturnDT);
 							ps.executeUpdate();
-							JOptionPane.showMessageDialog(null, "대출이 완료되었습니다", "대출 완료",
+							JOptionPane.showMessageDialog(null, "대출이 완료되었습니다"+"\n 반납 기한 :" + ReturnDT, "대출 완료",
 									JOptionPane.INFORMATION_MESSAGE);
 							sql = "UPDATE USER set USER_RENT_CNT = USER_RENT_CNT + 1 where USER_PHONE = \""+ textField_8.getText() +"\";";
 							tmpConn = dbConn.getConnection();
