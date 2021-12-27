@@ -2,6 +2,7 @@ package BookCheckoutReturn;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import javax.imageio.ImageIO;
@@ -188,8 +189,9 @@ public class BCR_MemberSearch extends JFrame {
 			int count = 0;
 			while (src.next()) {
 				InputStream inputStream = src.getBinaryStream(6);
-				JLabel imgLabel = new JLabel(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage()
-						.getScaledInstance(100, 80, Image.SCALE_SMOOTH)));
+				BufferedImage image =ImageIO.read(inputStream);
+				ImageIcon tempimage = new ImageIcon(image);
+				JLabel imgLabel = new JLabel(new ImageIcon(tempimage.getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH)));
 				JLabel Name = new JLabel("이름 : " + src.getString(2));
 				Name.setFont(new Font("굴림", Font.PLAIN, 15));
 				JLabel Phone = new JLabel("전화번호 : " + src.getString(1));
