@@ -176,10 +176,14 @@ public class BookSearch extends JFrame {
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
+		splitPane.setEnabled(false);
+		splitPane.setDividerSize(2);
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		contentPane.add(splitPane);
 		
 		JSplitPane splitPane_1 = new JSplitPane();
+		splitPane_1.setDividerSize(4);
+		splitPane_1.setEnabled(false);
 		splitPane_1.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		splitPane.setLeftComponent(splitPane_1);
 		

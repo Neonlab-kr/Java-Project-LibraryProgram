@@ -40,6 +40,9 @@ import SQL.dbConnector;
 import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Rectangle;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class BookRegister extends JFrame {
 	
@@ -54,8 +57,8 @@ public class BookRegister extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField_5;
 	private JTextField textField_6;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -168,7 +171,7 @@ public class BookRegister extends JFrame {
 		JButton btnNewButton = new JButton("\uC800\uC7A5");	//저장버튼
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(iis==null||textField.getText()==""||textField_1.getText()==""||textField_2.getText()==""||textField_3.getText()==""||textField_4.getText()==""||textField_5.getText()=="") {
+				if(iis==null||textField.getText()==""||textField_1.getText()==""||textField_2.getText()==""||textField_3.getText()==""||textField_4.getText()==""||textArea.getText()=="") {
 					JOptionPane.showMessageDialog(null, "모든 필드가 채워지지 않았습니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
 				}
 				else {
@@ -186,7 +189,7 @@ public class BookRegister extends JFrame {
 			            pre.setInt(5,Integer.parseInt(textField_2.getText()));	//가격
 			            pre.setString(6,textField_3.getText());	//링크
 			            pre.setInt(7,Integer.parseInt(textField_4.getText()));	//ISBN
-			            pre.setString(8,textField_5.getText());	//설명
+			            pre.setString(8,textArea.getText());	//설명
 			            pre.executeUpdate();
 
 						
@@ -271,7 +274,7 @@ public class BookRegister extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new MigLayout("", "[50.00px][357.00px,grow]", "[23.00px][23.00][][][][][172.00]"));
+		panel_2.setLayout(new MigLayout("", "[50.00px][357.00px,grow]", "[23.00px][23.00][][][][][172.00,grow]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
@@ -318,9 +321,13 @@ public class BookRegister extends JFrame {
 		JLabel lblNewLabel_7 = new JLabel("\uC124\uBA85");
 		panel_2.add(lblNewLabel_7, "cell 0 6,alignx center,aligny center");
 		
-		textField_5 = new JTextField();
-		panel_2.add(textField_5, "cell 1 6,grow");
-		textField_5.setColumns(10);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panel_2.add(scrollPane, "cell 1 6,grow");
+		
+		textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
 		splitPane.setDividerLocation(170);
 	}
 
