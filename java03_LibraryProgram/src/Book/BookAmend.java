@@ -199,28 +199,27 @@ public class BookAmend extends JFrame implements ActionListener
 			            pre.setInt(6,Integer.parseInt(textField_4.getText()));	//ISBN
 			            pre.setString(7,textArea.getText());	//설명
 			            pre.executeUpdate();
+			            
+			            if(!(iis==null)) {//이미지 변경
+							System.out.println("이미지 변경");
+						
+				            //File imgfile = new File("d:\\images.jpg");
+				            //FileInputStream fin = new FileInputStream(imgfile);
+				            PreparedStatement pref = tmpConn.prepareStatement("update BOOK set BOOK_IMAGE=? where BOOK_ISBN like \""+isbn+"\";");
+				            pref.setBinaryStream(1,iis,(int)file.length());	//이미지
+				            pref.executeUpdate();
+						}
+			            JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
+			            setVisible(false);
+						BookSearch temp = new BookSearch();
+						temp.setVisible(true);
+			            
 					}catch (NullPointerException |SQLException e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.\n중복틍록인지  확인하세요.", "수정 실패", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
-					
-					//이미지 변경
-					try {
-						if(!(iis==null)) {
-							System.out.println("이미지 변경");
-							Connection tmpConn = dbConn.getConnection();
-							Statement st = tmpConn.createStatement();
-				            //File imgfile = new File("d:\\images.jpg");
-				            //FileInputStream fin = new FileInputStream(imgfile);
-				            PreparedStatement pre = tmpConn.prepareStatement("update BOOK set BOOK_IMAGE=? where BOOK_ISBN like \""+isbn+"\";");
-				            pre.setBinaryStream(1,iis,(int)file.length());	//이미지
-						}
-					}catch(NullPointerException |SQLException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.\n중복틍록인지  확인하세요.", "수정 실패", JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-					}
+
 				}
 			}
 		});
@@ -389,6 +388,7 @@ public class BookAmend extends JFrame implements ActionListener
 			panel_2.add(lblNewLabel_9, "cell 0 8,alignx center");
 			
 			textField_7 = new JTextField();
+			textField_7.setEditable(false);
 			panel_2.add(textField_7, "cell 1 8,growx,aligny center");
 			textField_7.setColumns(10);
 			splitPane.setDividerLocation(160);
