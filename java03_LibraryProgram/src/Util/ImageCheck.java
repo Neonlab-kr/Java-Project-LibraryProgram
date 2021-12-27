@@ -20,7 +20,7 @@ public class ImageCheck{
 	    try {
 	        b = (ImageIO.read(file) != null);
 	    } catch (IOException e) {
-	    	JOptionPane.showMessageDialog(null, "이미지를 찾을 수 없습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+	    	e.printStackTrace();
 	    }
 	    return b;
 	}
