@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -250,24 +251,26 @@ public class BookRegister extends JFrame {
 	            	file = new File(filePath);
 	                
 	                //이미지 불러오기
-	            	try {           		           	
-						if(ImageCheck.isImage(file)==false){
+	            	try {
+	            		
+	            		if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
+							System.out.println(filePath);
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
-						else {
+						else if(!filePath.equals("nullnull")) {
 							iis = new FileInputStream(file);
 							Image image = ImageIO.read(file);           	
 			            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
 			            	lblNewLabel_1.setIcon(icon);
-						}  						
-					} catch (FileNotFoundException e1) {
+						} 
+	            	} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "IOException", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 			}

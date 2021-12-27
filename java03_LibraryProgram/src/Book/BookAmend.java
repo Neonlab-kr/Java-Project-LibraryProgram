@@ -293,10 +293,10 @@ public class BookAmend extends JFrame implements ActionListener
 	                //사진파일 입력
 	            	file = new File(filePath);
 					
-					if(ImageCheck.isImage(file)==false){
+					if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
 						JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 					}
-					else {						
+					else if(!filePath.equals("nullnull")) {						
 						iis = new FileInputStream(file);
 						Image image = ImageIO.read(file);           	
 		            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
@@ -305,11 +305,11 @@ public class BookAmend extends JFrame implements ActionListener
 					}  						
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "IOException", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				}
 			}
