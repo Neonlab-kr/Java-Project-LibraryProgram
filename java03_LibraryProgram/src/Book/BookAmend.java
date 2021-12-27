@@ -225,8 +225,6 @@ public class BookAmend extends JFrame implements ActionListener
 				}
 			}
 		});
-			
-
 
 		panel.add(btnNewButton_3);
 		
@@ -270,14 +268,12 @@ public class BookAmend extends JFrame implements ActionListener
 		splitPane.setLeftComponent(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		
-		
+				
 		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");	//이미지 찾아보기
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
 		
 		lblNewLabel_1 = new JLabel("Image");
 		panel_1.add(lblNewLabel_1, BorderLayout.CENTER);
-		
 		
 		ActionListener find=new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -317,10 +313,6 @@ public class BookAmend extends JFrame implements ActionListener
 		};
 		btnNewButton_2.addActionListener(find);
 
-		
-
-
-			
 			
 			JPanel panel_2 = new JPanel();
 			splitPane.setRightComponent(panel_2);
@@ -458,8 +450,7 @@ public class BookAmend extends JFrame implements ActionListener
 		}catch(NullPointerException e) {
 			e.printStackTrace();		
 		}
-		
-		
+
 	}
 
 	@Override

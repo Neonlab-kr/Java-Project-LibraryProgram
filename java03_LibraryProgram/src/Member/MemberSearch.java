@@ -207,7 +207,6 @@ public class MemberSearch extends JFrame {
 						.executeQurey("select * from USER where USER_OUT_DATE is null and USER_NAME like \"%"
 								+ textField_Booktitle.getText() + "%\" and USER_PHONE like \"%"
 								+ textField_Author.getText() + "%\";");
-//					ResultSet src = dbConn.executeQurey("select * from j20183087.USER where USER_NAME=\"한국인\";");
 
 				remove(jp_label);
 				remove(scrollPane);
@@ -239,7 +238,6 @@ public class MemberSearch extends JFrame {
 						int sex = src.getInt(4);
 						String mail = src.getString(5);
 						String phone = src.getString(1);
-//							byte[] image = src.getBytes(6);
 						InputStream image = src.getBinaryStream(6);
 
 						btnNewButton.addActionListener(new ActionListener() {
@@ -278,49 +276,7 @@ public class MemberSearch extends JFrame {
 		scrollPane.setBounds(12, 77, 642, 281);
 		add(scrollPane);
 
-//		for(int i=0;i<10;i++) {
-		/*
-		 * ResultSet src =
-		 * dbConn.executeQurey("select * from USER where USER_OUT_DATE is null;"); try {
-		 * while (src.next()) { JLabel imgLabel = new JLabel(); ImageIcon c = new
-		 * ImageIcon("image/icon1.png"); imgLabel.setIcon(c); JLabel a = new
-		 * JLabel("이름 : " + src.getString(2)); a.setFont(new Font("굴림", Font.PLAIN,
-		 * 15)); JLabel b = new JLabel("전화번호 : " + src.getString(1)); b.setFont(new
-		 * Font("굴림", Font.PLAIN, 15));
-		 * 
-		 * dbConnector dbConn2 = new dbConnector(); Connection tmpConn =
-		 * dbConn2.getConnection(); Statement stmt =
-		 * tmpConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-		 * ResultSet.CONCUR_UPDATABLE);
-		 * 
-		 * // ResultSet src2 =
-		 * dbConn2.executeQurey("select * from RENT where USER_PHONE=\"0171234567\";");
-		 * ResultSet src2 = stmt.executeQuery("select * from RENT where USER_PHONE=\"" +
-		 * src.getString(1) + "\";"); src2.last(); int columnCount = src2.getRow();
-		 * 
-		 * System.out.println(src.getString(1)); System.out.println(columnCount);
-		 * 
-		 * JLabel c2 = new JLabel("대출중 : " + Integer.toString(columnCount));
-		 * b.setFont(new Font("굴림", Font.PLAIN, 15)); JPanel label2 = new JPanel();
-		 * JButton btnNewButton = new JButton("상세정보");
-		 * 
-		 * String name = src.getString(2); Date from = new Date(); SimpleDateFormat
-		 * transFormat = new SimpleDateFormat("yyyy-MM-dd"); String birth =
-		 * transFormat.format(src.getDate(3)); int sex = src.getInt(4); String mail =
-		 * src.getString(5); String phone = src.getString(1); // byte[] image =
-		 * src.getBytes(6); InputStream image = src.getBinaryStream(6);
-		 * 
-		 * btnNewButton.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { ResultSet src =
-		 * dbConn.executeQurey("select * from USER where USER_PHONE like \"" + phone +
-		 * "\" and USER_OUT_DATE is null;"); try { src.next(); MemberAmend temp1 = new
-		 * MemberAmend(src.getBinaryStream(6), name, birth, sex, mail, phone);
-		 * temp1.setVisible(true); } catch (SQLException e1) { // TODO Auto-generated
-		 * catch block e1.printStackTrace(); } } }); label2.add(imgLabel);
-		 * label2.add(a); label2.add(b); label2.add(c2); label2.add(btnNewButton);
-		 * create_form(label2, 0, count++ * 30, 50, 10); } } catch (SQLException e1) {
-		 * // TODO Auto-generated catch block e1.printStackTrace(); }
-		 */
+
 	}
 }
 

@@ -46,11 +46,8 @@ import Util.ImageCheck;
 
 import javax.swing.JRadioButton;
 
-//<<<<<<< HEAD:java03_LibraryProgram/src/Member/MemberResigster.java
-//public class MemberResigster extends JPanel {
-//=======
 public class MemberRegister extends JFrame {
-//>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
+
 	private JTextField textField_Name;
 	private JTextField textField_Birth;
 	private JTextField textField_Email;
@@ -76,11 +73,9 @@ public class MemberRegister extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-//<<<<<<< HEAD:java03_LibraryProgram/src/Member/MemberResigster.java
-//	public MemberRegister() {
-//=======
+
 	public MemberRegister() {
-//>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
+
 		setBounds(100, 100, 680, 428);
 		getContentPane().setLayout(null);
 		ButtonGroup group = new ButtonGroup();
@@ -181,9 +176,7 @@ public class MemberRegister extends JFrame {
 		                System.out.println(filePath);
 		                //사진파일 입력
 		            	file = new File(filePath);
-		            	
-		            	
-		
+
 						if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
@@ -194,10 +187,8 @@ public class MemberRegister extends JFrame {
 			            	Image resize=image.getScaledInstance(90,90,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
 			            	lbImage.setIcon(icon);
-
 						}
-  
-						
+
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
@@ -208,7 +199,6 @@ public class MemberRegister extends JFrame {
 						e1.printStackTrace();
 					}
 			}
-
 		});
 		
 		JLabel lbName = new JLabel("\uC774\uB984");
@@ -270,8 +260,7 @@ public class MemberRegister extends JFrame {
 				if(textField_Name.getText()==""||textField_Birth.getText()==""||textField_Email.getText()==""||textField_PhoneN.getText()=="") {
 					JOptionPane.showMessageDialog(null, "모든 필드가 채워지지 않았습니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
 				}
-				else {
-					
+				else {				
 						Connection tmpConn = dbConn.getConnection();
 						Calendar cal = Calendar.getInstance();
 						cal.setTime(new Date());
@@ -306,17 +295,11 @@ public class MemberRegister extends JFrame {
 							e1.printStackTrace();
 							
 						}
-						
-						
-						
-						
-			
+				}
 			}
-		}
 		});
 		
-		
-		
+
 		JButton btnCancel = new JButton("\uCDE8\uC18C");
 		btnCancel.addActionListener(new ActionListener() {
 
