@@ -1,16 +1,36 @@
 package Member;
-
+import Program.MainMenu;
+import SQL.dbConnector;
+import Util.ImageCheck;
 
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
+import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -19,6 +39,8 @@ import Book.BookRegister;
 import Book.BookSearch;
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
+import SQL.dbConnector;
+import Util.ImageCheck;
 
 import javax.swing.JRadioButton;
 
@@ -31,7 +53,10 @@ public class MemberRegister extends JFrame {
 	private JTextField textField_Birth;
 	private JTextField textField_Email;
 	private JTextField textField_PhoneN;
-
+	private FileInputStream iis=null;
+	private File file;
+	dbConnector dbConn = new dbConnector();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,11 +78,10 @@ public class MemberRegister extends JFrame {
 //	public MemberRegister() {
 //=======
 	public MemberRegister() {
-		setTitle("LibraryManager");
 //>>>>>>> fc80ecfc8da66def7f819e3e19d8febccccbcf2a:java03_LibraryProgram/src/Member/MemberRegister.java
 		setBounds(100, 100, 680, 428);
 		setLayout(null);
-		
+		ButtonGroup group = new ButtonGroup();
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
@@ -131,7 +155,7 @@ public class MemberRegister extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");
-		lbTitle.setFont(new Font("����", Font.BOLD, 15));
+		lbTitle.setFont(new Font("굴림", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
 		add(lbTitle);
 		
@@ -142,6 +166,49 @@ public class MemberRegister extends JFrame {
 		JButton btn_ImageFind = new JButton("\uCC3E\uC544\uBCF4\uAE30");
 		btn_ImageFind.setBounds(49, 161, 97, 23);
 		add(btn_ImageFind);
+		btn_ImageFind.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame jFrame = new JFrame();
+					FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
+	                fileDialogOpen.setVisible(true);
+	                
+	                //이미지 불러오기
+	            	try {
+	            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
+		                System.out.println(filePath);
+		                //사진파일 입력
+		            	file = new File(filePath);
+		            	
+		            	iis = new FileInputStream(file);
+		
+						if(ImageCheck.isImage(file)==false){
+							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						}
+
+						else {
+							
+							Image image = ImageIO.read(file);
+			            	
+			            	
+			            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
+			            	ImageIcon icon=new ImageIcon(resize);
+			            	lbImage.setIcon(icon);
+
+						}
+  
+						
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+			}
+
+		});
 		
 		JLabel lbName = new JLabel("\uC774\uB984");
 		lbName.setBounds(204, 67, 42, 15);
@@ -173,6 +240,9 @@ public class MemberRegister extends JFrame {
 		rdWom.setBounds(345, 136, 57, 23);
 		add(rdWom);
 		
+		group.add(rdWom);
+		group.add(rdMan);
+		
 		JLabel lbEmail = new JLabel("\uC774\uBA54\uC77C");
 		lbEmail.setBounds(194, 176, 42, 15);
 		add(lbEmail);
@@ -194,9 +264,66 @@ public class MemberRegister extends JFrame {
 		JButton btnUp = new JButton("\uB4F1\uB85D");
 		btnUp.setBounds(82, 246, 97, 23);
 		add(btnUp);
+		btnUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textField_Name.getText()==""||textField_Birth.getText()==""||textField_Email.getText()==""||textField_PhoneN.getText()=="") {
+					JOptionPane.showMessageDialog(null, "모든 필드가 채워지지 않았습니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					
+						Connection tmpConn = dbConn.getConnection();
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(new Date());
+						DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String nowDT = df.format(cal.getTime());
+						cal.add(Calendar.DATE, 14);
+						String RetrunDT = df.format(cal.getTime());
+						String sql = "insert into USER (USER_PHONE,USER_NAME,USER_BIRTH,USER_SEX,USER_MAIL,USER_IMAGE,USER_REG_DATE) values (?,?,?,?,?,?,?);";
+						PreparedStatement ps;
+						try {
+							ps = tmpConn.prepareStatement(sql);
+							ps.setString(1, textField_PhoneN.getText());
+							ps.setString(2, textField_Name.getText());
+							ps.setString(3, textField_Birth.getText());
+							 if(rdWom.isSelected())
+					            	ps.setInt(4,0);	//성별
+					            else
+					            	ps.setInt(4,1);	//성별
+							ps.setString(5, textField_Email.getText());
+							ps.setBinaryStream(6,iis,(int)file.length());
+							ps.setString(7, nowDT);
+							
+							ps.executeUpdate();
+							JOptionPane.showMessageDialog(null, "저장이 완료되었습니다", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+							
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패\n", JOptionPane.ERROR_MESSAGE);
+							e1.printStackTrace();
+							
+						}
+						
+						
+						
+						
+			
+			}
+		}
+		});
+		
+		
 		
 		JButton btnCancel = new JButton("\uCDE8\uC18C");
 		btnCancel.setBounds(268, 246, 97, 23);
 		add(btnCancel);
+		btnCancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				MainMenu temp = new MainMenu();
+				temp.setVisible(true);
+			}
+		});
 	}
 }
