@@ -372,8 +372,9 @@ public class BookReturn extends JFrame {
 							tmpConn = dbConn.getConnection();
 							ps = tmpConn.prepareStatement(sql);
 							ps.executeUpdate();
-							JOptionPane.showMessageDialog(null, "반납이 완료되었습니다", "반납 완료",
-									JOptionPane.INFORMATION_MESSAGE);
+							src = dbConn.executeQurey("select * from USER where USER_PHONE like \"" + src.getString(5) + "\";");
+							src.next();
+							JOptionPane.showMessageDialog(null, "반납이 완료되었습니다\n"+src.getString(2)+"님의 남은 대여 도서는 "+src.getString(9)+"권 입니다.", "반납 완료",JOptionPane.INFORMATION_MESSAGE);
 							BookReturn temp = new BookReturn();
 							temp.setVisible(true);
 							setVisible(false);
