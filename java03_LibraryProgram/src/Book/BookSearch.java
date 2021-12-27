@@ -386,7 +386,11 @@ public class BookSearch extends JFrame {
 
 		try {
 			inputStream = src.getBinaryStream(7);
-			lblNewLabel_3_51.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+			try {
+				lblNewLabel_3_51.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+			}catch(NullPointerException e) {
+				lblNewLabel_3_51.setText("이미지 오류");
+			}
 			pane.add(lblNewLabel_3_51);
 			
 			JTextPane titlePane = new JTextPane();
@@ -413,8 +417,6 @@ public class BookSearch extends JFrame {
 				}
 			});
 			pane.add(btnNewButton_1_51);
-		}catch(NullPointerException e) {
-			e.printStackTrace();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

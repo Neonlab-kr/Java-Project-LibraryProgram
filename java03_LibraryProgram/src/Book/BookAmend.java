@@ -31,6 +31,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import BookCheckoutReturn.BCR_BookSearch;
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
@@ -39,6 +40,9 @@ import SQL.dbConnector;
 import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
 import java.awt.ComponentOrientation;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class BookAmend extends JFrame implements ActionListener
@@ -55,10 +59,10 @@ public class BookAmend extends JFrame implements ActionListener
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JLabel lblNewLabel_1; //이미지 라벨
+	JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -248,7 +252,7 @@ public class BookAmend extends JFrame implements ActionListener
 			
 			JPanel panel_2 = new JPanel();
 			splitPane.setRightComponent(panel_2);
-			panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00][][]"));
+			panel_2.setLayout(new MigLayout("", "[74.00px][265.00px,grow]", "[21.00px][23.00][][][][47.00,grow][][]"));
 			
 			JLabel lblNewLabel_2 = new JLabel("\uC81C\uBAA9");
 			panel_2.add(lblNewLabel_2, "cell 0 0,alignx center,aligny center");
@@ -288,14 +292,20 @@ public class BookAmend extends JFrame implements ActionListener
 			JLabel lblNewLabel_7 = new JLabel("\uC124\uBA85");
 			panel_2.add(lblNewLabel_7, "cell 0 5,alignx center,aligny center");
 			
-			textField_5 = new JTextField();
-			panel_2.add(textField_5, "cell 1 5,grow");
-			textField_5.setColumns(10);
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			panel_2.add(scrollPane, "cell 1 5,grow");
+			
+			textArea = new JTextArea();
+			textArea.setLineWrap(true);
+			scrollPane.setViewportView(textArea);
 			
 			JLabel lblNewLabel_8 = new JLabel("\uB300\uCD9C\uC790");
 			panel_2.add(lblNewLabel_8, "cell 0 6,alignx center,aligny center");
 			
 			textField_6 = new JTextField();
+			textField_6.setEditable(false);
 			panel_2.add(textField_6, "cell 1 6,growx,aligny center");
 			textField_6.setColumns(10);
 			
@@ -308,10 +318,10 @@ public class BookAmend extends JFrame implements ActionListener
 			splitPane.setDividerLocation(160);
 			
 			
+			//도서정보 표시
 			InputStream inputStream = null;
 		try {
-			ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
-					+ isbn + "\";");
+			ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \"" + isbn + "\";");
 			src.next();
 			
 			System.out.println(src.getString(2));
@@ -320,9 +330,10 @@ public class BookAmend extends JFrame implements ActionListener
 			textField_2.setText(src.getString(5));
 			textField_3.setText(src.getString(8));
 			textField_4.setText(src.getString(1));
-			textField_5.setText(src.getString(6));
+			textArea.setText(src.getString(6));
 			inputStream = src.getBinaryStream(7);
 			lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(160, 180, Image.SCALE_SMOOTH)));
+
 			contentPane.revalidate();	//패널 다시 그리기
 			contentPane.repaint();
 			
@@ -333,6 +344,32 @@ public class BookAmend extends JFrame implements ActionListener
 		}catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+		
+		//대출정보 표시
+		try {
+			ResultSet src= dbConn.executeQurey("select * from RENT where BOOK_ISBN like \""+isbn+"\";");
+			System.out.println("대출조회isbn:"+isbn);
+			System.out.println("select * from RENT where BOOK_ISBN like \'"+isbn+"\';");
+			if (!src.isBeforeFirst()) {
+				textField_6.setText("대출되지 않음");
+				textField_7.setText("대출되지 않음");
+			} else {
+				src.close();
+				ResultSet src_rent= dbConn.executeQurey("select * from RENT where BOOK_ISBN like \""+isbn+"\";");
+				src_rent.next();
+				String phonenum=src_rent.getString(5);
+				String rdate=src_rent.getString(3);
+				System.out.println("select * from USER where USER_PHONE like \"" + phonenum + "\";");
+				ResultSet src_name= dbConn.executeQurey("select * from USER where USER_PHONE like \"" + phonenum + "\";");
+				src_name.next();
+				//System.out.println("select * from USER where USER_PHONE like \"" +  + "\";");
+				textField_6.setText(src_name.getString(2)+" ("+phonenum+")");
+				textField_7.setText(rdate);
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
 		}
 		
 		
