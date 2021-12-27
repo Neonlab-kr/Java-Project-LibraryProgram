@@ -67,7 +67,7 @@ public class BookAmend extends JFrame implements ActionListener
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookAmend frame = new BookAmend(123456789);
+					BookAmend frame = new BookAmend("123456789");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,9 +79,7 @@ public class BookAmend extends JFrame implements ActionListener
 	/**
 	 * Create the frame.
 	 */
-	public int isbn;
-	public BookAmend(int i) {
-		isbn=i;
+	public BookAmend(String isbn) {
 		setTitle("LibrayManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
@@ -312,18 +310,16 @@ public class BookAmend extends JFrame implements ActionListener
 			
 		try {
 			ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
-					+ i + "\";");
+					+ isbn + "\";");
 			src.next();
 			
 			System.out.println(src.getString(2));
-			//InputStream inputStream = src.getBinaryStream(7);
-			//lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
-			lblNewLabel_2.setText(src.getString(2));
-			textField_1.setText(src.getString(4));
-			textField_2.setText(src.getString(2));
+			textField.setText(src.getString(2));
+			textField_1.setText(src.getString(3));
+			textField_2.setText(src.getString(5));
 			textField_3.setText(src.getString(8));
-			textField_4.setText(src.getString(7));
-			textField_5.setText("되는거 맞나");
+			textField_4.setText(src.getString(1));
+			textField_5.setText(src.getString(6));
 			contentPane.revalidate();	//패널 다시 그리기
 			contentPane.repaint();
 			

@@ -41,7 +41,7 @@ import javax.swing.JTextPane;
 
 public class BookSearch extends JFrame {
 	
-	private int isbn;
+	private String isbn;
 	private JPanel contentPane;
 	private JTextField txtn;
 	private JTextField txtm;
@@ -379,7 +379,7 @@ public class BookSearch extends JFrame {
 
 	void AddResult(ResultSet src) {
 		try {
-			isbn=src.getInt(0);
+			isbn=src.getString(1);
 			System.out.println(isbn);
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
@@ -416,7 +416,7 @@ public class BookSearch extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					BookAmend info = new BookAmend(isbn);
 					info.setVisible(true);
-					System.out.println(info.isbn);
+					System.out.println(isbn);
 				}
 			});
 			pane.add(btnNewButton_1_51);
