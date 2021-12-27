@@ -110,7 +110,7 @@ public class MemberAmend extends JFrame {
 		                //사진파일 입력
 		            	file = new File(filePath);
 		            	
-		            	iis = new FileInputStream(file);
+		            	
 		            	
 		            	
 						if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
@@ -118,7 +118,7 @@ public class MemberAmend extends JFrame {
 						}
 
 						else if(!filePath.equals("nullnull")) {
-							
+							iis = new FileInputStream(file);
 							Image image = ImageIO.read(file);
 			            	Image resize=image.getScaledInstance(190,190,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
@@ -129,11 +129,11 @@ public class MemberAmend extends JFrame {
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "IOException", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 			}
