@@ -244,12 +244,13 @@ public class BookRegister extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 					JFrame jFrame=new JFrame();
 					FileDialog fileDialogOpen = new FileDialog(jFrame, "이미지 열기", FileDialog.LOAD);
-					fileDialogOpen.setFilenameFilter((FilenameFilter) new FilenameFilter(){
-		                @Override
-		                public boolean accept(File dir, String name) {
-		                    return name.endsWith(".jpg") || name.endsWith(".jpeg");
-		                }
-		            });
+					//fileDialogOpen.setFilterExtensions(new String[] { "*.sxc", "*.xls", "*.csv", "*.*" });
+					/*fileDialogOpen.setFilenameFilter(new FilenameFilter() {
+						@Override
+						public boolean accept(File dir,String name) {
+							return name.endsWith("jpg") || name.endsWith("jpeg");
+						}
+					});*/
 	                fileDialogOpen.setVisible(true);
 	                
 	                String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
