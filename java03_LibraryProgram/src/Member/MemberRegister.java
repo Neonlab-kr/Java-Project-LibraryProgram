@@ -1,66 +1,66 @@
 package Member;
-import Program.MainMenu;
-import SQL.dbConnector;
-import Util.ImageCheck;
 
+import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.FileDialog;
 import java.awt.Font;
-import java.awt.Image;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 import Book.BookRegister;
 import Book.BookSearch;
+import BookCheckoutReturn.BCR_MemberSearch;
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import SQL.dbConnector;
-import Util.ImageCheck;
 
-import javax.swing.JRadioButton;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
-public class MemberRegister extends JFrame {
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.sql.*;
 
-	private JTextField textField_Name;
-	private JTextField textField_Birth;
-	private JTextField textField_Email;
-	private JTextField textField_PhoneN;
-	private FileInputStream iis=null;
-	private File file;
+public class MemberSearch extends JFrame {
+	private JTextField textField_Booktitle;
+	private JTextField textField_Author;
+
 	dbConnector dbConn = new dbConnector();
-	
+
+	MemberSearch getSelf() {
+		return this;
+	}
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberRegister frame = new MemberRegister();
+					MemberSearch frame = new MemberSearch();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,23 +68,43 @@ public class MemberRegister extends JFrame {
 			}
 		});
 	}
-		
-	
+
 	/**
 	 * Create the panel.
 	 */
+	JPanel jp_label, jp_btn;
+	JScrollPane scroll;
+	JLabel label;
+	JButton btn;
+	int count = 1;
+	GridBagLayout Gbag = new GridBagLayout();
+	GridBagConstraints gbc1;
+	JScrollPane scrollPane;
 
-	public MemberRegister() {
+	public void create_form(Component cmpt, int x, int y, int w, int h) {
 
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridx = x;
+		gbc.gridy = y;
+		gbc.gridwidth = w;
+		gbc.gridheight = h;
+		this.Gbag.setConstraints(cmpt, gbc);
+		jp_label.add(cmpt);
+		jp_label.updateUI();
+
+	}
+
+	public MemberSearch() {
 		setBounds(100, 100, 680, 428);
-		getContentPane().setLayout(null);
-		ButtonGroup group = new ButtonGroup();
+		setLayout(null);
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnNewMenu = new JMenu("\uB3C4\uC11C\uAD00\uB9AC");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem mntmNewMenuItem = new JMenuItem("\uB3C4\uC11C\uAC80\uC0C9");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -94,7 +114,7 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
-		
+
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("\uB3C4\uC11C\uB4F1\uB85D");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,10 +124,10 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
-		
+
 		JMenu mnNewMenu_1 = new JMenu("\uD68C\uC6D0\uAD00\uB9AC");
 		menuBar.add(mnNewMenu_1);
-		
+
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("\uD68C\uC6D0\uAC80\uC0C9");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,7 +137,7 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
-		
+
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("\uD68C\uC6D0\uB4F1\uB85D");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,10 +147,10 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
-		
+
 		JMenu mnNewMenu_2 = new JMenu("\uB300\uCD9C\uAD00\uB9AC");
 		menuBar.add(mnNewMenu_2);
-		
+
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("\uB3C4\uC11C\uB300\uCD9C");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +160,7 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_4);
-		
+
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("\uB3C4\uC11C\uBC18\uB0A9");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,171 +170,155 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
-		
-		JLabel lbTitle = new JLabel("\uD68C\uC6D0\uB4F1\uB85D");
-		lbTitle.setFont(new Font("±º∏≤", Font.BOLD, 15));
+
+		JLabel lbTitle = new JLabel("ÌöåÏõêÍ≤ÄÏÉâ");
+		lbTitle.setFont(new Font("Íµ¥Î¶º", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
-		getContentPane().add(lbTitle);
-		
-		JLabel lbImage = new JLabel("     User Image");
-		lbImage.setBorder(new LineBorder(Color.BLACK));
-		lbImage.setBounds(120, 84, 97, 92);
-		getContentPane().add(lbImage);
-		
-		JButton btn_ImageFind = new JButton("\uCC3E\uC544\uBCF4\uAE30");
-		btn_ImageFind.setBounds(120, 186, 97, 23);
-		getContentPane().add(btn_ImageFind);
-		btn_ImageFind.addActionListener(new ActionListener() {
+		add(lbTitle);
+
+		JLabel lbBookTitle = new JLabel("Ïù¥Î¶Ñ :");
+		lbBookTitle.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 15));
+		lbBookTitle.setBounds(82, 46, 48, 18);
+		add(lbBookTitle);
+
+		textField_Booktitle = new JTextField();
+		textField_Booktitle.setBounds(131, 46, 111, 21);
+		add(textField_Booktitle);
+		textField_Booktitle.setColumns(10);
+
+		JLabel lbAuthor = new JLabel("Ï†ÑÌôîÎ≤àÌò∏ :");
+		lbAuthor.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 15));
+		lbAuthor.setBounds(254, 46, 75, 18);
+		add(lbAuthor);
+
+		textField_Author = new JTextField();
+		textField_Author.setColumns(10);
+		textField_Author.setBounds(330, 45, 111, 21);
+		add(textField_Author);
+
+		JButton btnSearch = new JButton("Í≤ÄÏÉâ");
+		btnSearch.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 14));
+		btnSearch.setBounds(460, 45, 111, 21);
+		add(btnSearch);
+
+		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame jFrame = new JFrame();
-					FileDialog fileDialogOpen = new FileDialog(jFrame, "¿ÃπÃ¡ˆ ø≠±‚", FileDialog.LOAD);
-	                fileDialogOpen.setVisible(true);
-	                
-	                //¿ÃπÃ¡ˆ ∫“∑Øø¿±‚
-	            	try {
-	            		String filePath = fileDialogOpen.getDirectory() + fileDialogOpen.getFile();
-		                System.out.println(filePath);
-		                //ªÁ¡¯∆ƒ¿œ ¿‘∑¬
-		            	file = new File(filePath);
+				ResultSet src = dbConn
+						.executeQurey("select * from USER where USER_OUT_DATE is null and USER_NAME like \"%"
+								+ textField_Booktitle.getText() + "%\" and USER_PHONE like \"%"
+								+ textField_Author.getText() + "%\";");
+//					ResultSet src = dbConn.executeQurey("select * from j20183087.USER where USER_NAME=\"ÌïúÍµ≠Ïù∏\";");
 
-						if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
-							JOptionPane.showMessageDialog(null, "¿ÃπÃ¡ˆ∞° æ∆¥’¥œ¥Ÿ.", "¿ÃπÃ¡ˆ ø¿∑˘", JOptionPane.ERROR_MESSAGE);
-						}
+				remove(jp_label);
+				remove(scrollPane);
 
-						else if(!filePath.equals("nullnull")){
-							iis = new FileInputStream(file);
-							Image image = ImageIO.read(file);
-			            	Image resize=image.getScaledInstance(90,90,Image.SCALE_SMOOTH);
-			            	ImageIcon icon=new ImageIcon(resize);
-			            	lbImage.setIcon(icon);
-						}
+				jp_label = new JPanel();
 
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "¿ÃπÃ¡ˆ∏¶ ∫“∑Øø¿¥¬µ• Ω«∆–«ﬂΩ¿¥œ¥Ÿ.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "¿ÃπÃ¡ˆ∏¶ ∫“∑Øø¿¥¬µ• Ω«∆–«ﬂΩ¿¥œ¥Ÿ.", "IOException", JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
+				jp_label.setLayout(Gbag);
+				scrollPane = new JScrollPane(jp_label);
+				scrollPane.setBounds(12, 77, 642, 281);
+				add(scrollPane);
+
+				try {
+					while (src.next()) {
+						System.out.print(src.getString(2));
+						JLabel imgLabel = new JLabel();
+						ImageIcon c = new ImageIcon("image/icon1.png");
+						imgLabel.setIcon(c);
+						JLabel a = new JLabel("Ïù¥Î¶Ñ : " + src.getString(2));
+						a.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 15));
+						JLabel b = new JLabel("Ï†ÑÌôîÎ≤àÌò∏ : " + src.getString(1));
+						b.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 15));
+						JPanel label2 = new JPanel();
+						JButton btnNewButton = new JButton("ÏÉÅÏÑ∏Ï†ïÎ≥¥");
+
+						String name = src.getString(2);
+						Date from = new Date();
+						SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+						String birth = transFormat.format(src.getDate(3));
+						int sex = src.getInt(4);
+						String mail = src.getString(5);
+						String phone = src.getString(1);
+//							byte[] image = src.getBytes(6);
+						InputStream image = src.getBinaryStream(6);
+
+						btnNewButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								MemberAmend temp = new MemberAmend(image, name, birth, sex, mail, phone);
+								temp.setVisible(true);
+
+							}
+						});
+						label2.add(imgLabel);
+						label2.add(a);
+						label2.add(b);
+						label2.add(btnNewButton);
+						create_form(label2, 0, count++ * 30, 30, 10);
 					}
-			}
-		});
-		
-		JLabel lbName = new JLabel("\uC774\uB984");
-		lbName.setBounds(323, 87, 42, 15);
-		getContentPane().add(lbName);
-		
-		textField_Name = new JTextField();
-		textField_Name.setBounds(377, 84, 144, 21);
-		getContentPane().add(textField_Name);
-		textField_Name.setColumns(10);
-		
-		JLabel lbBirth = new JLabel("\uC0DD\uB144\uC6D4\uC77C");
-		lbBirth.setBounds(308, 126, 57, 15);
-		getContentPane().add(lbBirth);
-		
-		textField_Birth = new JTextField();
-		textField_Birth.setBounds(377, 123, 144, 21);
-		getContentPane().add(textField_Birth);
-		textField_Birth.setColumns(10);
-		
-		JLabel lbSex = new JLabel("\uC131\uBCC4");
-		lbSex.setBounds(323, 161, 32, 15);
-		getContentPane().add(lbSex);
-		
-		JRadioButton rdMan = new JRadioButton("\uB0A8\uC131");
-		rdMan.setBounds(377, 157, 57, 23);
-		getContentPane().add(rdMan);
-		
-		JRadioButton rdWom = new JRadioButton("\uC5EC\uC131");
-		rdWom.setBounds(464, 156, 57, 23);
-		getContentPane().add(rdWom);
-		
-		group.add(rdWom);
-		group.add(rdMan);
-		
-		JLabel lbEmail = new JLabel("\uC774\uBA54\uC77C");
-		lbEmail.setBounds(313, 196, 42, 15);
-		getContentPane().add(lbEmail);
-		
-		textField_Email = new JTextField();
-		textField_Email.setColumns(10);
-		textField_Email.setBounds(377, 193, 144, 21);
-		getContentPane().add(textField_Email);
-		
-		JLabel lbPhoneN = new JLabel("\uC804\uD654\uBC88\uD638");
-		lbPhoneN.setBounds(308, 230, 57, 15);
-		getContentPane().add(lbPhoneN);
-		
-		textField_PhoneN = new JTextField();
-		textField_PhoneN.setBounds(377, 227, 144, 21);
-		getContentPane().add(textField_PhoneN);
-		textField_PhoneN.setColumns(10);
-		
-		JButton btnUp = new JButton("\uB4F1\uB85D");
-		btnUp.setBounds(187, 306, 97, 23);
-		getContentPane().add(btnUp);
-		btnUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(textField_Name.getText()==""||textField_Birth.getText()==""||textField_Email.getText()==""||textField_PhoneN.getText()=="") {
-					JOptionPane.showMessageDialog(null, "∏µÁ « µÂ∞° √§øˆ¡ˆ¡ˆ æ æ“Ω¿¥œ¥Ÿ.", "¿‘∑¬ ø¿∑˘", JOptionPane.WARNING_MESSAGE);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				else {				
-						Connection tmpConn = dbConn.getConnection();
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(new Date());
-						DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						String nowDT = df.format(cal.getTime());
-						cal.add(Calendar.DATE, 14);
-						String RetrunDT = df.format(cal.getTime());
-						String sql = "insert into USER (USER_PHONE,USER_NAME,USER_BIRTH,USER_SEX,USER_MAIL,USER_IMAGE,USER_REG_DATE) values (?,?,?,?,?,?,?);";
-						PreparedStatement ps;
-						try {
-							ps = tmpConn.prepareStatement(sql);
-							ps.setString(1, textField_PhoneN.getText());
-							ps.setString(2, textField_Name.getText());
-							ps.setString(3, textField_Birth.getText());
-							 if(rdWom.isSelected())
-					            	ps.setInt(4,0);	//º∫∫∞
-					            else
-					            	ps.setInt(4,1);	//º∫∫∞
-							ps.setString(5, textField_Email.getText());
-							ps.setBinaryStream(6,iis,(int)file.length());
-							ps.setString(7, nowDT);
-							
-							ps.executeUpdate();
-							JOptionPane.showMessageDialog(null, "¿˙¿Â¿Ã øœ∑·µ«æ˙Ω¿¥œ¥Ÿ", "¿˙¿Â øœ∑·", JOptionPane.INFORMATION_MESSAGE);
-							setVisible(false);
-							MainMenu temp = new MainMenu();
-							temp.setVisible(true);
-							
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(null, "¿˙¿Âø° Ω«∆–«œø¥Ω¿¥œ¥Ÿ.", "¿˙¿Â Ω«∆–\n", JOptionPane.ERROR_MESSAGE);
-							e1.printStackTrace();
-							
-						}
-				}
+				JOptionPane.showMessageDialog(null, "Í≤ÄÏÉâÏù¥ ÏôÑÎ£åÎêòÏóàÏäµÎãàÎã§.", "Í≤ÄÏÉâÏôÑÎ£å", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
-		
 
-		JButton btnCancel = new JButton("\uCDE8\uC18C");
-		btnCancel.addActionListener(new ActionListener() {
+		jp_label = new JPanel();
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				setVisible(false);
-				MemberRegister temp = new MemberRegister();
-				temp.setVisible(true);
-				
-			}
-		});
-		
-		btnCancel.setBounds(371, 306, 97, 23);
-		getContentPane().add(btnCancel);
-		btnCancel.addActionListener(null);
+		// ÎùºÎ≤®Ïù¥ Îì§Ïñ¥Í∞à panel ÏùÄ Î†àÏù¥ÏïÑÏõÉÏùÑ GridBagÏùÑ ÏÇ¨Ïö©ÌïúÎã§.
+		jp_label.setLayout(Gbag);
+
+//	   jp_label.setBackground(Color.white);
+
+		label = new JLabel();
+		create_form(label, 0, 0, 30, 10); // GridBagLayout ÏùÑ ÏúÑÌïú Ìï®ÏàòÌò∏Ï∂ú
+
+		scrollPane = new JScrollPane(jp_label);
+		scrollPane.setBounds(12, 77, 642, 281);
+		add(scrollPane);
+
+//		for(int i=0;i<10;i++) {
+		/*
+		 * ResultSet src =
+		 * dbConn.executeQurey("select * from USER where USER_OUT_DATE is null;"); try {
+		 * while (src.next()) { JLabel imgLabel = new JLabel(); ImageIcon c = new
+		 * ImageIcon("image/icon1.png"); imgLabel.setIcon(c); JLabel a = new
+		 * JLabel("Ïù¥Î¶Ñ : " + src.getString(2)); a.setFont(new Font("Íµ¥Î¶º", Font.PLAIN,
+		 * 15)); JLabel b = new JLabel("Ï†ÑÌôîÎ≤àÌò∏ : " + src.getString(1)); b.setFont(new
+		 * Font("Íµ¥Î¶º", Font.PLAIN, 15));
+		 * 
+		 * dbConnector dbConn2 = new dbConnector(); Connection tmpConn =
+		 * dbConn2.getConnection(); Statement stmt =
+		 * tmpConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+		 * ResultSet.CONCUR_UPDATABLE);
+		 * 
+		 * // ResultSet src2 =
+		 * dbConn2.executeQurey("select * from RENT where USER_PHONE=\"0171234567\";");
+		 * ResultSet src2 = stmt.executeQuery("select * from RENT where USER_PHONE=\"" +
+		 * src.getString(1) + "\";"); src2.last(); int columnCount = src2.getRow();
+		 * 
+		 * System.out.println(src.getString(1)); System.out.println(columnCount);
+		 * 
+		 * JLabel c2 = new JLabel("ÎåÄÏ∂úÏ§ë : " + Integer.toString(columnCount));
+		 * b.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 15)); JPanel label2 = new JPanel();
+		 * JButton btnNewButton = new JButton("ÏÉÅÏÑ∏Ï†ïÎ≥¥");
+		 * 
+		 * String name = src.getString(2); Date from = new Date(); SimpleDateFormat
+		 * transFormat = new SimpleDateFormat("yyyy-MM-dd"); String birth =
+		 * transFormat.format(src.getDate(3)); int sex = src.getInt(4); String mail =
+		 * src.getString(5); String phone = src.getString(1); // byte[] image =
+		 * src.getBytes(6); InputStream image = src.getBinaryStream(6);
+		 * 
+		 * btnNewButton.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { ResultSet src =
+		 * dbConn.executeQurey("select * from USER where USER_PHONE like \"" + phone +
+		 * "\" and USER_OUT_DATE is null;"); try { src.next(); MemberAmend temp1 = new
+		 * MemberAmend(src.getBinaryStream(6), name, birth, sex, mail, phone);
+		 * temp1.setVisible(true); } catch (SQLException e1) { // TODO Auto-generated
+		 * catch block e1.printStackTrace(); } } }); label2.add(imgLabel);
+		 * label2.add(a); label2.add(b); label2.add(c2); label2.add(btnNewButton);
+		 * create_form(label2, 0, count++ * 30, 50, 10); } } catch (SQLException e1) {
+		 * // TODO Auto-generated catch block e1.printStackTrace(); }
+		 */
 	}
 }
