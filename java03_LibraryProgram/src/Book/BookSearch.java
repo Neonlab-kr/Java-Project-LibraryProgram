@@ -33,6 +33,8 @@ import Member.MemberRegister;
 import Member.MemberSearch;
 import SQL.dbConnector;
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
@@ -388,6 +390,7 @@ public class BookSearch extends JFrame {
 
 	void AddResult(ResultSet src) {
 		JPanel pane = new JPanel();
+		pane.setBackground(Color.WHITE);
 		panel.add(pane, "cell 0 "+index+",grow");
 		pane.setLayout(new GridLayout(1, 0, 0, 0));
 		
