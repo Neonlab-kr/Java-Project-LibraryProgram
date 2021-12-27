@@ -199,6 +199,11 @@ public class BookAmend extends JFrame implements ActionListener
 		
 		JButton btnNewButton_2 = new JButton("\uCC3E\uC544\uBCF4\uAE30");	//이미지 찾아보기
 		panel_1.add(btnNewButton_2, BorderLayout.SOUTH);
+		
+		lblNewLabel_1 = new JLabel("Image");
+		panel_1.add(lblNewLabel_1, BorderLayout.CENTER);
+		
+		
 		ActionListener find=new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame jFrame=new JFrame();
@@ -238,13 +243,7 @@ public class BookAmend extends JFrame implements ActionListener
 
 		
 
-		
 
-			try {
-				panel_1.add(lblNewLabel_1);
-			}catch(NullPointerException e){
-				e.printStackTrace();
-			}
 			
 			
 			JPanel panel_2 = new JPanel();
@@ -308,6 +307,8 @@ public class BookAmend extends JFrame implements ActionListener
 			textField_7.setColumns(10);
 			splitPane.setDividerLocation(160);
 			
+			
+			InputStream inputStream = null;
 		try {
 			ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \""
 					+ isbn + "\";");
@@ -320,6 +321,8 @@ public class BookAmend extends JFrame implements ActionListener
 			textField_3.setText(src.getString(8));
 			textField_4.setText(src.getString(1));
 			textField_5.setText(src.getString(6));
+			inputStream = src.getBinaryStream(7);
+			lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(160, 180, Image.SCALE_SMOOTH)));
 			contentPane.revalidate();	//패널 다시 그리기
 			contentPane.repaint();
 			
@@ -327,10 +330,10 @@ public class BookAmend extends JFrame implements ActionListener
 			e.printStackTrace();		
 		}catch(SQLException e){
 			e.printStackTrace();
+		}catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		/*catch(IOException e) {
-			e.printStackTrace();
-		}*/
 		
 		
 	}

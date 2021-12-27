@@ -415,8 +415,8 @@ public class BookSearch extends JFrame {
 			btnNewButton_1_51.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					BookAmend info = new BookAmend(isbn);
+					System.out.println("³Ñ±â´Â isbn:"+isbn);
 					info.setVisible(true);
-					System.out.println(isbn);
 				}
 			});
 			pane.add(btnNewButton_1_51);
