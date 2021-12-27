@@ -244,8 +244,6 @@ public class MemberSearch extends JFrame {
 								public void actionPerformed(ActionEvent e) {
 									MemberAmend temp = new MemberAmend(image,name,birth,sex,mail,phone);
 									temp.setVisible(true);
-									setVisible(false);
-
 								}
 								}
 							);
@@ -327,7 +325,6 @@ public class MemberSearch extends JFrame {
 
 						MemberAmend temp1 = new MemberAmend(image,name,birth,sex,mail,phone);
 						temp1.setVisible(true);
-						setVisible(false);
 
 					}
 					}

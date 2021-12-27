@@ -67,7 +67,6 @@ public class MemberAmend extends JFrame {
 	 * Create the panel.
 	 */
 	public MemberAmend(InputStream image, String name,String birth,int sex,String mail,String phone) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
 		getContentPane().setLayout(null);
 			
@@ -248,10 +247,11 @@ public class MemberAmend extends JFrame {
 
 				            pre.executeUpdate();
 		
-							JOptionPane.showMessageDialog(null, "저장이 완료되었습니다.", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
+							setVisible(false);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패\n", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.", "수정 실패\n", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 					}
 					}else {
@@ -346,10 +346,11 @@ public class MemberAmend extends JFrame {
 			            
 			            pre.executeUpdate();
 	
-						JOptionPane.showMessageDialog(null, "저장이 완료되었습니다.", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "탈퇴 처리 되었습니다.", "탈퇴 완료", JOptionPane.INFORMATION_MESSAGE);
+						setVisible(false);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "저장에 실패항였습니다.", "저장 실패\n", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "탈퇴에 실패하였습니다.", "탈퇴 실패", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					
 					}
