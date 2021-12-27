@@ -89,6 +89,10 @@ public class MemberAmend extends JFrame {
 			e1.printStackTrace();
 		}
 
+		
+		
+		
+
 		JButton btn_ImageFind = new JButton("\uCC3E\uC544\uBCF4\uAE30");
 		btn_ImageFind.setBounds(36, 315, 138, 43);
 		getContentPane().add(btn_ImageFind);
@@ -106,28 +110,34 @@ public class MemberAmend extends JFrame {
 		                //사진파일 입력
 		            	file = new File(filePath);
 		            	
-						if(ImageCheck.isImage(file)==false&&!filePath.equals("nullnull")){
+		            	iis = new FileInputStream(file);
+		            	
+		            	
+						if(ImageCheck.isImage(file)==false){
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
 
-						else if(!filePath.equals("nullnull")) {
-							iis = new FileInputStream(file);
+						else {
+							
 							Image image = ImageIO.read(file);
 			            	Image resize=image.getScaledInstance(190,190,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
 			            	lbImage.setIcon(icon);
+
 						}
-  		
+  
+						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "IOException", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 			}
+
 		});
 		
 		JLabel lbName = new JLabel("\uC774\uB984");
@@ -317,7 +327,7 @@ public class MemberAmend extends JFrame {
 		getContentPane().add(btnTOut);
 		btnTOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField_Name.getText()==""||textField_Birth.getText()==""||textField_Email.getText()==""||textField_PhoneN.getText()=="") {
+				if(textField_Name.getText().equals("")||textField_Birth.getText().equals("")||textField_Email.getText().equals("")||textField_PhoneN.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "모든 필드가 채워지지 않았습니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
 				}
 				else {
@@ -354,7 +364,8 @@ public class MemberAmend extends JFrame {
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "탈퇴 실패하였습니다.", "탈퇴 실패\n", JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();	
+						e1.printStackTrace();
+					
 					}
 				}
 			}
