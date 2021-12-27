@@ -70,6 +70,7 @@ public class BookAmend extends JFrame implements ActionListener
 	private JLabel lblNewLabel_1; //이미지 라벨
 	private File file;	//이미지 파일
 	JTextArea textArea;
+	JButton btnNewButton;	//삭제버튼
 
 
 	/**
@@ -229,7 +230,7 @@ public class BookAmend extends JFrame implements ActionListener
 
 		panel.add(btnNewButton_3);
 		
-		JButton btnNewButton = new JButton("\uC0AD\uC81C");	//삭제버튼
+		btnNewButton = new JButton("\uC0AD\uC81C");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ResultSet src = dbConn.executeQurey("delete from BOOK where BOOK_ISBN like \""+isbn+"\";");
@@ -446,6 +447,9 @@ public class BookAmend extends JFrame implements ActionListener
 				//System.out.println("select * from USER where USER_PHONE like \"" +  + "\";");
 				textField_6.setText(src_name.getString(2)+" ("+phonenum+")");
 				textField_7.setText(rdate);
+				btnNewButton.setEnabled(false);
+				btnNewButton.setText("대출중 삭제불가");
+				
 			}
 		}
 		catch(SQLException e) {

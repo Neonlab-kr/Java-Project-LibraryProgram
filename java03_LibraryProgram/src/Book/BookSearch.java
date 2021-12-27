@@ -234,6 +234,8 @@ public class BookSearch extends JFrame {
 					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
+				}catch(NullPointerException e2) {
+					e2.printStackTrace();
 				}
 			
 			}
