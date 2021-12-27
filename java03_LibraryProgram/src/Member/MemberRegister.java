@@ -171,13 +171,13 @@ public class MemberSearch extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 
-		JLabel lbTitle = new JLabel("회원검색");
-		lbTitle.setFont(new Font("굴림", Font.BOLD, 15));
+		JLabel lbTitle = new JLabel("�쉶�썝寃��깋");
+		lbTitle.setFont(new Font("援대┝", Font.BOLD, 15));
 		lbTitle.setBounds(12, 10, 75, 27);
 		add(lbTitle);
 
-		JLabel lbBookTitle = new JLabel("이름 :");
-		lbBookTitle.setFont(new Font("굴림", Font.PLAIN, 15));
+		JLabel lbBookTitle = new JLabel("�씠由� :");
+		lbBookTitle.setFont(new Font("援대┝", Font.PLAIN, 15));
 		lbBookTitle.setBounds(82, 46, 48, 18);
 		add(lbBookTitle);
 
@@ -186,8 +186,8 @@ public class MemberSearch extends JFrame {
 		add(textField_Booktitle);
 		textField_Booktitle.setColumns(10);
 
-		JLabel lbAuthor = new JLabel("전화번호 :");
-		lbAuthor.setFont(new Font("굴림", Font.PLAIN, 15));
+		JLabel lbAuthor = new JLabel("�쟾�솕踰덊샇 :");
+		lbAuthor.setFont(new Font("援대┝", Font.PLAIN, 15));
 		lbAuthor.setBounds(254, 46, 75, 18);
 		add(lbAuthor);
 
@@ -196,8 +196,8 @@ public class MemberSearch extends JFrame {
 		textField_Author.setBounds(330, 45, 111, 21);
 		add(textField_Author);
 
-		JButton btnSearch = new JButton("검색");
-		btnSearch.setFont(new Font("굴림", Font.PLAIN, 14));
+		JButton btnSearch = new JButton("寃��깋");
+		btnSearch.setFont(new Font("援대┝", Font.PLAIN, 14));
 		btnSearch.setBounds(460, 45, 111, 21);
 		add(btnSearch);
 
@@ -207,7 +207,7 @@ public class MemberSearch extends JFrame {
 						.executeQurey("select * from USER where USER_OUT_DATE is null and USER_NAME like \"%"
 								+ textField_Booktitle.getText() + "%\" and USER_PHONE like \"%"
 								+ textField_Author.getText() + "%\";");
-//					ResultSet src = dbConn.executeQurey("select * from j20183087.USER where USER_NAME=\"한국인\";");
+//					ResultSet src = dbConn.executeQurey("select * from j20183087.USER where USER_NAME=\"�븳援��씤\";");
 
 				remove(jp_label);
 				remove(scrollPane);
@@ -225,12 +225,12 @@ public class MemberSearch extends JFrame {
 						JLabel imgLabel = new JLabel();
 						ImageIcon c = new ImageIcon("image/icon1.png");
 						imgLabel.setIcon(c);
-						JLabel a = new JLabel("이름 : " + src.getString(2));
-						a.setFont(new Font("굴림", Font.PLAIN, 15));
-						JLabel b = new JLabel("전화번호 : " + src.getString(1));
-						b.setFont(new Font("굴림", Font.PLAIN, 15));
+						JLabel a = new JLabel("�씠由� : " + src.getString(2));
+						a.setFont(new Font("援대┝", Font.PLAIN, 15));
+						JLabel b = new JLabel("�쟾�솕踰덊샇 : " + src.getString(1));
+						b.setFont(new Font("援대┝", Font.PLAIN, 15));
 						JPanel label2 = new JPanel();
-						JButton btnNewButton = new JButton("상세정보");
+						JButton btnNewButton = new JButton("�긽�꽭�젙蹂�");
 
 						String name = src.getString(2);
 						Date from = new Date();
@@ -259,19 +259,19 @@ public class MemberSearch extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(null, "검색이 완료되었습니다.", "검색완료", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "寃��깋�씠 �셿猷뚮릺�뿀�뒿�땲�떎.", "寃��깋�셿猷�", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 
 		jp_label = new JPanel();
 
-		// 라벨이 들어갈 panel 은 레이아웃을 GridBag을 사용한다.
+		// �씪踰⑥씠 �뱾�뼱媛� panel �� �젅�씠�븘�썐�쓣 GridBag�쓣 �궗�슜�븳�떎.
 		jp_label.setLayout(Gbag);
 
 //	   jp_label.setBackground(Color.white);
 
 		label = new JLabel();
-		create_form(label, 0, 0, 30, 10); // GridBagLayout 을 위한 함수호출
+		create_form(label, 0, 0, 30, 10); // GridBagLayout �쓣 �쐞�븳 �븿�닔�샇異�
 
 		scrollPane = new JScrollPane(jp_label);
 		scrollPane.setBounds(12, 77, 642, 281);
@@ -283,9 +283,9 @@ public class MemberSearch extends JFrame {
 		 * dbConn.executeQurey("select * from USER where USER_OUT_DATE is null;"); try {
 		 * while (src.next()) { JLabel imgLabel = new JLabel(); ImageIcon c = new
 		 * ImageIcon("image/icon1.png"); imgLabel.setIcon(c); JLabel a = new
-		 * JLabel("이름 : " + src.getString(2)); a.setFont(new Font("굴림", Font.PLAIN,
-		 * 15)); JLabel b = new JLabel("전화번호 : " + src.getString(1)); b.setFont(new
-		 * Font("굴림", Font.PLAIN, 15));
+		 * JLabel("�씠由� : " + src.getString(2)); a.setFont(new Font("援대┝", Font.PLAIN,
+		 * 15)); JLabel b = new JLabel("�쟾�솕踰덊샇 : " + src.getString(1)); b.setFont(new
+		 * Font("援대┝", Font.PLAIN, 15));
 		 * 
 		 * dbConnector dbConn2 = new dbConnector(); Connection tmpConn =
 		 * dbConn2.getConnection(); Statement stmt =
@@ -299,9 +299,9 @@ public class MemberSearch extends JFrame {
 		 * 
 		 * System.out.println(src.getString(1)); System.out.println(columnCount);
 		 * 
-		 * JLabel c2 = new JLabel("대출중 : " + Integer.toString(columnCount));
-		 * b.setFont(new Font("굴림", Font.PLAIN, 15)); JPanel label2 = new JPanel();
-		 * JButton btnNewButton = new JButton("상세정보");
+		 * JLabel c2 = new JLabel("��異쒖쨷 : " + Integer.toString(columnCount));
+		 * b.setFont(new Font("援대┝", Font.PLAIN, 15)); JPanel label2 = new JPanel();
+		 * JButton btnNewButton = new JButton("�긽�꽭�젙蹂�");
 		 * 
 		 * String name = src.getString(2); Date from = new Date(); SimpleDateFormat
 		 * transFormat = new SimpleDateFormat("yyyy-MM-dd"); String birth =
