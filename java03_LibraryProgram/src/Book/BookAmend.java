@@ -196,7 +196,7 @@ public class BookAmend extends JFrame implements ActionListener
 			            pre.setString(3,textField_5.getText());	//출판사
 			            pre.setInt(4,Integer.parseInt(textField_2.getText()));	//가격
 			            pre.setString(5,textField_3.getText());	//링크
-			            pre.setInt(6,Integer.parseInt(textField_4.getText()));	//ISBN
+			            pre.setString(6,textField_4.getText());	//ISBN
 			            pre.setString(7,textArea.getText());	//설명
 			            pre.executeUpdate();
 			            
@@ -211,8 +211,6 @@ public class BookAmend extends JFrame implements ActionListener
 						}
 			            JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 			            setVisible(false);
-						BookSearch temp = new BookSearch();
-						temp.setVisible(true);
 			            
 					}catch (NullPointerException |SQLException e1) {
 						// TODO Auto-generated catch block
