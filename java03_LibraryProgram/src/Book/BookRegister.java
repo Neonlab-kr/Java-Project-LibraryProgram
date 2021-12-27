@@ -177,7 +177,6 @@ public class BookRegister extends JFrame {
 				else {
 					try {
 						Connection tmpConn = dbConn.getConnection();
-						
 						Statement st = tmpConn.createStatement();
 			            //File imgfile = new File("d:\\images.jpg");
 			            //FileInputStream fin = new FileInputStream(imgfile);

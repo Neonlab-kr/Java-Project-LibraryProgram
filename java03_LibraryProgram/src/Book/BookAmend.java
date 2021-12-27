@@ -13,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -179,11 +181,30 @@ public class BookAmend extends JFrame implements ActionListener
 		});
 		panel.add(btnNewButton_3);
 		
-		JButton btnNewButton = new JButton("\uC0AD\uC81C");
+		JButton btnNewButton = new JButton("\uC0AD\uC81C");	//삭제버튼
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//ResultSet src = dbConn.executeQurey("delete from BOOK where BOOK_ISBN like \""+isbn+"\";");
+				System.out.println("삭제버튼");
+				Connection tmpConn = dbConn.getConnection();
+				try {
+					PreparedStatement pre = tmpConn.prepareStatement("delete from BOOK where BOOK_ISBN like \""+isbn+"\";");
+					pre.executeUpdate();
+					JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다.", "삭제", JOptionPane.INFORMATION_MESSAGE);
+					setVisible(false);
+					BookSearch temp = new BookSearch();
+					temp.setVisible(true);
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("\uCDE8\uC18C");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnNewButton_1.addActionListener(new ActionListener() {	//취소버튼
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
@@ -322,6 +343,7 @@ public class BookAmend extends JFrame implements ActionListener
 			InputStream inputStream = null;
 		try {
 			ResultSet src = dbConn.executeQurey("select * from BOOK where BOOK_ISBN like \"" + isbn + "\";");
+			System.out.println("select * from BOOK where BOOK_ISBN like \"" + isbn + "\";");
 			src.next();
 			
 			System.out.println(src.getString(2));
