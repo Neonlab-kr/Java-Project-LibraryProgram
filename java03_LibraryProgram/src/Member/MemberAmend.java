@@ -77,8 +77,10 @@ public class MemberAmend extends JFrame {
 
 
 		try {
-			BufferedImage bimg = ImageIO.read(image);
-			lbImage = new JLabel("",new ImageIcon(bimg), JLabel.CENTER);
+			lbImage = new JLabel();
+			BufferedImage bimg = ImageIO.read(image);	
+			lbImage.setIcon(new ImageIcon(new ImageIcon(bimg).getImage()
+					.getScaledInstance(199, 199, Image.SCALE_SMOOTH)));
 			lbImage.setBounds(70, 78, 199, 199);
 			lbImage.setBorder(new TitledBorder(new LineBorder(Color.black,5)));
 			getContentPane().add(lbImage);
@@ -109,7 +111,8 @@ public class MemberAmend extends JFrame {
 		            	file = new File(filePath);
 		            	
 		            	iis = new FileInputStream(file);
-		
+		            	
+		            	
 						if(ImageCheck.isImage(file)==false){
 							JOptionPane.showMessageDialog(null, "이미지가 아닙니다.", "이미지 오류", JOptionPane.ERROR_MESSAGE);
 						}
@@ -117,9 +120,7 @@ public class MemberAmend extends JFrame {
 						else {
 							
 							Image image = ImageIO.read(file);
-			            	
-			            	
-			            	Image resize=image.getScaledInstance(175,230,Image.SCALE_SMOOTH);
+			            	Image resize=image.getScaledInstance(190,190,Image.SCALE_SMOOTH);
 			            	ImageIcon icon=new ImageIcon(resize);
 			            	lbImage.setIcon(icon);
 
@@ -221,8 +222,8 @@ public class MemberAmend extends JFrame {
 	
 				            PreparedStatement pre = tmpConn.prepareStatement(sql);
 	
-				            pre.setString(1,textField_PhoneN.getText());	//�쑕���룿
-				            pre.setString(2,textField_Name.getText());	//�씠由�
+				            pre.setString(1,textField_PhoneN.getText());	
+				            pre.setString(2,textField_Name.getText());	
 				            
 				            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 				            
@@ -236,19 +237,20 @@ public class MemberAmend extends JFrame {
 				            
 				            long timeInMilliSeconds = to.getTime();
 				            
-				            pre.setDate(3,new java.sql.Date(timeInMilliSeconds));	//�깮�씪
+				            pre.setDate(3,new java.sql.Date(timeInMilliSeconds));	
 				            if(rdWom.isSelected())
-				            	pre.setInt(4,0);	//�꽦蹂�
+				            	pre.setInt(4,0);	
 				            else
-				            	pre.setInt(4,1);	//�꽦蹂�
+				            	pre.setInt(4,1);	
 				            
 				            
-				            pre.setString(5,textField_Email.getText());	//�씠硫붿씪
+				            pre.setString(5,textField_Email.getText());	
 
 				            pre.executeUpdate();
 		
 							JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
+							
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.", "수정 실패\n", JOptionPane.ERROR_MESSAGE);
@@ -265,8 +267,8 @@ public class MemberAmend extends JFrame {
 	
 				            PreparedStatement pre = tmpConn.prepareStatement(sql);
 	
-				            pre.setString(1,textField_PhoneN.getText());	//�쑕���룿
-				            pre.setString(2,textField_Name.getText());	//�씠由�
+				            pre.setString(1,textField_PhoneN.getText());	
+				            pre.setString(2,textField_Name.getText());	
 				            
 				            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 				            
@@ -280,24 +282,28 @@ public class MemberAmend extends JFrame {
 				            
 				            long timeInMilliSeconds = to.getTime();
 				            
-				            pre.setDate(3,new java.sql.Date(timeInMilliSeconds));	//�깮�씪
+				            pre.setDate(3,new java.sql.Date(timeInMilliSeconds));	
 				            if(rdWom.isSelected())
-				            	pre.setInt(4,1);	//�꽦蹂�
+				            	pre.setInt(4,0);	
 				            else
-				            	pre.setInt(4,0);	//�꽦蹂�
+				            	pre.setInt(4,1);	
 				            
 				            
-				            pre.setString(5,textField_Email.getText());	//�씠硫붿씪
+				            pre.setString(5,textField_Email.getText());	
 				            
-				            pre.setBinaryStream(6,iis,(int)file.length());	//�씠誘몄�
-				            
+				            pre.setBinaryStream(6,iis,(int)file.length());	
+				       
 				            
 				            pre.executeUpdate();
 		
-							JOptionPane.showMessageDialog(null, "저장이 완료되었습니다.", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "저장 완료", JOptionPane.INFORMATION_MESSAGE);
+							MemberSearch temp = new MemberSearch();
+							temp.setVisible(true);
+							setVisible(false);
+							
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패\n", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "수정에 실패하였습니다.", "저장 실패\n", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 						
 						}
@@ -311,8 +317,6 @@ public class MemberAmend extends JFrame {
 		getContentPane().add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MemberSearch temp = new MemberSearch();
-				temp.setVisible(true);
 				setVisible(false);
 			}
 			}
@@ -328,29 +332,38 @@ public class MemberAmend extends JFrame {
 				}
 				else {
 					try {
+						
 						Connection tmpConn = dbConn.getConnection();
-
-						String sql = "UPDATE USER set USER_OUT_DATE = ? WHERE USER_PHONE = \""+ textField_PhoneN.getText() +"\";";
-
-			            PreparedStatement pre = tmpConn.prepareStatement(sql);
-
-
-			            SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
-			            
-			            Date time = new Date();
-			            
-			            long timeInMilliSeconds = time.getTime();
-			            java.sql.Date date1 = new java.sql.Date(timeInMilliSeconds);
-
-			            pre.setDate(1,date1);	//�깮�씪
-			            
-			            pre.executeUpdate();
+						ResultSet src = dbConn.executeQurey("select * from USER where USER_PHONE = \""+textField_PhoneN.getText()+"\";");//폰 번호를 프라이머리로 받아서 검색
+						int ys=-1;
+						while(src.next())
+							ys = src.getInt(9);
+						
+						System.out.println(ys);
+						
+						if(ys != 0) {
+							JOptionPane.showMessageDialog(null, "도서 대출 상태입니다","탈퇴 오류" ,JOptionPane.WARNING_MESSAGE);
+						}else {
+							String sql = "UPDATE USER set USER_OUT_DATE = ? WHERE USER_PHONE = \""+ textField_PhoneN.getText() +"\";";
+				            PreparedStatement pre = tmpConn.prepareStatement(sql);
+				            SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+				            
+				            Date time = new Date();
+				            
+				            long timeInMilliSeconds = time.getTime();
+				            java.sql.Date date1 = new java.sql.Date(timeInMilliSeconds);
 	
-						JOptionPane.showMessageDialog(null, "탈퇴 처리 되었습니다.", "탈퇴 완료", JOptionPane.INFORMATION_MESSAGE);
-						setVisible(false);
+				            pre.setDate(1,date1);	
+				            
+				            pre.executeUpdate();
+		
+							JOptionPane.showMessageDialog(null, "탈퇴 완료되었습니다.", "탈퇴 완료", JOptionPane.INFORMATION_MESSAGE);
+							setVisible(false);
+						}
+						
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "탈퇴에 실패하였습니다.", "탈퇴 실패", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "탈퇴 실패하였습니다.", "탈퇴 실패\n", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					
 					}
