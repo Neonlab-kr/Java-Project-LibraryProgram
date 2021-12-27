@@ -222,7 +222,7 @@ public class MemberAmend extends JFrame {
 	//						String sql = "UPDATE USER SET USER_PHONE = ?, USER_NAME = ?, USER_BIRTH = ?, USER_SEX = ?, USER_MAIL = ? WHERE USER_PHONE = ?;";
 	//						System.out.println(lbPhoneN.getText());
 	//						System.out.println(textField_Name.getText());
-							String sql = "UPDATE USER set USER_PHONE = ?,USER_NAME = ? ,USER_BIRTH = ?, USER_SEX = ?, USER_MAIL = ? WHERE USER_PHONE = \""+ textField_PhoneN.getText() +"\";";
+							String sql = "UPDATE USER set USER_PHONE = ?,USER_NAME = ? ,USER_BIRTH = ?, USER_SEX = ?, USER_MAIL = ? WHERE USER_PHONE = \""+ phone +"\";";
 	
 				            PreparedStatement pre = tmpConn.prepareStatement(sql);
 	
@@ -267,7 +267,7 @@ public class MemberAmend extends JFrame {
 	//						String sql = "UPDATE USER SET USER_PHONE = ?, USER_NAME = ?, USER_BIRTH = ?, USER_SEX = ?, USER_MAIL = ? WHERE USER_PHONE = ?;";
 	//						System.out.println(lbPhoneN.getText());
 	//						System.out.println(textField_Name.getText());
-							String sql = "UPDATE USER set USER_PHONE = ?,USER_NAME = ? ,USER_BIRTH = ?, USER_SEX = ?, USER_MAIL = ? , USER_IMAGE = ? WHERE USER_PHONE = \""+ textField_PhoneN.getText() +"\";";
+							String sql = "UPDATE USER set USER_PHONE = ?,USER_NAME = ? ,USER_BIRTH = ?, USER_SEX = ?, USER_MAIL = ? , USER_IMAGE = ? WHERE USER_PHONE = \""+ phone +"\";";
 	
 				            PreparedStatement pre = tmpConn.prepareStatement(sql);
 	
