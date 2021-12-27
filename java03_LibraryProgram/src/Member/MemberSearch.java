@@ -230,6 +230,8 @@ public class MemberSearch extends JFrame {
 								a.setFont(new Font("굴림", Font.PLAIN, 15));
 								JLabel b = new JLabel("전화번호 : " + src.getString(1));
 								b.setFont(new Font("굴림", Font.PLAIN, 15));
+								JLabel count1 = new JLabel("대여권수 : " + src.getString(9));
+								count1.setFont(new Font("굴림", Font.PLAIN, 15));
 								JPanel label2 = new JPanel();
 								JButton btnNewButton = new JButton("상세정보");
 
@@ -259,6 +261,7 @@ public class MemberSearch extends JFrame {
 								label2.add(imgLabel);
 								label2.add(a);
 								label2.add(b);
+								label2.add(count1);
 								label2.add(btnNewButton);
 								create_form(label2, 0, count++ * 30, 30, 10);
 							}
