@@ -47,6 +47,10 @@ public class BookSearch extends JFrame {
 	private JPanel panel;
 	private int index=0;
 	
+	
+	BookSearch getSelf() {
+		return this;
+	}
 	dbConnector dbConn = new dbConnector();
 	
 	/**
@@ -415,7 +419,7 @@ public class BookSearch extends JFrame {
 			JButton btnNewButton_1_51 = new JButton("세부정보");
 			btnNewButton_1_51.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					BookAmend info = new BookAmend(isbnLabel.getText());
+					BookAmend info = new BookAmend(getSelf(),isbnLabel.getText());
 					info.setVisible(true);
 					System.out.println(isbnLabel.getText());
 				}

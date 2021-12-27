@@ -40,6 +40,7 @@ import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
 import Member.MemberSearch;
+import Program.MainMenu;
 import SQL.dbConnector;
 import Util.ImageCheck;
 import net.miginfocom.swing.MigLayout;
@@ -78,7 +79,7 @@ public class BookAmend extends JFrame implements ActionListener
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookAmend frame = new BookAmend("123456789");
+					MainMenu frame = new MainMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,9 +91,8 @@ public class BookAmend extends JFrame implements ActionListener
 	/**
 	 * Create the frame.
 	 */
-	public BookAmend(String isbn) {
+	public BookAmend(BookSearch BS, String isbn) {
 		setTitle("LibrayManager");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 428);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -211,6 +211,9 @@ public class BookAmend extends JFrame implements ActionListener
 						}
 			            JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 			            setVisible(false);
+			            BS.setVisible(false);
+			            BookSearch temp = new BookSearch();
+			            temp.setVisible(true);
 			            
 					}catch (NullPointerException |SQLException e1) {
 						// TODO Auto-generated catch block
@@ -236,9 +239,10 @@ public class BookAmend extends JFrame implements ActionListener
 					PreparedStatement pre = tmpConn.prepareStatement("delete from BOOK where BOOK_ISBN like \""+isbn+"\";");
 					pre.executeUpdate();
 					JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다.", "삭제", JOptionPane.INFORMATION_MESSAGE);
-					setVisible(false);
-					BookSearch temp = new BookSearch();
-					temp.setVisible(true);
+		            setVisible(false);
+		            BS.setVisible(false);
+		            BookSearch temp = new BookSearch();
+		            temp.setVisible(true);
 					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
