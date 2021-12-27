@@ -154,7 +154,7 @@ public class BCR_BookSearch extends JFrame {
 							tempsrc.next();
 							BR.textArea.setText(tempsrc.getString(6));
 							InputStream inputStream = tempsrc.getBinaryStream(7);
-							BR.lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(67, 89, Image.SCALE_SMOOTH)));
+							BR.lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(inputStream)).getImage().getScaledInstance(99, 112, Image.SCALE_SMOOTH)));
 							setVisible(false);
 						} catch (SQLException | IOException e1) {
 							e1.printStackTrace();
