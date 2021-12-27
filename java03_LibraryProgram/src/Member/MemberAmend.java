@@ -35,6 +35,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import Book.BookSearch;
 import Program.MainMenu;
 import SQL.dbConnector;
 import Util.ImageCheck;
@@ -66,7 +67,7 @@ public class MemberAmend extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-	public MemberAmend(InputStream image, String name,String birth,int sex,String mail,String phone) {
+	public MemberAmend(MemberSearch MS,InputStream image, String name,String birth,int sex,String mail,String phone) {
 		setBounds(100, 100, 680, 428);
 		getContentPane().setLayout(null);
 			
@@ -254,6 +255,9 @@ public class MemberAmend extends JFrame {
 		
 							JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
+							MS.setVisible(false);
+							MemberSearch temp = new MemberSearch();
+							temp.setVisible(true);
 							
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -350,7 +354,6 @@ public class MemberAmend extends JFrame {
 						}else {
 							String sql = "UPDATE USER set USER_OUT_DATE = ? WHERE USER_PHONE = \""+ textField_PhoneN.getText() +"\";";
 				            PreparedStatement pre = tmpConn.prepareStatement(sql);
-				            SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
 				            
 				            Date time = new Date();
 				            
@@ -363,6 +366,9 @@ public class MemberAmend extends JFrame {
 		
 							JOptionPane.showMessageDialog(null, "탈퇴 완료되었습니다.", "탈퇴 완료", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
+							MS.setVisible(false);
+							MemberSearch temp = new MemberSearch();
+							temp.setVisible(true);
 						}
 						
 					} catch (SQLException e1) {

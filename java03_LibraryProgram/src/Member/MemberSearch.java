@@ -250,7 +250,7 @@ public class MemberSearch extends JFrame {
 														+ phone + "\";");
 										try {
 											src.next();
-										MemberAmend temp = new MemberAmend(src.getBinaryStream(6), name, birth, sex, mail, phone);
+										MemberAmend temp = new MemberAmend(getSelf(),src.getBinaryStream(6), name, birth, sex, mail, phone);
 										temp.setVisible(true);
 										} catch (SQLException e1) {
 											// TODO Auto-generated catch block
