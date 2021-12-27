@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +34,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import BookCheckoutReturn.BCR_BookSearch;
 import BookCheckoutReturn.BookCheckout;
 import BookCheckoutReturn.BookReturn;
 import Member.MemberRegister;
@@ -188,7 +186,7 @@ public class BookAmend extends JFrame implements ActionListener
 				}else {
 					try {
 						Connection tmpConn = dbConn.getConnection();
-						Statement st = tmpConn.createStatement();
+						//Statement st = tmpConn.createStatement();
 			            //File imgfile = new File("d:\\images.jpg");
 			            //FileInputStream fin = new FileInputStream(imgfile);
 			            PreparedStatement pre = tmpConn.prepareStatement("update BOOK set BOOK_TITLE=?,BOOK_AUTHOR=?,BOOK_PUB=?,BOOK_PRICE=?,BOOK_LINK=?,BOOK_ISBN=?,BOOK_DESCRIPTION=? where BOOK_ISBN like \""+isbn+"\";");    

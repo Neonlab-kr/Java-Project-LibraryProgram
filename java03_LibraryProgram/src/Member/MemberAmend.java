@@ -87,6 +87,10 @@ public class MemberAmend extends JFrame {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}catch (NullPointerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "이미지를 불러오는데 실패했습니다.", "NullPointerException", JOptionPane.ERROR_MESSAGE);
 		}
 
 		

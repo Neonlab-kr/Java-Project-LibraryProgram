@@ -305,8 +305,11 @@ public class MemberRegister extends JFrame {
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "저장 실패\n", JOptionPane.ERROR_MESSAGE);
-							e1.printStackTrace();
-							
+							e1.printStackTrace();	
+						}catch (NullPointerException e1) {
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(null, "저장에 실패하였습니다.", "NullPointerException", JOptionPane.ERROR_MESSAGE);
+							e1.printStackTrace();	
 						}
 						
 						
