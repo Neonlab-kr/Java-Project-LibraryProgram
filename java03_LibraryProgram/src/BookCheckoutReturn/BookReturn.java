@@ -220,18 +220,18 @@ public class BookReturn extends JFrame {
 		textField_3.setColumns(10);
 		textField_3.setBounds(360, 130, 226, 21);
 		textField_3.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {                                           
-			    if (Desktop.isDesktopSupported()) {
-			            Desktop desktop = Desktop.getDesktop();
-			            try {
-			                URI uri = new URI(textField_3.getText());
-			                desktop.browse(uri);
-			            } catch (IOException ex) {
-			                ex.printStackTrace();
-			            } catch (URISyntaxException ex) {
-			                ex.printStackTrace();
-			            }
-			    }
+			public void mouseClicked(MouseEvent e) {
+				if (Desktop.isDesktopSupported()) {
+					Desktop desktop = Desktop.getDesktop();
+					try {
+						URI uri = new URI(textField_3.getText());
+						desktop.browse(uri);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					} catch (URISyntaxException ex) {
+						ex.printStackTrace();
+					}
+				}
 			}
 		});
 		Font font = textField_3.getFont();
@@ -294,48 +294,9 @@ public class BookReturn extends JFrame {
 								JOptionPane.showMessageDialog(null, "대출중인 도서 검색 결과가 없습니다.", "결과 없음",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
-								src = dbConn.executeQurey("select * from BOOK where BOOK_TITLE like \"%"
-										+ textField.getText() + "%\" and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
-								BCR_BookSearch temp = new BCR_BookSearch(2, src);
-								temp.BR = getSelf();
-								temp.setVisible(true);
-							}
-						}
-					} else if (!textField.getText().equals("")) {
-						ResultSet src = dbConn.executeQurey(
-								"select * from BOOK where BOOK_TITLE like \"%" + textField.getText() + "%\";");
-						if (!src.isBeforeFirst()) {
-							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
-						} else {
-							src.next();
-							ResultSet tempsrc = dbConn.executeQurey(
-									"select * from RENT where BOOK_ISBN like \"" + src.getString(1) + "\";");
-							if (!tempsrc.isBeforeFirst()) {
-								JOptionPane.showMessageDialog(null, "대출중인 도서 검색 결과가 없습니다.", "결과 없음",
-										JOptionPane.ERROR_MESSAGE);
-							} else {
 								src = dbConn.executeQurey(
-										"select * from BOOK where BOOK_TITLE like \"%" + textField.getText() + "%\";");
-								BCR_BookSearch temp = new BCR_BookSearch(2, src);
-								temp.BR = getSelf();
-								temp.setVisible(true);
-							}
-						}
-					} else if (!textField_1.getText().equals("")) {
-						ResultSet src = dbConn.executeQurey(
-								"select * from BOOK where BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
-						if (!src.isBeforeFirst()) {
-							JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.ERROR_MESSAGE);
-						} else {
-							src.next();
-							ResultSet tempsrc = dbConn.executeQurey(
-									"select * from RENT where BOOK_ISBN like \"" + src.getString(1) + "\";");
-							if (!tempsrc.isBeforeFirst()) {
-								JOptionPane.showMessageDialog(null, "대출중인 도서 검색 결과가 없습니다.", "결과 없음",
-										JOptionPane.ERROR_MESSAGE);
-							} else {
-								src = dbConn.executeQurey(
-										"select * from BOOK where BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
+										"select * from BOOK where BOOK_TITLE like \"%" + textField.getText()
+												+ "%\" and BOOK_AUTHOR like\"%" + textField_1.getText() + "%\";");
 								BCR_BookSearch temp = new BCR_BookSearch(2, src);
 								temp.BR = getSelf();
 								temp.setVisible(true);
@@ -368,13 +329,17 @@ public class BookReturn extends JFrame {
 							Connection tmpConn = dbConn.getConnection();
 							PreparedStatement ps = tmpConn.prepareStatement(sql);
 							ps.executeUpdate();
-							sql = "UPDATE USER set USER_RENT_CNT = USER_RENT_CNT - 1 where USER_PHONE = \""+ src.getString(5) +"\";";
+							sql = "UPDATE USER set USER_RENT_CNT = USER_RENT_CNT - 1 where USER_PHONE = \""
+									+ src.getString(5) + "\";";
 							tmpConn = dbConn.getConnection();
 							ps = tmpConn.prepareStatement(sql);
 							ps.executeUpdate();
-							src = dbConn.executeQurey("select * from USER where USER_PHONE like \"" + src.getString(5) + "\";");
+							src = dbConn.executeQurey(
+									"select * from USER where USER_PHONE like \"" + src.getString(5) + "\";");
 							src.next();
-							JOptionPane.showMessageDialog(null, "반납이 완료되었습니다\n"+src.getString(2)+"님의 남은 대여 도서는 "+src.getString(9)+"권 입니다.", "반납 완료",JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null,
+									"반납이 완료되었습니다\n" + src.getString(2) + "님의 남은 대여 도서는 " + src.getString(9) + "권 입니다.",
+									"반납 완료", JOptionPane.INFORMATION_MESSAGE);
 							BookReturn temp = new BookReturn();
 							temp.setVisible(true);
 							setVisible(false);
